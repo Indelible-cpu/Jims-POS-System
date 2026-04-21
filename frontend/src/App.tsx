@@ -46,8 +46,12 @@ const App: React.FC = () => {
 
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/pos" element={<POSPage />} />
-          <Route path="*" element={<Navigate to="/pos" replace />} />
+          <Route 
+            path="/pos" 
+            element={localStorage.getItem('token') ? <POSPage /> : <Navigate to="/login" replace />} 
+          />
+          <Route path="/" element={<Navigate to="/pos" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>
