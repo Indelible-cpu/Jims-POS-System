@@ -1,7 +1,7 @@
 import React from 'react';
-import { Sun, Moon, Monitor, Laptop } from 'lucide-react';
-import { useThemeStore, Theme } from '../hooks/useThemeStore';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon, Monitor } from 'lucide-react';
+import { useThemeStore, type Theme } from '../hooks/useThemeStore';
+import { motion } from 'framer-motion';
 
 const ThemeToggle: React.FC = () => {
   const { theme, setTheme } = useThemeStore();
