@@ -64,7 +64,7 @@ const DashboardPage: React.FC = () => {
            <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
               <div className="flex justify-between items-center mb-8">
                  <h3 className="text-sm font-black tracking-widest">Recent sales</h3>
-                 <button className="text-[10px] font-black text-primary-400 uppercase hover:underline">View all</button>
+                 <button className="text-[10px] font-black text-primary-400 hover:underline">View all</button>
               </div>
               <div className="space-y-4">
                  {sales?.slice(-5).reverse().map((sale, i) => (
@@ -74,8 +74,8 @@ const DashboardPage: React.FC = () => {
                             <TrendingUp className="w-5 h-5" />
                          </div>
                          <div>
-                            <div className="text-xs font-black uppercase">{sale.invoiceNo}</div>
-                            <div className="text-[9px] text-surface-text/30 font-bold uppercase">{new Date(sale.createdAt).toLocaleDateString()}</div>
+                            <div className="text-xs font-black">{sale.invoiceNo}</div>
+                            <div className="text-[9px] text-surface-text/30 font-bold">{new Date(sale.createdAt).toLocaleDateString()}</div>
                          </div>
                       </div>
                       <div className="text-right">
@@ -85,14 +85,6 @@ const DashboardPage: React.FC = () => {
                    </div>
                  ))}
                  {(!sales || sales.length === 0) && (
-                    <div className="p-10 text-center text-surface-text/20 uppercase font-black text-xs tracking-widest">No recent activity</div>
-                 )}
-              </div>
-           </div>
-
-           <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
-              <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black uppercase tracking-widest">Low Stock Alert</h3>
                     <div className="p-10 text-center text-surface-text/20 font-black text-xs tracking-widest">No recent activity</div>
                  )}
               </div>
@@ -100,8 +92,8 @@ const DashboardPage: React.FC = () => {
 
            <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
               <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black tracking-widest">Low Stock Alert</h3>
-                 <button className="text-[10px] font-black text-primary-400 hover:underline">Manage Inventory</button>
+                 <h3 className="text-sm font-black tracking-widest">Low stock alert</h3>
+                 <button className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</button>
               </div>
               <div className="space-y-4">
                  {products?.filter(p => p.quantity <= 5).slice(0, 5).map((p, i) => (
@@ -122,7 +114,7 @@ const DashboardPage: React.FC = () => {
                    </div>
                  ))}
                  {lowStockCount === 0 && (
-                    <div className="p-10 text-center text-emerald-500/20 uppercase font-black text-xs tracking-widest">All stock levels healthy</div>
+                    <div className="p-10 text-center text-emerald-500/20 font-black text-xs tracking-widest">All stock levels healthy</div>
                  )}
               </div>
            </div>
