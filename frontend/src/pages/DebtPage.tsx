@@ -70,7 +70,7 @@ const DebtPage: React.FC = () => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-    } catch (err) {
+    } catch {
       toast.error('Camera access denied or unavailable');
       setUseCamera(false);
     }
@@ -281,7 +281,7 @@ const DebtPage: React.FC = () => {
               <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
                 <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">Record payment</div>
                 <div className="flex gap-2 mt-2">
-                  <input type="number" placeholder="Amount" className="input-field flex-1" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} />
+                  <input type="number" placeholder="Amount" className="input-field flex-1" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} onFocus={(e) => e.target.select()} />
                   <button onClick={handleRecordPayment} className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest">Record</button>
                 </div>
               </div>
@@ -368,7 +368,7 @@ const DebtPage: React.FC = () => {
                   )}
                   
                   {useCamera && !custForm.livePhoto && (
-                    <button type="button" onClick={capturePhoto} className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-red-500 text-white w-10 h-10 rounded-full shadow-lg border-2 border-white"></button>
+                    <button type="button" title="Capture photo" aria-label="Capture photo" onClick={capturePhoto} className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-red-500 text-white w-10 h-10 rounded-full shadow-lg border-2 border-white"></button>
                   )}
                   <canvas ref={canvasRef} className="hidden" />
                 </div>

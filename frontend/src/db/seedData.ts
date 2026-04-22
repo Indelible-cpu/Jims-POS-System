@@ -83,6 +83,12 @@ export const seedProducts = [
   { id: 122, categoryId: 3, sku: 'SE-GOO-002', name: 'Google account removal', costPrice: 1500.00, sellPrice: 15000.00, quantity: 1, isService: true }
 ];
 
+export const seedUsers = [
+  { id: crypto.randomUUID(), username: 'superadmin', fullname: 'Super Administrator', role: 'SUPER_ADMIN', roleId: 1, phone: '0880000001', createdAt: new Date().toISOString() },
+  { id: crypto.randomUUID(), username: 'admin', fullname: 'Administrator', role: 'ADMIN', roleId: 2, phone: '0880000002', createdAt: new Date().toISOString() },
+  { id: crypto.randomUUID(), username: 'cashier', fullname: 'Main Cashier', role: 'CASHIER', roleId: 3, phone: '0880000003', createdAt: new Date().toISOString() }
+];
+
 export const initDB = async (db: any) => {
   const catCount = await db.categories.count();
   if (catCount === 0) {
@@ -94,5 +100,10 @@ export const initDB = async (db: any) => {
       updatedAt: new Date().toISOString()
     }));
     await db.products.bulkAdd(productsToInsert);
+  }
+
+  const userCount = await db.users.count();
+  if (userCount === 0) {
+    await db.users.bulkAdd(seedUsers);
   }
 };

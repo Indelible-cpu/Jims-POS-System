@@ -175,7 +175,7 @@ const ExpensesPage: React.FC = () => {
           </div>
           <div className="space-y-1">
             <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Amount (MK)</label>
-            <input required type="number" className="input-field w-full text-2xl font-black text-red-500" placeholder="0.00" value={formData.amount} onChange={(e) => setFormData({...formData, amount: parseFloat(e.target.value)})} />
+            <input required type="number" className="input-field w-full text-2xl font-black text-red-500" placeholder="0.00" value={formData.amount} onChange={(e) => setFormData({...formData, amount: parseFloat(e.target.value)})} onFocus={(e) => e.target.select()} />
           </div>
           <div className="flex gap-4 pt-4">
             <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest">Cancel</button>

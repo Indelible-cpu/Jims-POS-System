@@ -132,8 +132,8 @@ const UsersPage: React.FC = () => {
            users?.map(u => (
              <div key={u.id} className="bg-surface-card border border-surface-border p-8 rounded-3xl group hover:border-primary-500/30 transition-all relative overflow-hidden">
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                   <button onClick={() => handleEdit(u)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-primary-400 transition-colors"><Edit2 className="w-4 h-4" /></button>
-                   <button onClick={() => handleDelete(u.id)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                   <button title="Edit User" aria-label="Edit User" onClick={() => handleEdit(u)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-primary-400 transition-colors"><Edit2 className="w-4 h-4" /></button>
+                   <button title="Delete User" aria-label="Delete User" onClick={() => handleDelete(u.id)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
@@ -181,8 +181,8 @@ const UsersPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
              <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Role</label>
-                <select className="input-field w-full appearance-none bg-surface-bg" value={formData.roleId} onChange={(e) => {
+                <label htmlFor="role" className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Role</label>
+                <select id="role" name="role" aria-label="Role" title="Select Role" className="input-field w-full appearance-none bg-surface-bg" value={formData.roleId} onChange={(e) => {
                    const r = roles.find(rl => rl.id === Number(e.target.value));
                    setFormData({...formData, roleId: r!.id, role: r!.name});
                 }}>

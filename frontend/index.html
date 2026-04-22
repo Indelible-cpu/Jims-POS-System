@@ -14,9 +14,62 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
+  <style>
+    #global-loader {
+      position: fixed;
+      inset: 0;
+      background-color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
+    .splash-logo-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #1e293b;
+      border: 3px solid #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+    }
+    #splash-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 
 <body>
+  <div id="global-loader">
+    <div class="splash-logo-container">
+      <img id="splash-logo" src="/pwa-192x192.png" alt="Company Logo" title="Loading..." />
+    </div>
+  </div>
+  <script>
+    try {
+      const storedLogo = localStorage.getItem('companyLogo');
+      if (storedLogo) {
+        document.getElementById('splash-logo').src = storedLogo;
+      }
+    } catch(e) {}
+    
+    // Hide loader when React mounts
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('global-loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 300);
+        }
+      }, 500); // Give React time to render
+    });
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
