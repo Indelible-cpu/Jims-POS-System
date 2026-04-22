@@ -16,21 +16,24 @@ import MainLayout from './components/MainLayout';
 
 const App: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleSync = async () => {
+    if (navigator.onLine) {
+      setIsSyncing(true);
+      await SyncService.pushSales();
+      setTimeout(() => setIsSyncing(false), 2000); // Keep indicator for a bit
+    }
+  };
 
   useEffect(() => {
     const handleStatusChange = () => setIsOnline(navigator.onLine);
     window.addEventListener('online', handleStatusChange);
     window.addEventListener('offline', handleStatusChange);
 
-    if (navigator.onLine) {
-      SyncService.pushSales();
-    }
+    handleSync();
 
-    const syncInterval = setInterval(() => {
-      if (navigator.onLine) {
-        SyncService.pushSales();
-      }
-    }, 60000);
+    const syncInterval = setInterval(handleSync, 60000);
 
     return () => {
       window.removeEventListener('online', handleStatusChange);
@@ -49,7 +52,7 @@ const App: React.FC = () => {
             path="/*" 
             element={
               localStorage.getItem('token') ? (
-                <MainLayout isOnline={isOnline}>
+                <MainLayout isOnline={isOnline} isSyncing={isSyncing}>
                   <Routes>
                     <Route path="dashboard" element={<DashboardPage />} />
                     <Route path="pos" element={<POSPage />} />
