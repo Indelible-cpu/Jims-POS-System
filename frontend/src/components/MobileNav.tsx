@@ -25,7 +25,7 @@ const MobileNav: React.FC = () => {
             )}
           >
             <tab.icon className="w-5 h-5 mb-1" />
-            <span className="text-[10px] font-bold uppercase tracking-wider">{tab.label}</span>
+            <span className="text-[10px] font-bold tracking-wider">{tab.label}</span>
           </NavLink>
         ))}
       </div>
