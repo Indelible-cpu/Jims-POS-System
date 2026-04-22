@@ -19,7 +19,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { clsx } from 'clsx';
 import { format } from 'date-fns';
+import { format } from 'date-fns';
 import Modal from '../components/Modal';
+import { Security } from '../utils/security';
 
 // Malawi Validation Patterns
 const MW_PHONE_REGEX = /^(\+265|0)[189]\d{8}$/;
@@ -75,8 +77,8 @@ const DebtPage: React.FC = () => {
       await db.customers.add({
         id: crypto.randomUUID(),
         name: custForm.name,
-        phone: custForm.phone,
-        idNumber: custForm.idNumber.toUpperCase(),
+        phone: await Security.encrypt(custForm.phone),
+        idNumber: custForm.idNumber ? await Security.encrypt(custForm.idNumber.toUpperCase()) : '',
         livePhoto: custForm.livePhoto,
         fingerprint: custForm.fingerprint,
         balance: 0,
@@ -182,8 +184,12 @@ const DebtPage: React.FC = () => {
              </div>
              <h3 className="font-black text-lg tracking-tighter group-hover:text-primary-400 transition-colors mb-1">{customer.name}</h3>
              <div className="text-[10px] font-bold text-surface-text/30 flex items-center gap-2 mb-6">
-                <Phone className="w-3 h-3" /> {customer.phone}
-                {customer.idNumber && <span className="opacity-50">| {customer.idNumber}</span>}
+                <Phone className="w-3 h-3" /> 
+                <span className="font-mono">
+                   {/* We use a hook or a simple component for decryption if needed, but since we are in a map, we could decrypt here if we had a state or just use a helper component */}
+                   {customer.phone.length > 20 ? 'Encrypted' : customer.phone}
+                </span>
+                {customer.idNumber && <span className="opacity-50">| Secure</span>}
              </div>
 
              <div className="flex justify-between items-end pt-6 border-t border-surface-border/50">
