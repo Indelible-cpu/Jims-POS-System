@@ -82,7 +82,6 @@ export default function CreditsPage() {
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse min-w-[1100px]">
             <thead>
-             <thead>
               <tr className="text-[10px] font-bold text-zinc-400 border-b border-zinc-50 bg-zinc-50/50">
                 <th className="px-10 py-6">Customer</th>
                 <th className="px-10 py-6">Invoice #</th>
