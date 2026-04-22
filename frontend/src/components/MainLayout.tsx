@@ -1,16 +1,18 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, WifiOff } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import MobileNav from './MobileNav';
+import MobileHeader from './MobileHeader';
 import { clsx } from 'clsx';
 import toast from 'react-hot-toast';
 
 interface MainLayoutProps {
   children: React.ReactNode;
   isOnline: boolean;
+  isSyncing?: boolean;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children, isOnline }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({ children, isOnline, isSyncing = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,31 +23,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, isOnline }) => {
     navigate('/login');
   };
 
-  // Hide nav on login page if it ever gets wrapped
   const hideNav = location.pathname === '/login';
 
   return (
     <div className="min-h-screen flex flex-col bg-surface-bg transition-colors duration-300">
-      {/* Global Connectivity Banner */}
-      {!isOnline && (
-        <div className="sticky top-0 z-[60] bg-accent-vibrant text-black text-center text-[10px] py-1 font-black uppercase tracking-widest">
-          <div className="flex items-center justify-center gap-2">
-            <WifiOff className="w-3 h-3" />
-            Offline Mode
-          </div>
-        </div>
-      )}
+      {/* Dynamic Mobile Header */}
+      {!hideNav && <MobileHeader isOnline={isOnline} isSyncing={isSyncing} />}
 
       {/* Main Content Area */}
       <main className={clsx(
         "flex-1 w-full mx-auto pb-20 md:pb-0 transition-all",
-        // Edge-to-edge on mobile, contained on desktop
         "px-0 md:px-6 max-w-screen-2xl"
       )}>
         {children}
       </main>
 
-      {/* Desktop Header / Toolbar (Simplified for now) */}
+      {/* Desktop Sign Out */}
       <div className="hidden md:flex fixed top-4 right-6 z-50 gap-3">
         <button 
           onClick={handleSignOut}
