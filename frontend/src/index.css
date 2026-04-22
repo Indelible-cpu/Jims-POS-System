@@ -15,6 +15,7 @@
   --color-accent-vibrant: #f59e0b;
   --color-accent-success: #10b981;
   --color-accent-danger: #ef4444;
+  --color-brand-green: #21e211; /* betPawa style green */
 
   --color-surface-bg: var(--bg-main);
   --color-surface-text: var(--text-main);
@@ -25,11 +26,11 @@
 }
 
 :root {
-  --bg-main: #f8fafc;
+  --bg-main: #f3f4f6;
   --text-main: #0f172a;
   --bg-card: #ffffff;
   --bg-card-rgb: 255, 255, 255;
-  --border-color: #e2e8f0;
+  --border-color: #e5e7eb;
   
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -42,11 +43,11 @@
 }
 
 .dark {
-  --bg-main: #020617;
-  --text-main: #f8fafc;
-  --bg-card: #0f172a;
-  --bg-card-rgb: 15, 23, 42;
-  --border-color: #1e293b;
+  --bg-main: #000000;
+  --text-main: #f1f5f9;
+  --bg-card: #0a0a0a;
+  --bg-card-rgb: 10, 10, 10;
+  --border-color: #1a1a1a;
 }
 
 body {
@@ -55,7 +56,8 @@ body {
   min-height: 100vh;
   background-color: var(--bg-main);
   color: var(--text-main);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  overflow-x: hidden;
 }
 
 @layer components {

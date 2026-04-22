@@ -86,7 +86,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-surface-bg text-surface-text">
+  return (
+    <div className="min-h-screen flex items-center justify-center p-0 md:p-6 bg-surface-bg text-surface-text">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -96,8 +97,8 @@ const LoginPage: React.FC = () => {
           <div className="inline-flex p-4 rounded-2xl bg-primary-600/20 text-primary-400 mb-4">
             <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-xl font-black mb-2">Smart Pos</h1>
-          <p className="text-surface-text/40">Please Sign In To Continue</p>
+          <h1 className="text-sm font-black mb-1 uppercase tracking-widest text-primary-400">Smart Pos</h1>
+          <p className="text-surface-text/40 text-xs font-bold uppercase tracking-tighter">Please sign in to continue</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
@@ -143,7 +144,7 @@ const LoginPage: React.FC = () => {
 
           <button 
             disabled={loading}
-            className="w-full btn-primary h-14 flex items-center justify-center gap-3 text-lg"
+            className="w-full btn-primary h-14 flex items-center justify-center gap-3 text-base uppercase font-black tracking-widest"
           >
             {loading ? <Loader2 className="animate-spin" /> : 'Sign in'}
           </button>

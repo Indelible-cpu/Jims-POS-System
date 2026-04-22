@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast';
 import POSPage from './pages/POSPage';
 import LoginPage from './pages/LoginPage';
+import SettingsPage from './pages/SettingsPage';
 import { SyncService } from './services/SyncService';
+import MainLayout from './components/MainLayout';
 
 const App: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -13,12 +15,10 @@ const App: React.FC = () => {
     window.addEventListener('online', handleStatusChange);
     window.addEventListener('offline', handleStatusChange);
 
-    // Initial Sync Attempt if online
     if (navigator.onLine) {
       SyncService.pushSales();
     }
 
-    // Auto-sync every 60 seconds if online
     const syncInterval = setInterval(() => {
       if (navigator.onLine) {
         SyncService.pushSales();
@@ -34,25 +34,28 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <Toaster position="top-center" />
       <div className="min-h-screen selection:bg-primary-500/30">
-        <Toaster position="top-right" />
-
-        
-        {/* Connectivity Banner */}
-        {!isOnline && (
-          <div className="bg-accent-vibrant text-black text-center text-xs py-1 font-bold animate-pulse">
-            OFFLINE MODE ACTIVE - Data is being saved locally
-          </div>
-        )}
-
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route 
-            path="/pos" 
-            element={localStorage.getItem('token') ? <POSPage /> : <Navigate to="/login" replace />} 
+            path="/*" 
+            element={
+              localStorage.getItem('token') ? (
+                <MainLayout isOnline={isOnline}>
+                  <Routes>
+                    <Route path="pos" element={<POSPage />} />
+                    <Route path="inventory" element={<div className="p-4">Inventory Page coming soon...</div>} />
+                    <Route path="sales" element={<div className="p-4">Sales Reports coming soon...</div>} />
+                    <Route path="settings" element={<SettingsPage />} />
+                    <Route path="/" element={<Navigate to="/pos" replace />} />
+                  </Routes>
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            } 
           />
-          <Route path="/" element={<Navigate to="/pos" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

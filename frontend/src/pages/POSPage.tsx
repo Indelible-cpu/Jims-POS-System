@@ -11,7 +11,6 @@ import clsx from 'clsx';
 
 import { Receipt } from '../components/Receipt';
 import { Invoice } from '../components/Invoice';
-import ThemeToggle from '../components/ThemeToggle';
 
 
 const generateInvoiceNo = () => `INV-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
@@ -119,7 +118,7 @@ const POSPage: React.FC = () => {
   };
 
   return (
-    <div className={clsx('flex', 'flex-col', 'h-screen', 'overflow-hidden', 'lg:flex-row', 'bg-surface-bg', 'text-surface-text')}>
+    <div className={clsx('flex', 'flex-col', 'lg:flex-row', 'min-h-[calc(100vh-4rem)]', 'lg:h-[calc(100vh-64px)]', 'overflow-hidden')}>
       <AnimatePresence>
         {showReceipt && (
           <motion.div
@@ -164,20 +163,18 @@ const POSPage: React.FC = () => {
 
 
       <div className={clsx('flex-1', 'flex', 'flex-col', 'min-w-0')}>
-        <header className={clsx('p-4', 'glass-panel', 'm-2')}>
+        <header className={clsx('p-4', 'bg-surface-card', 'border-b', 'border-surface-border')}>
           <div className={clsx('flex', 'items-center', 'gap-4')}>
             <div className={clsx('relative', 'flex-1')}>
               <Search className={clsx('absolute', 'left-3', 'top-1/2', '-translate-y-1/2', 'text-surface-text/40', 'w-5', 'h-5')} />
               <input
                 type="text"
-                placeholder="Search products (SKU or Name)..."
+                placeholder="Search products..."
                 className={clsx('input-field', 'w-full', 'pl-11')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-
-            <ThemeToggle />
 
             <button
               title="Sync Sales Data"
@@ -215,7 +212,7 @@ const POSPage: React.FC = () => {
           </div>
         </header>
 
-        <div className={clsx('flex-1', 'overflow-y-auto', 'p-4', 'grid', 'grid-cols-2', 'md:grid-cols-3', 'xl:grid-cols-4', 'gap-4', 'scroll-smooth')}>
+        <div className={clsx('flex-1', 'overflow-y-auto', 'p-2', 'md:p-4', 'grid', 'grid-cols-2', 'md:grid-cols-3', 'xl:grid-cols-4', 'gap-2', 'md:gap-4', 'scroll-smooth')}>
           <AnimatePresence mode="popLayout">
             {filteredProducts?.map(product => (
               <motion.div
@@ -240,7 +237,7 @@ const POSPage: React.FC = () => {
         </div>
       </div>
 
-      <div className={clsx('w-full', 'lg:w-96', 'glass-panel', 'm-2', 'flex', 'flex-col', 'shrink-0', 'border-surface-border/50')}>
+      <div className={clsx('w-full', 'lg:w-96', 'bg-surface-card', 'border-l', 'border-surface-border', 'hidden', 'lg:flex', 'flex-col', 'shrink-0')}>
         <div className={clsx('p-6', 'border-b', 'border-surface-border', 'flex', 'justify-between', 'items-center', 'bg-surface-card/30')}>
 
           <h2 className={clsx('text-xl', 'font-black', 'flex', 'items-center', 'gap-3', 'tracking-tighter')}>
