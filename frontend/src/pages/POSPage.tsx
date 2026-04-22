@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/posDB';
 import type { LocalProduct } from '../db/posDB';
-import { Search, ShoppingCart, Power, RefreshCw } from 'lucide-react';
+import { Search, ShoppingCart, Power, RefreshCw, UserPlus, Users, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { SyncService } from '../services/SyncService';
@@ -21,12 +21,17 @@ const POSPage: React.FC = () => {
   const [paymentMode, setPaymentMode] = useState<'CASH' | 'CREDIT'>('CASH');
   const [cart, setCart] = useState<{ product: LocalProduct; quantity: number }[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
+  const [showCustomerSelector, setShowCustomerSelector] = useState(false);
+  const [custSearch, setCustSearch] = useState('');
+
   const [showReceipt, setShowReceipt] = useState<{
     items: { product: LocalProduct; quantity: number }[];
     total: number;
     invoiceNo: string;
     date: string;
     mode: 'CASH' | 'CREDIT';
+    customerName?: string;
   } | null>(null);
 
   // Load products and categories from IndexedDB
@@ -35,6 +40,10 @@ const POSPage: React.FC = () => {
     [searchTerm]
   );
   const categories = useLiveQuery(() => db.categories.toArray());
+  const customers = useLiveQuery(
+    () => db.customers.where('name').startsWithIgnoreCase(custSearch).toArray(),
+    [custSearch]
+  );
 
   const filteredProducts = selectedCategory
     ? products?.filter(p => p.categoryId === selectedCategory)
@@ -62,6 +71,12 @@ const POSPage: React.FC = () => {
   const handleCheckout = async () => {
     if (cart.length === 0) return;
 
+    // If it's a credit sale and no customer is selected, show selector
+    if (paymentMode === 'CREDIT' && !selectedCustomerId) {
+       setShowCustomerSelector(true);
+       return;
+    }
+
     const invoiceNo = generateInvoiceNo();
     const now = new Date().toISOString();
 
@@ -79,6 +94,7 @@ const POSPage: React.FC = () => {
       itemsCount: cart.length,
       createdAt: now,
       synced: 0,
+      customerId: selectedCustomerId || undefined,
       items: cart.map(item => ({
         productId: item.product.id,
         productName: item.product.name,
@@ -93,20 +109,31 @@ const POSPage: React.FC = () => {
     try {
       await db.salesQueue.add(sale);
 
-      // Store current cart for receipt display before clearing
+      // If credit, update customer balance
+      if (paymentMode === 'CREDIT' && selectedCustomerId) {
+        const customer = await db.customers.get(selectedCustomerId);
+        if (customer) {
+          await db.customers.update(selectedCustomerId, {
+            balance: customer.balance + cartTotal,
+            updatedAt: now
+          });
+        }
+      }
+
       const receiptData = {
         items: [...cart],
         total: cartTotal,
         invoiceNo,
         date: now,
-        mode: paymentMode
+        mode: paymentMode,
+        customerName: paymentMode === 'CREDIT' ? (await db.customers.get(selectedCustomerId!))?.name : undefined
       };
 
-      // Attempt immediate sync (background)
       SyncService.pushSales();
-
       setShowReceipt(receiptData);
       setCart([]);
+      setSelectedCustomerId(null);
+      setShowCustomerSelector(false);
     } catch (err) {
       console.error(err);
       toast.error('Failed to save sale');
@@ -120,6 +147,69 @@ const POSPage: React.FC = () => {
   return (
     <div className={clsx('flex', 'flex-col', 'lg:flex-row', 'min-h-[calc(100vh-4rem)]', 'lg:h-[calc(100vh-64px)]', 'overflow-hidden')}>
       <AnimatePresence>
+        {showCustomerSelector && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-surface-bg/90 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-surface-card border border-surface-border rounded-3xl w-full max-w-md shadow-2xl flex flex-col max-h-[80vh]"
+            >
+              <div className="p-6 border-b border-surface-border bg-surface-bg/30">
+                <h3 className="text-xl font-black tracking-tighter uppercase mb-4">Select Credit Customer</h3>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-text/40 w-4 h-4" />
+                  <input 
+                    title="Search Customers"
+                    autoFocus
+                    type="text" 
+                    placeholder="Search name..."
+                    className="input-field w-full pl-10"
+                    value={custSearch}
+                    onChange={(e) => setCustSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto p-2 divide-y divide-surface-border/50">
+                 {customers?.length === 0 ? (
+                   <div className="p-8 text-center text-surface-text/40 font-bold uppercase text-[10px] tracking-widest leading-loose">
+                      No matching customers found.<br/>
+                      <button className="mt-4 text-primary-400 border border-primary-500/20 px-4 py-2 rounded-lg">Manage Debt Book</button>
+                   </div>
+                 ) : (
+                   customers?.map(c => (
+                     <button 
+                       key={c.id} 
+                       onClick={() => { setSelectedCustomerId(c.id); handleCheckout(); }}
+                       className="w-full p-4 flex justify-between items-center hover:bg-primary-500/5 transition-colors group"
+                     >
+                       <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-surface-bg border border-surface-border rounded-xl flex items-center justify-center group-hover:border-primary-400 transition-colors">
+                             <Users className="w-5 h-5 text-surface-text/40" />
+                          </div>
+                          <div className="text-left">
+                            <div className="font-bold text-sm uppercase">{c.name}</div>
+                            <div className="text-[10px] text-surface-text/30 font-bold">{c.phone}</div>
+                          </div>
+                       </div>
+                       <ChevronRight className="w-5 h-5 text-surface-text/20 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
+                     </button>
+                   ))
+                 )}
+              </div>
+
+              <div className="p-6 border-t border-surface-border bg-surface-bg/30 flex gap-4">
+                 <button onClick={() => setShowCustomerSelector(false)} className="flex-1 py-3 bg-surface-bg border border-surface-border rounded-xl text-[10px] font-bold uppercase">Cancel</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
         {showReceipt && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -136,7 +226,7 @@ const POSPage: React.FC = () => {
                 <ShoppingCart className={clsx('w-8', 'h-8')} />
               </div>
               <h2 className={clsx('text-3xl', 'font-black', 'mb-2')}>SALE COMPLETED</h2>
-              <p className={clsx('text-surface-text/40', 'mb-8', 'text-center', 'uppercase', 'tracking-widest', 'text-[10px]', 'font-bold')}>MODE: {showReceipt.mode}</p>
+              <p className={clsx('text-surface-text/40', 'mb-8', 'text-center', 'uppercase', 'tracking-widest', 'text-[10px]', 'font-bold')}>MODE: {showReceipt.mode} {showReceipt.customerName && `| CUSTOMER: ${showReceipt.customerName}`}</p>
 
               <div className={clsx('w-full', 'bg-white', 'rounded-xl', 'overflow-hidden', 'mb-8', 'shadow-2xl')}>
                 {showReceipt.mode === 'CASH' ? <Receipt {...showReceipt} /> : <Invoice {...showReceipt} />}

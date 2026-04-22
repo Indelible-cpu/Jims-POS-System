@@ -36,7 +36,26 @@ export interface LocalSale {
   itemsCount: number;
   createdAt: string;
   synced: number; 
+  customerId?: string;
   items: LocalSaleItem[];
+}
+
+export interface LocalCustomer {
+  id: string;
+  name: string;
+  phone: string;
+  balance: number; // Total amount currently owed
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LocalDebtPayment {
+  id: string;
+  customerId: string;
+  amount: number;
+  paymentMethod: string;
+  reference?: string;
+  createdAt: string;
 }
 
 export class POSDatabase extends Dexie {
@@ -44,14 +63,18 @@ export class POSDatabase extends Dexie {
   categories!: Table<{ id: number; title: string; slug: string }>;
   salesQueue!: Table<LocalSale>;
   settings!: Table<{ key: string; value: string | number | boolean | object }>;
+  customers!: Table<LocalCustomer>;
+  debtPayments!: Table<LocalDebtPayment>;
 
   constructor() {
     super('JEF_POS_DB');
-    this.version(2).stores({
+    this.version(3).stores({
       products: 'id, categoryId, sku, name',
       categories: 'id, slug',
-      salesQueue: 'id, invoiceNo, synced',
-      settings: 'key'
+      salesQueue: 'id, invoiceNo, synced, customerId',
+      settings: 'key',
+      customers: 'id, name, phone',
+      debtPayments: 'id, customerId'
     });
   }
 }

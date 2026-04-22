@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
 import InventoryPage from './pages/InventoryPage';
 import SalesPage from './pages/SalesPage';
+import DebtPage from './pages/DebtPage';
 import { SyncService } from './services/SyncService';
 import MainLayout from './components/MainLayout';
 
@@ -49,6 +50,7 @@ const App: React.FC = () => {
                     <Route path="pos" element={<POSPage />} />
                     <Route path="inventory" element={<InventoryPage />} />
                     <Route path="sales" element={<SalesPage />} />
+                    <Route path="debt" element={<DebtPage />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="/" element={<Navigate to="/pos" replace />} />
                   </Routes>
