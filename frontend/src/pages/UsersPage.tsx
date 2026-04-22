@@ -5,13 +5,10 @@ import {
   Users, 
   UserPlus, 
   Edit2, 
-  Shield, 
   Mail, 
   Phone, 
   Search, 
-  X, 
   Trash2, 
-  AlertCircle,
   User as UserIcon
 } from 'lucide-react';
 import toast from 'react-hot-toast';
