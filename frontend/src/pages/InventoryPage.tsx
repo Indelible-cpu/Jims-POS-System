@@ -116,13 +116,13 @@ const InventoryPage: React.FC = () => {
             <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
               <Package className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase">Inventory</h1>
+            <h1 className="text-2xl font-black tracking-tighter">Inventory</h1>
           </div>
           <button 
             onClick={() => { resetForm(); setEditingProduct(null); setIsAddModalOpen(true); }}
-            className="btn-primary !px-4 !py-2 flex items-center gap-2 text-xs uppercase tracking-widest font-black"
+            className="btn-primary !px-4 !py-2 flex items-center gap-2 text-xs font-bold"
           >
-            <Plus className="w-4 h-4" /> Add Item
+            <Plus className="w-4 h-4" /> Add item
           </button>
         </div>
 
@@ -141,7 +141,7 @@ const InventoryPage: React.FC = () => {
             <button 
               onClick={() => setSelectedCategory(null)}
               className={clsx(
-                "px-4 py-2 rounded-xl border text-xs font-bold uppercase transition-all whitespace-nowrap",
+                "px-4 py-2 rounded-xl border text-xs font-bold transition-all whitespace-nowrap",
                 !selectedCategory ? "bg-primary-600 border-primary-600 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
               )}
             >
@@ -152,7 +152,7 @@ const InventoryPage: React.FC = () => {
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
                 className={clsx(
-                  "px-4 py-2 rounded-xl border text-xs font-bold uppercase transition-all whitespace-nowrap",
+                  "px-4 py-2 rounded-xl border text-xs font-bold transition-all whitespace-nowrap",
                   selectedCategory === cat.id ? "bg-primary-600 border-primary-600 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
                 )}
               >
@@ -177,7 +177,7 @@ const InventoryPage: React.FC = () => {
               >
                 <div className="p-5 flex-1">
                   <div className="flex justify-between items-start mb-4">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">{product.sku}</div>
+                    <div className="text-[10px] font-bold text-surface-text/30">{product.sku}</div>
                     <div className="flex gap-1">
                       <button 
                         onClick={() => openEditModal(product)} 
@@ -195,16 +195,16 @@ const InventoryPage: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                  <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary-400 transition-colors uppercase tracking-tight">{product.name}</h3>
+                  <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary-400 transition-colors tracking-tight">{product.name}</h3>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-primary-400 font-black text-xl leading-none">MK {product.sellPrice.toLocaleString()}</span>
                   </div>
                   <div className={clsx(
-                    "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider",
+                    "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold",
                     product.quantity <= 5 ? "bg-accent-danger/10 text-accent-danger border border-accent-danger/20" : "bg-accent-success/10 text-accent-success border border-accent-success/20"
                   )}>
                     {product.quantity <= 5 ? <AlertTriangle className="w-3 h-3" /> : <Package className="w-3 h-3" />}
-                    {product.quantity} In Stock
+                    {product.quantity} in stock
                   </div>
                 </div>
                 <div className="px-5 py-3 bg-surface-bg/50 border-t border-surface-border flex justify-between items-center text-[10px] font-bold text-surface-text/40">
@@ -225,7 +225,7 @@ const InventoryPage: React.FC = () => {
         <form onSubmit={handleSaveProduct} className="p-8 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2 col-span-2">
-              <label htmlFor="prod-name" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Product Name</label>
+              <label htmlFor="prod-name" className="text-[10px] font-bold text-surface-text/40 ml-1">Product name</label>
               <input 
                 id="prod-name"
                 required 
@@ -238,7 +238,7 @@ const InventoryPage: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="prod-sku" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">SKU / Code</label>
+              <label htmlFor="prod-sku" className="text-[10px] font-bold text-surface-text/40 ml-1">SKU / Code</label>
               <input 
                 id="prod-sku"
                 required 
@@ -251,7 +251,7 @@ const InventoryPage: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="prod-cat" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Category</label>
+              <label htmlFor="prod-cat" className="text-[10px] font-bold text-surface-text/40 ml-1">Category</label>
               <select 
                 id="prod-cat"
                 title="Product Category"
@@ -265,7 +265,7 @@ const InventoryPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-3 gap-4 bg-surface-bg/30 p-4 rounded-2xl border border-surface-border">
             <div className="space-y-2">
-              <label htmlFor="prod-cost" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Cost</label>
+              <label htmlFor="prod-cost" className="text-[10px] font-bold text-surface-text/40 ml-1">Cost</label>
               <input 
                 id="prod-cost"
                 required 
@@ -278,7 +278,7 @@ const InventoryPage: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="prod-sell" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Sell</label>
+              <label htmlFor="prod-sell" className="text-[10px] font-bold text-surface-text/40 ml-1">Sell</label>
               <input 
                 id="prod-sell"
                 required 
@@ -291,7 +291,7 @@ const InventoryPage: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="prod-stock" className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Stock</label>
+              <label htmlFor="prod-stock" className="text-[10px] font-bold text-surface-text/40 ml-1">Stock</label>
               <input 
                 id="prod-stock"
                 required 
@@ -305,8 +305,8 @@ const InventoryPage: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-4 pt-4">
-            <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-surface-card transition-all">Cancel</button>
-            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-black uppercase tracking-widest">Save Changes</button>
+            <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-bold hover:bg-surface-card transition-all">Cancel</button>
+            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-bold">Save changes</button>
           </div>
         </form>
       </Modal>

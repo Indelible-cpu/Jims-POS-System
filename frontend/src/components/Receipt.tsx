@@ -12,14 +12,14 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, invoiceNo, date 
   return (
     <div className="receipt p-8 bg-white text-black font-mono w-[80mm] mx-auto text-sm">
       <div className="text-center border-b-2 border-black pb-4 mb-4">
-        <h1 className="text-xl font-bold">JIMS POS</h1>
+        <h1 className="text-xl font-bold">Jims POS</h1>
         <p className="text-xs">Excellence in Service</p>
         <p className="text-xs mt-2">123 Business Street, Lilongwe</p>
         <p className="text-xs">Tel: +265 999 000 000</p>
       </div>
 
       <div className="flex justify-between mb-4 text-xs font-bold">
-        <span>INV: {invoiceNo}</span>
+        <span>Inv: {invoiceNo}</span>
         <span>{new Date(date).toLocaleString()}</span>
       </div>
 
@@ -46,7 +46,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, invoiceNo, date 
       </table>
 
       <div className="flex justify-between font-bold text-lg mb-4">
-        <span>TOTAL</span>
+        <span>Total</span>
         <span>MK {total.toLocaleString()}</span>
       </div>
 

@@ -37,7 +37,7 @@ const ForgotPasswordPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md glass-panel p-8"
       >
-        <Link to="/login" className="inline-flex items-center gap-2 text-surface-text/40 hover:text-primary-400 mb-8 transition-colors text-[10px] font-black uppercase tracking-widest">
+        <Link to="/login" className="inline-flex items-center gap-2 text-surface-text/40 hover:text-primary-400 mb-8 transition-colors text-xs font-bold">
           <ArrowLeft className="w-4 h-4" /> Back to sign in
         </Link>
 
@@ -45,13 +45,13 @@ const ForgotPasswordPage: React.FC = () => {
           <div className="inline-flex p-4 rounded-2xl bg-amber-500/10 text-amber-500 mb-4">
             <KeyRound className="w-8 h-8" />
           </div>
-          <h1 className="text-sm font-black mb-1 uppercase tracking-widest text-primary-400">Recover account</h1>
-          <p className="text-surface-text/40 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Enter your registered email or phone number to receive reset instructions</p>
+          <h1 className="text-sm font-black mb-1 text-primary-400">Forgot password</h1>
+          <p className="text-surface-text/40 text-[10px] font-bold leading-relaxed">Enter your registered email or phone number to receive reset instructions</p>
         </div>
 
         <form onSubmit={handleReset} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-surface-text/30 tracking-widest pl-1 uppercase">Email or Phone</label>
+            <label className="text-[10px] font-bold text-surface-text/30 pl-1">Email or phone</label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-text/40" />
               <input 
@@ -68,7 +68,7 @@ const ForgotPasswordPage: React.FC = () => {
           <button 
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-black uppercase tracking-widest transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-[10px]"
+            className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-xs"
           >
             {loading ? 'Sending request...' : 'Send reset link'}
           </button>

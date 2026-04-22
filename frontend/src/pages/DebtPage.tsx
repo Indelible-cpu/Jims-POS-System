@@ -193,11 +193,11 @@ const DebtPage: React.FC = () => {
             <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
               <Users className="w-6 h-6" />
             </div>
-            <h1 className="text-xl md:text-2xl font-black tracking-tighter uppercase">Debt book</h1>
+            <h1 className="text-xl md:text-2xl font-black tracking-tighter">Debt book</h1>
           </div>
           <button 
             onClick={() => setIsAddModalOpen(true)}
-            className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest"
+            className="btn-primary !px-4 !py-2 text-[10px] font-bold"
           >
             Add customer
           </button>
@@ -236,21 +236,21 @@ const DebtPage: React.FC = () => {
                   )}
                 </div>
                 {customer.balance > 0 && (
-                  <div className="bg-amber-500/10 text-amber-500 px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest border border-amber-500/20 flex items-center gap-1">
+                  <div className="bg-amber-500/10 text-amber-500 px-2 py-1 rounded-md text-[8px] font-bold border border-amber-500/20 flex items-center gap-1">
                     <AlertCircle className="w-2.5 h-2.5" /> Owing
                   </div>
                 )}
               </div>
               
-              <h3 className="font-bold text-lg leading-tight uppercase tracking-tight mb-1 group-hover:text-primary-400 transition-colors">{customer.name}</h3>
-              <div className="flex flex-col gap-1 text-[10px] font-bold text-surface-text/30 mb-6 uppercase tracking-wider">
+              <h3 className="font-bold text-lg leading-tight tracking-tight mb-1 group-hover:text-primary-400 transition-colors">{customer.name}</h3>
+              <div className="flex flex-col gap-1 text-[10px] font-bold text-surface-text/30 mb-6 tracking-wider">
                 <div className="flex items-center gap-2"><Phone className="w-3 h-3" /> {customer.phone}</div>
                 {customer.idNumber && <div className="flex items-center gap-2 mt-1">ID: {customer.idNumber}</div>}
               </div>
 
               <div className="pt-4 border-t border-surface-border flex justify-between items-end">
                 <div>
-                  <div className="text-[9px] font-black uppercase tracking-[0.2em] text-surface-text/20 mb-1">Balance</div>
+                  <div className="text-[9px] font-bold text-surface-text/20 mb-1">Balance</div>
                   <div className={clsx(
                     "text-lg font-black",
                     customer.balance > 0 ? "text-amber-500" : "text-emerald-500"
@@ -275,47 +275,47 @@ const DebtPage: React.FC = () => {
           <div className="p-4 md:p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
-                <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">Total balance</div>
+                <div className="text-[10px] font-bold text-surface-text/30">Total balance</div>
                 <div className="text-3xl font-black text-amber-500 mt-2">MK {selectedCustomer.balance.toLocaleString()}</div>
               </div>
               <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
-                <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">Record payment</div>
+                <div className="text-[10px] font-bold text-surface-text/30">Record payment</div>
                 <div className="flex gap-2 mt-2">
                   <input type="number" placeholder="Amount" className="input-field flex-1" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} onFocus={(e) => e.target.select()} />
-                  <button onClick={handleRecordPayment} className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest">Record</button>
+                  <button onClick={handleRecordPayment} className="btn-primary !px-4 !py-2 text-[10px] font-bold">Record</button>
                 </div>
               </div>
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-surface-text/30 flex items-center gap-2">
+              <h3 className="text-[10px] font-bold text-surface-text/30 flex items-center gap-2">
                 <History className="w-4 h-4" /> Recent transactions
               </h3>
               <div className="bg-surface-border/20 rounded-2xl overflow-hidden border border-surface-border divide-y divide-surface-border">
                 {customerSales?.length === 0 && customerPayments?.length === 0 && (
-                  <div className="p-12 text-center text-surface-text/20 font-black uppercase text-[10px] tracking-widest">No transaction history</div>
+                  <div className="p-12 text-center text-surface-text/20 font-bold text-[10px]">No transaction history</div>
                 )}
                 {customerSales?.map(sale => (
                   <div key={sale.id} className="p-4 bg-surface-card flex justify-between items-center group hover:bg-primary-500/5 transition-colors">
                     <div>
-                      <div className="text-xs font-black uppercase">Sale #{sale.id.slice(0,8)}</div>
-                      <div className="text-[9px] text-surface-text/30 font-bold uppercase">{format(new Date(sale.createdAt), 'MMM dd, HH:mm')}</div>
+                      <div className="text-xs font-bold">Sale #{sale.id.slice(0,8)}</div>
+                      <div className="text-[9px] text-surface-text/30 font-bold">{format(new Date(sale.createdAt), 'MMM dd, HH:mm')}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-sm font-black text-red-500">- MK {sale.total.toLocaleString()}</div>
-                      <div className="text-[8px] text-surface-text/20 font-black uppercase">Debt Incurred</div>
+                      <div className="text-[8px] text-surface-text/20 font-bold">Debt incurred</div>
                     </div>
                   </div>
                 ))}
                 {customerPayments?.map(payment => (
                   <div key={payment.id} className="p-4 bg-surface-card flex justify-between items-center group hover:bg-primary-500/5 transition-colors">
                     <div>
-                      <div className="text-xs font-black text-emerald-500 uppercase">Payment Received</div>
-                      <div className="text-[9px] text-surface-text/30 font-bold uppercase">{format(new Date(payment.createdAt), 'MMM dd, HH:mm')}</div>
+                      <div className="text-xs font-bold text-emerald-500">Payment received</div>
+                      <div className="text-[9px] text-surface-text/30 font-bold">{format(new Date(payment.createdAt), 'MMM dd, HH:mm')}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-sm font-black text-emerald-500">+ MK {payment.amount.toLocaleString()}</div>
-                      <div className="text-[8px] text-surface-text/20 font-black uppercase">{payment.paymentMethod}</div>
+                      <div className="text-[8px] text-surface-text/20 font-bold">{payment.paymentMethod}</div>
                     </div>
                   </div>
                 ))}
@@ -337,19 +337,19 @@ const DebtPage: React.FC = () => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1 space-y-4">
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">Full name</label>
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">Full name</label>
                 <input required type="text" className="input-field w-full" placeholder="e.g. John Phiri" value={custForm.name} onChange={(e) => setCustForm({...custForm, name: e.target.value})} />
               </div>
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">Phone number</label>
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">Phone number</label>
                 <input required type="text" className="input-field w-full" placeholder="e.g. 0881234567 or +265..." value={custForm.phone} onChange={(e) => setCustForm({...custForm, phone: e.target.value})} />
               </div>
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">National ID (8 chars)</label>
-                <input type="text" className="input-field w-full uppercase" placeholder="e.g. ABC12345" value={custForm.idNumber} onChange={(e) => setCustForm({...custForm, idNumber: e.target.value})} />
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">National ID (8 chars)</label>
+                <input type="text" className="input-field w-full" placeholder="e.g. ABC12345" value={custForm.idNumber} onChange={(e) => setCustForm({...custForm, idNumber: e.target.value})} />
               </div>
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">Village / Location</label>
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">Village / location</label>
                 <input type="text" className="input-field w-full" placeholder="e.g. Lilongwe" value={custForm.village} onChange={(e) => setCustForm({...custForm, village: e.target.value})} />
               </div>
             </div>
@@ -357,7 +357,7 @@ const DebtPage: React.FC = () => {
             <div className="w-full md:w-48 space-y-4">
               {/* Photo Capture */}
               <div className="space-y-2">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">Live photo</label>
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">Live photo</label>
                 <div className="w-full aspect-square bg-surface-bg border border-surface-border rounded-2xl overflow-hidden relative flex flex-col items-center justify-center">
                   {custForm.livePhoto ? (
                     <img src={custForm.livePhoto} alt="Preview" className="w-full h-full object-cover" />
@@ -375,16 +375,16 @@ const DebtPage: React.FC = () => {
                 
                 <div className="flex gap-2">
                   {!useCamera && !custForm.livePhoto && (
-                    <button type="button" onClick={startCamera} className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-black uppercase flex items-center justify-center gap-1 hover:bg-surface-border/50">
+                    <button type="button" onClick={startCamera} className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-bold flex items-center justify-center gap-1 hover:bg-surface-border/50">
                       <Camera className="w-3 h-3" /> Camera
                     </button>
                   )}
                   {custForm.livePhoto && (
-                    <button type="button" onClick={() => setCustForm({...custForm, livePhoto: ''})} className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-black uppercase text-red-500 hover:bg-red-500/10">
+                    <button type="button" onClick={() => setCustForm({...custForm, livePhoto: ''})} className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-bold text-red-500 hover:bg-red-500/10">
                       Retake
                     </button>
                   )}
-                  <label className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-black uppercase flex items-center justify-center gap-1 cursor-pointer hover:bg-surface-border/50">
+                  <label className="flex-1 py-2 bg-surface-bg border border-surface-border rounded-lg text-[9px] font-bold flex items-center justify-center gap-1 cursor-pointer hover:bg-surface-border/50">
                     <Upload className="w-3 h-3" /> Upload
                     <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
                   </label>
@@ -393,7 +393,7 @@ const DebtPage: React.FC = () => {
 
               {/* Fingerprint Capture */}
               <div className="space-y-2 pt-2 border-t border-surface-border">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 pl-1">Biometrics (Encrypted)</label>
+                <label className="text-[9px] font-bold text-surface-text/30 pl-1">Biometrics (encrypted)</label>
                 <button 
                   type="button" 
                   onClick={captureFingerprint}
@@ -403,12 +403,12 @@ const DebtPage: React.FC = () => {
                   {custForm.fingerprintData ? (
                     <>
                       <CheckCircle2 className="w-6 h-6" />
-                      <span className="text-[9px] font-black uppercase">Captured</span>
+                      <span className="text-[9px] font-bold">Captured</span>
                     </>
                   ) : (
                     <>
                       <Fingerprint className="w-6 h-6" />
-                      <span className="text-[9px] font-black uppercase">Scan fingerprint</span>
+                      <span className="text-[9px] font-bold">Scan fingerprint</span>
                     </>
                   )}
                 </button>
@@ -417,8 +417,8 @@ const DebtPage: React.FC = () => {
           </div>
 
           <div className="flex gap-3 pt-6 mt-4 border-t border-surface-border">
-            <button type="button" onClick={() => { setIsAddModalOpen(false); stopCamera(); }} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-xl text-[10px] font-black uppercase">Cancel</button>
-            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-black uppercase tracking-widest">Create secure profile</button>
+            <button type="button" onClick={() => { setIsAddModalOpen(false); stopCamera(); }} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-xl text-[10px] font-bold">Cancel</button>
+            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-bold">Create secure profile</button>
           </div>
         </form>
       </Modal>

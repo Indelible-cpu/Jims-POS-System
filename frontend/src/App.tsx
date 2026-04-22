@@ -125,8 +125,7 @@ const App: React.FC = () => {
             color: 'inherit',
             fontWeight: '900',
             fontSize: '12px',
-            textTransform: 'uppercase',
-            letterSpacing: '2px'
+            letterSpacing: '0.5px'
           },
           icon: null,
           success: { icon: null },

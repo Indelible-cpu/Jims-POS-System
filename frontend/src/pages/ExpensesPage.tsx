@@ -87,13 +87,13 @@ const ExpensesPage: React.FC = () => {
             <div className="w-10 h-10 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center">
               <Wallet className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase">Expenses</h1>
+            <h1 className="text-2xl font-black tracking-tighter">Expenses</h1>
           </div>
           <button 
             onClick={() => { resetForm(); setEditingExpense(null); setIsModalOpen(true); }}
-            className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest bg-red-500 hover:bg-red-600 shadow-red-900/20"
+            className="btn-primary !px-4 !py-2 text-[10px] font-bold bg-red-500 hover:bg-red-600 shadow-red-900/20"
           >
-            <Plus className="w-4 h-4 mr-1" /> Add Expense
+            <Plus className="w-4 h-4 mr-1" /> Add expense
           </button>
         </div>
 
@@ -103,7 +103,7 @@ const ExpensesPage: React.FC = () => {
                  <ArrowDownCircle className="w-6 h-6" />
               </div>
               <div>
-                 <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">Total Outflow</div>
+                 <div className="text-[10px] font-bold text-surface-text/30">Total outflow</div>
                  <div className="text-xl font-black">MK {totalSpent.toLocaleString()}</div>
               </div>
            </div>
@@ -123,7 +123,7 @@ const ExpensesPage: React.FC = () => {
       <div className="p-0 md:p-8">
         <div className="bg-surface-card md:border border-surface-border md:rounded-3xl overflow-hidden divide-y divide-surface-border">
           {expenses?.length === 0 ? (
-            <div className="p-20 text-center text-surface-text/20 uppercase font-black text-xs tracking-widest">No expenses recorded</div>
+            <div className="p-20 text-center text-surface-text/20 font-bold text-xs">No expenses recorded</div>
           ) : (
             expenses?.map(exp => (
               <div key={exp.id} className="p-6 flex justify-between items-center group hover:bg-red-500/5 transition-colors">
@@ -132,14 +132,14 @@ const ExpensesPage: React.FC = () => {
                        <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                       <div className="font-black text-sm uppercase">{exp.description || 'No description'}</div>
-                       <div className="text-[10px] text-surface-text/40 font-bold uppercase tracking-widest">{exp.category} • {exp.date}</div>
+                       <div className="font-bold text-sm">{exp.description || 'No description'}</div>
+                       <div className="text-[10px] text-surface-text/40 font-bold">{exp.category} • {exp.date}</div>
                     </div>
                  </div>
                  <div className="flex items-center gap-6">
                     <div className="text-right">
                        <div className="text-base font-black text-red-500">MK {exp.amount.toLocaleString()}</div>
-                       <div className="text-[9px] text-surface-text/30 font-black uppercase tracking-widest">{exp.paymentMethod}</div>
+                       <div className="text-[9px] text-surface-text/30 font-bold">{exp.paymentMethod}</div>
                     </div>
                     <button title="Delete Expense" aria-label="Delete expense" onClick={() => handleDelete(exp.id)} className="p-2 text-surface-text/20 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
                        <Trash2 className="w-4 h-4" />
@@ -159,27 +159,27 @@ const ExpensesPage: React.FC = () => {
         <form onSubmit={handleSave} className="p-8 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1 col-span-2">
-              <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Description</label>
+              <label className="text-[9px] font-bold text-surface-text/30 ml-1">Description</label>
               <input required type="text" className="input-field w-full" placeholder="e.g. Electricity Bill" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
             </div>
             <div className="space-y-1">
-              <label htmlFor="category" className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Category</label>
+              <label htmlFor="category" className="text-[9px] font-bold text-surface-text/30 ml-1">Category</label>
               <select id="category" name="category" aria-label="Category" title="Select Category" className="input-field w-full appearance-none bg-surface-bg" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="date" className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Date</label>
+              <label htmlFor="date" className="text-[9px] font-bold text-surface-text/30 ml-1">Date</label>
               <input id="date" name="date" aria-label="Expense Date" title="Expense Date" type="date" className="input-field w-full" value={formData.date} onChange={(e) => setFormData({...formData, date: e.target.value})} />
             </div>
           </div>
           <div className="space-y-1">
-            <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Amount (MK)</label>
+            <label className="text-[9px] font-bold text-surface-text/30 ml-1">Amount (MK)</label>
             <input required type="number" className="input-field w-full text-2xl font-black text-red-500" placeholder="0.00" value={formData.amount} onChange={(e) => setFormData({...formData, amount: parseFloat(e.target.value)})} onFocus={(e) => e.target.select()} />
           </div>
           <div className="flex gap-4 pt-4">
-            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest">Cancel</button>
-            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-black uppercase tracking-widest bg-red-500 hover:bg-red-600">Save Expense</button>
+            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-bold">Cancel</button>
+            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-bold bg-red-500 hover:bg-red-600">Save expense</button>
           </div>
         </form>
       </Modal>

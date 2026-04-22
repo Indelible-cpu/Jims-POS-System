@@ -25,14 +25,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           <div 
             key={toast.id}
             className={`pointer-events-auto flex items-center gap-4 px-8 py-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 animate-fade-in min-w-[320px] ${
-              toast.type === 'success' ? 'bg-slate-900 text-white border-emerald-500/30' : 
-              toast.type === 'error' ? 'bg-slate-900 text-white border-rose-500/30' : 
-              'bg-slate-900 text-white border-slate-700'
+              toast.type === 'success' ? 'bg-zinc-900 text-white border-emerald-500/30' : 
+              toast.type === 'error' ? 'bg-zinc-900 text-white border-rose-500/30' : 
+              'bg-zinc-900 text-white border-zinc-700'
             }`}
           >
-            <p className="font-black text-[13px] tracking-wide flex-1 uppercase">{toast.message}</p>
+            <p className="font-bold text-[13px] tracking-wide flex-1">{toast.message}</p>
             <button title="Dismiss" onClick={() => removeToast(toast.id)} className="p-2 hover:bg-white/10 rounded-xl transition-colors shrink-0">
-               <X className="w-4 h-4 text-slate-400" />
+               <X className="w-4 h-4 text-zinc-400" />
             </button>
           </div>
         ))}

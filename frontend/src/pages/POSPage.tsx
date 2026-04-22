@@ -172,9 +172,9 @@ const POSPage: React.FC = () => {
               </div>
               <div className="flex-1 overflow-y-auto p-2 divide-y divide-surface-border/50">
                  {customers?.length === 0 ? (
-                   <div className="p-8 text-center text-surface-text/40 font-bold text-[10px] tracking-widest leading-loose">
+                   <div className="p-8 text-center text-surface-text/40 font-bold text-[10px] leading-loose">
                       No matching customers found.<br/>
-                      <button className="mt-4 text-primary-400 border border-primary-500/20 px-4 py-2 rounded-lg">Manage Debt Book</button>
+                      <button className="mt-4 text-primary-400 border border-primary-500/20 px-4 py-2 rounded-lg">Manage debt book</button>
                    </div>
                  ) : (
                    customers?.map(c => (
@@ -184,7 +184,7 @@ const POSPage: React.FC = () => {
                              <Users className="w-5 h-5 text-surface-text/40" />
                           </div>
                           <div className="text-left">
-                            <div className="font-bold text-sm uppercase">{c.name}</div>
+                            <div className="font-bold text-sm">{c.name}</div>
                             <div className="text-[10px] text-surface-text/30 font-bold">{c.phone}</div>
                           </div>
                        </div>
@@ -207,7 +207,7 @@ const POSPage: React.FC = () => {
                 <ShoppingCart className={clsx('w-8', 'h-8')} />
               </div>
               <h2 className={clsx('text-3xl', 'font-black', 'mb-2')}>Sale completed</h2>
-              <p className={clsx('text-surface-text/40', 'mb-8', 'text-center', 'tracking-widest', 'text-[10px]', 'font-bold')}>Mode: {showReceipt.mode} {showReceipt.customerName && `| Customer: ${showReceipt.customerName}`}</p>
+              <p className={clsx('text-surface-text/40', 'mb-8', 'text-center', 'text-[10px]', 'font-bold')}>Mode: {showReceipt.mode} {showReceipt.customerName && `| Customer: ${showReceipt.customerName}`}</p>
               <div className={clsx('w-full', 'bg-white', 'rounded-xl', 'overflow-hidden', 'mb-8', 'shadow-2xl')}>
                 {showReceipt.mode === 'CASH' ? <Receipt {...showReceipt} /> : <Invoice {...showReceipt} />}
               </div>
@@ -256,7 +256,7 @@ const POSPage: React.FC = () => {
           <AnimatePresence mode="popLayout">
             {filteredProducts?.map(product => (
               <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} key={product.id} onClick={() => addToCart(product)} className={clsx('glass-card', 'p-4', 'cursor-pointer', 'active:scale-95', 'flex', 'flex-col', 'group', 'overflow-hidden', 'border-surface-border/50', 'hover:bg-surface-card/40')}>
-                <div className={clsx('text-[10px]', 'tracking-widest', 'text-surface-text/40', 'mb-1', 'font-bold')}>{product.sku}</div>
+                <div className={clsx('text-[10px]', 'text-surface-text/40', 'mb-1', 'font-bold')}>{product.sku}</div>
                 <div className={clsx('font-bold', 'text-surface-text', 'group-hover:text-primary-400', 'transition-colors', 'line-clamp-2')}>{product.name}</div>
                 <div className={clsx('mt-auto', 'pt-4', 'flex', 'justify-between', 'items-end')}>
                   <div className={clsx('text-lg', 'font-black', 'text-primary-400')}>MK {product.sellPrice.toLocaleString()}</div>
@@ -274,7 +274,7 @@ const POSPage: React.FC = () => {
             <ShoppingCart className={clsx('w-6', 'h-6', 'text-primary-400')} />
             Current order
           </h2>
-          <span className={clsx('bg-primary-500/10', 'text-primary-400', 'border', 'border-primary-500/20', 'px-3', 'py-1', 'rounded-full', 'text-[10px]', 'font-black', 'tracking-widest')}>
+          <span className={clsx('bg-primary-500/10', 'text-primary-400', 'border', 'border-primary-500/20', 'px-3', 'py-1', 'rounded-full', 'text-[10px]', 'font-bold')}>
             {cart.length} items
           </span>
         </div>
@@ -310,15 +310,15 @@ const POSPage: React.FC = () => {
 
         <div className={clsx('p-6', 'bg-surface-card/60', 'backdrop-blur-2xl', 'border-t', 'border-surface-border', 'space-y-6')}>
           <div className={clsx('flex', 'p-1', 'bg-surface-bg', 'rounded-xl', 'border', 'border-surface-border')}>
-            <button onClick={() => setPaymentMode('CASH')} className={`flex-1 py-2 text-[10px] font-black uppercase tracking-[0.2em] rounded-lg transition-all ${paymentMode === 'CASH' ? 'bg-primary-600 text-white shadow-lg' : 'text-surface-text/40 hover:text-surface-text'}`}>
+            <button onClick={() => setPaymentMode('CASH')} className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${paymentMode === 'CASH' ? 'bg-primary-600 text-white shadow-lg' : 'text-surface-text/40 hover:text-surface-text'}`}>
               Cash payment
             </button>
-            <button onClick={() => setPaymentMode('CREDIT')} className={`flex-1 py-2 text-[10px] font-black uppercase tracking-[0.2em] rounded-lg transition-all ${paymentMode === 'CREDIT' ? 'bg-accent-vibrant text-black shadow-lg' : 'text-surface-text/40 hover:text-surface-text'}`}>
-              Credit / Debt
+            <button onClick={() => setPaymentMode('CREDIT')} className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${paymentMode === 'CREDIT' ? 'bg-accent-vibrant text-black shadow-lg' : 'text-surface-text/40 hover:text-surface-text'}`}>
+              Credit / debt
             </button>
           </div>
           <div className="space-y-2">
-            <div className={clsx('flex', 'justify-between', 'items-center', 'text-surface-text/40', 'font-bold', 'text-[10px]', 'tracking-widest')}>
+            <div className={clsx('flex', 'justify-between', 'items-center', 'text-surface-text/40', 'font-bold', 'text-[10px]')}>
               <span>Subtotal</span>
               <span>MK {cartTotal.toLocaleString()}</span>
             </div>

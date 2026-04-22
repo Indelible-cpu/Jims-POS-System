@@ -47,7 +47,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOnline, isSyncing }) => {
           </div>
         )}
         <div className="flex flex-col">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-400 leading-none mb-1">Jims POS</span>
+          <span className="text-[10px] font-bold text-primary-400 leading-none mb-1">Jims POS</span>
           <h1 className="text-lg font-black tracking-tighter text-surface-text">{pageTitle}</h1>
         </div>
       </div>
@@ -56,7 +56,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOnline, isSyncing }) => {
         {isSyncing && (
           <div className="flex items-center gap-2 px-3 py-1 bg-primary-500/10 rounded-full animate-pulse border border-primary-500/20">
             <RefreshCw className="w-3 h-3 text-primary-400 animate-spin" />
-            <span className="text-[8px] font-black text-primary-400 uppercase tracking-widest">Syncing</span>
+            <span className="text-[8px] font-bold text-primary-400">Syncing</span>
           </div>
         )}
         
@@ -67,7 +67,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOnline, isSyncing }) => {
             : "bg-red-500/10 border-red-500/20 text-red-500"
         )}>
           {isOnline ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
-          <span className="text-[8px] font-black uppercase tracking-widest">
+          <span className="text-[8px] font-bold">
             {isOnline ? 'Online' : 'Offline'}
           </span>
         </div>

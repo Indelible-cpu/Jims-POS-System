@@ -35,7 +35,7 @@ const SettingsPage: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-surface-bg text-surface-text">
        {/* Mobile Header */}
        <header className="p-6 bg-surface-card border-b border-surface-border md:hidden">
-          <h1 className="text-2xl font-black tracking-tighter uppercase">Account Menu</h1>
+          <h1 className="text-2xl font-black tracking-tighter">Account menu</h1>
        </header>
 
        <div className="p-0 md:p-8 space-y-px md:space-y-6">
@@ -54,7 +54,7 @@ const SettingsPage: React.FC = () => {
             {/* System Preferences */}
             <div className="bg-surface-card md:border md:rounded-2xl overflow-hidden">
                <div className="px-6 py-4 border-b border-surface-border/50">
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">System Preferences</h3>
+                  <h3 className="text-[10px] font-bold text-surface-text/30">System preferences</h3>
                </div>
                
                {/* Logo Upload Section */}
@@ -68,12 +68,12 @@ const SettingsPage: React.FC = () => {
                         )}
                      </div>
                      <div>
-                        <div className="font-bold text-sm">Company Logo</div>
+                        <div className="font-bold text-sm">Company logo</div>
                         <div className="text-xs text-surface-text/40">Set a circular logo for the mobile header</div>
                      </div>
                   </div>
-                  <label className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest cursor-pointer w-full md:w-auto text-center">
-                     Upload Logo
+                  <label className="btn-primary !px-4 !py-2 text-[10px] font-bold cursor-pointer w-full md:w-auto text-center">
+                     Upload logo
                      <input 
                         type="file" 
                         accept="image/*" 
@@ -113,7 +113,7 @@ const SettingsPage: React.FC = () => {
             {/* Business Info */}
             <div className="bg-surface-card md:border md:rounded-2xl overflow-hidden">
                <div className="px-6 py-4 border-b border-surface-border/50">
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">Business Tools</h3>
+                  <h3 className="text-[10px] font-bold text-surface-text/30">Business tools</h3>
                </div>
                
                <div className="divide-y divide-surface-border/50">
@@ -123,7 +123,7 @@ const SettingsPage: React.FC = () => {
                            <CreditCard className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
-                           <div className="font-bold text-sm">Debt Management</div>
+                           <div className="font-bold text-sm">Debt management</div>
                            <div className="text-xs text-surface-text/40">Track customer balances and payments</div>
                         </div>
                      </div>
@@ -135,7 +135,7 @@ const SettingsPage: React.FC = () => {
                            <Wallet className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
-                           <div className="font-bold text-sm">Expenses Tracking</div>
+                           <div className="font-bold text-sm">Expenses tracking</div>
                            <div className="text-xs text-surface-text/40">Log and monitor daily operational costs</div>
                         </div>
                      </div>
@@ -147,7 +147,7 @@ const SettingsPage: React.FC = () => {
                            <Receipt className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
-                           <div className="font-bold text-sm">Transactions History</div>
+                           <div className="font-bold text-sm">Transactions history</div>
                            <div className="text-xs text-surface-text/40">Detailed history of all system activities</div>
                         </div>
                      </div>
@@ -159,7 +159,7 @@ const SettingsPage: React.FC = () => {
                            <Users className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
-                           <div className="font-bold text-sm">Team Management</div>
+                           <div className="font-bold text-sm">Team management</div>
                            <div className="text-xs text-surface-text/40">Manage staff access and permissions</div>
                         </div>
                      </div>
@@ -171,7 +171,7 @@ const SettingsPage: React.FC = () => {
                            <Store className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
-                           <div className="font-bold text-sm">Branch Management</div>
+                           <div className="font-bold text-sm">Branch management</div>
                            <div className="text-xs text-surface-text/40">View and update location details</div>
                         </div>
                      </div>
@@ -183,7 +183,7 @@ const SettingsPage: React.FC = () => {
             {isSuperAdmin && (
               <div className="bg-surface-card md:border md:rounded-2xl overflow-hidden mt-6">
                  <div className="px-6 py-4 border-b border-surface-border/50 bg-accent-danger/5">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-accent-danger">System Security & Control</h3>
+                    <h3 className="text-[10px] font-bold text-accent-danger">System security & control</h3>
                  </div>
 
                  <div className="p-6 border-b border-surface-border/50 flex items-center justify-between group hover:bg-accent-danger/5 transition-colors">
@@ -192,15 +192,15 @@ const SettingsPage: React.FC = () => {
                           <ShieldAlert className="w-5 h-5 text-accent-danger" />
                        </div>
                        <div>
-                          <div className="font-bold text-sm">Force System Lock</div>
+                          <div className="font-bold text-sm">Force system lock</div>
                           <div className="text-xs text-surface-text/40">Immediately restrict access for all non-admin users</div>
                        </div>
                     </div>
                     <button 
                        onClick={() => toggleSystemLock(true)}
-                       className="btn-primary !bg-accent-danger hover:!bg-red-600 !px-4 !py-2 text-[10px] font-black uppercase"
+                       className="btn-primary !bg-accent-danger hover:!bg-red-600 !px-4 !py-2 text-[10px] font-bold"
                     >
-                       Lock System
+                       Lock system
                     </button>
                  </div>
 
@@ -210,11 +210,11 @@ const SettingsPage: React.FC = () => {
                           <History className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
-                          <div className="font-bold text-sm">Working Hours Auto-Lock</div>
+                          <div className="font-bold text-sm">Working hours auto-lock</div>
                           <div className="text-xs text-surface-text/40">Access is restricted daily from 8 PM to 6 AM</div>
                        </div>
                     </div>
-                    <div className="text-[10px] font-black uppercase text-emerald-500">Active</div>
+                    <div className="text-[10px] font-bold text-emerald-500">Active</div>
                  </div>
               </div>
             )}
@@ -223,10 +223,10 @@ const SettingsPage: React.FC = () => {
             <div className="p-6 md:px-0">
                <button 
                   onClick={handleSignOut}
-                  className="w-full py-5 bg-accent-danger/10 hover:bg-accent-danger text-accent-danger hover:text-white border border-accent-danger/20 rounded-2xl font-black flex items-center justify-center gap-3 transition-all duration-300 active:scale-95"
+                  className="w-full py-5 bg-accent-danger/10 hover:bg-accent-danger text-accent-danger hover:text-white border border-accent-danger/20 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-300 active:scale-95"
                >
                   <LogOut className="w-6 h-6" />
-                  SIGN OUT OF SYSTEM
+                  Sign out of system
                </button>
             </div>
           </div>

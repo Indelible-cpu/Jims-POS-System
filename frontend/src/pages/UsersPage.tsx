@@ -103,13 +103,13 @@ const UsersPage: React.FC = () => {
             <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
               <Users className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase">Team</h1>
+            <h1 className="text-2xl font-black tracking-tighter">Team</h1>
           </div>
           <button 
             onClick={() => { resetForm(); setEditingUser(null); setIsModalOpen(true); }}
-            className="btn-primary !px-4 !py-2 text-[10px] font-black uppercase tracking-widest"
+            className="btn-primary !px-4 !py-2 text-[10px] font-bold"
           >
-            <UserPlus className="w-4 h-4 mr-1" /> Add Staff
+            <UserPlus className="w-4 h-4 mr-1" /> Add staff
           </button>
         </div>
 
@@ -127,7 +127,7 @@ const UsersPage: React.FC = () => {
 
       <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
          {users?.length === 0 ? (
-           <div className="col-span-full py-20 text-center text-surface-text/20 uppercase font-black text-xs tracking-widest">No team members found</div>
+            <div className="col-span-full py-20 text-center text-surface-text/20 font-bold text-xs">No team members found</div>
          ) : (
            users?.map(u => (
              <div key={u.id} className="bg-surface-card border border-surface-border p-8 rounded-3xl group hover:border-primary-500/30 transition-all relative overflow-hidden">
@@ -140,10 +140,10 @@ const UsersPage: React.FC = () => {
                    <div className="w-20 h-20 bg-primary-600/10 text-primary-400 rounded-2xl flex items-center justify-center mb-6 border border-primary-500/20 group-hover:scale-105 transition-transform">
                       <UserIcon className="w-10 h-10" />
                    </div>
-                   <h3 className="text-lg font-black uppercase tracking-tight">{u.fullname}</h3>
-                   <p className="text-[10px] font-black text-surface-text/30 uppercase tracking-widest mb-6">@{u.username}</p>
+                   <h3 className="text-lg font-black tracking-tight">{u.fullname}</h3>
+                   <p className="text-[10px] font-bold text-surface-text/30 mb-6">@{u.username}</p>
                    
-                   <div className="px-4 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[9px] font-black uppercase tracking-widest mb-8">
+                   <div className="px-4 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[9px] font-bold mb-8">
                       {u.role}
                    </div>
 
@@ -171,17 +171,17 @@ const UsersPage: React.FC = () => {
         <form onSubmit={handleSave} className="p-8 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Username</label>
+              <label className="text-[9px] font-bold text-surface-text/30 ml-1">Username</label>
               <input required type="text" className="input-field w-full" placeholder="staff.user" value={formData.username} onChange={(e) => setFormData({...formData, username: e.target.value})} />
             </div>
             <div className="space-y-1">
-              <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Full Name</label>
+              <label className="text-[9px] font-bold text-surface-text/30 ml-1">Full name</label>
               <input required type="text" className="input-field w-full" placeholder="John Doe" value={formData.fullname} onChange={(e) => setFormData({...formData, fullname: e.target.value})} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
              <div className="space-y-1">
-                <label htmlFor="role" className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Role</label>
+                <label htmlFor="role" className="text-[9px] font-bold text-surface-text/30 ml-1">Role</label>
                 <select id="role" name="role" aria-label="Role" title="Select Role" className="input-field w-full appearance-none bg-surface-bg" value={formData.roleId} onChange={(e) => {
                    const r = roles.find(rl => rl.id === Number(e.target.value));
                    setFormData({...formData, roleId: r!.id, role: r!.name});
@@ -190,17 +190,17 @@ const UsersPage: React.FC = () => {
                 </select>
              </div>
              <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Phone</label>
+                <label className="text-[9px] font-bold text-surface-text/30 ml-1">Phone</label>
                 <input type="text" className="input-field w-full" placeholder="+265..." value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
              </div>
           </div>
           <div className="space-y-1">
-            <label className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 ml-1">Email (Optional)</label>
+            <label className="text-[9px] font-bold text-surface-text/30 ml-1">Email (optional)</label>
             <input type="email" className="input-field w-full" placeholder="staff@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
           </div>
           <div className="flex gap-4 pt-4">
-            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest">Cancel</button>
-            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-black uppercase tracking-widest">Save Staff</button>
+            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-bold">Cancel</button>
+            <button type="submit" className="flex-1 btn-primary !py-4 text-[10px] font-bold">Save staff</button>
           </div>
         </form>
       </Modal>

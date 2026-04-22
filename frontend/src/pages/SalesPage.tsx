@@ -36,35 +36,35 @@ const SalesPage: React.FC = () => {
           <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
             <TrendingUp className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-black tracking-tighter uppercase">Sales & Profit</h1>
+          <h1 className="text-2xl font-black tracking-tighter">Sales & profit</h1>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           <div className="bg-surface-bg border border-surface-border p-4 rounded-2xl">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <DollarSign className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Revenue</span>
+                <span className="text-[10px] font-bold">Revenue</span>
              </div>
              <div className="text-xl font-black text-primary-400">MK {totalRevenue.toLocaleString()}</div>
           </div>
           <div className="bg-surface-bg border border-surface-border p-4 rounded-2xl">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <TrendingUp className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Profit</span>
+                <span className="text-[10px] font-bold">Profit</span>
              </div>
              <div className="text-xl font-black text-emerald-500">MK {totalProfit.toLocaleString()}</div>
           </div>
           <div className="hidden lg:block bg-surface-bg border border-surface-border p-4 rounded-2xl">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <Receipt className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Orders</span>
+                <span className="text-[10px] font-bold">Orders</span>
              </div>
              <div className="text-xl font-black">{todaySales.length}</div>
           </div>
           <div className="hidden lg:block bg-surface-bg border border-surface-border p-4 rounded-2xl">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <Package className="w-3 h-3" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Items Sold</span>
+                <span className="text-[10px] font-bold">Items sold</span>
              </div>
              <div className="text-xl font-black">{todaySales.reduce((sum, s) => sum + s.itemsCount, 0)}</div>
           </div>
@@ -79,19 +79,19 @@ const SalesPage: React.FC = () => {
       <div className="p-0 md:p-8">
         <div className="bg-surface-card border-y md:border md:rounded-3xl border-surface-border overflow-hidden divide-y divide-surface-border">
           {filteredSales?.length === 0 ? (
-            <div className="p-20 flex flex-col items-center justify-center text-surface-text/20 uppercase font-black tracking-widest text-sm">
+            <div className="p-20 flex flex-col items-center justify-center text-surface-text/20 font-bold text-sm">
               <Receipt className="w-16 h-16 mb-4 opacity-20" /> No transactions found
             </div>
           ) : (
             filteredSales?.map((sale) => (
               <div key={sale.id} onClick={() => setSelectedSale(sale)} className="group hover:bg-primary-500/5 transition-all cursor-pointer p-6 flex justify-between items-center">
                 <div className="flex flex-col">
-                  <span className="font-black text-sm tracking-tight group-hover:text-primary-400 transition-colors uppercase">{sale.invoiceNo}</span>
-                  <span className="text-[10px] text-surface-text/40 font-bold uppercase tracking-widest">{format(new Date(sale.createdAt), 'MMM dd, HH:mm')} • {sale.itemsCount} ITEMS</span>
+                  <span className="font-bold text-sm tracking-tight group-hover:text-primary-400 transition-colors">{sale.invoiceNo}</span>
+                  <span className="text-[10px] text-surface-text/40 font-bold">{format(new Date(sale.createdAt), 'MMM dd, HH:mm')} • {sale.itemsCount} items</span>
                 </div>
                 <div className="text-right">
                   <div className="font-black text-base text-primary-400">MK {sale.total.toLocaleString()}</div>
-                  <div className="text-[9px] text-surface-text/30 font-black uppercase tracking-widest">{sale.paymentMode}</div>
+                  <div className="text-[9px] text-surface-text/30 font-bold">{sale.paymentMode}</div>
                 </div>
               </div>
             ))
@@ -108,15 +108,15 @@ const SalesPage: React.FC = () => {
         {selectedSale && (
           <div className="p-8 space-y-8">
             <div className="space-y-4">
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-surface-text/30 flex items-center gap-2">
-                <Package className="w-3 h-3" /> Items Purchased
+              <h3 className="text-[10px] font-bold text-surface-text/30 flex items-center gap-2">
+                <Package className="w-3 h-3" /> Items purchased
               </h3>
               <div className="space-y-2">
                 {selectedSale.items.map((item: LocalSaleItem, idx: number) => (
                   <div key={idx} className="flex justify-between items-center p-4 bg-surface-bg/40 rounded-2xl border border-surface-border">
                     <div>
-                      <div className="font-bold text-sm uppercase">{item.productName}</div>
-                      <div className="text-[10px] text-surface-text/40 font-bold uppercase">MK {item.unitPrice.toLocaleString()} × {item.quantity}</div>
+                      <div className="font-bold text-sm">{item.productName}</div>
+                      <div className="text-[10px] text-surface-text/40 font-bold">MK {item.unitPrice.toLocaleString()} × {item.quantity}</div>
                     </div>
                     <div className="font-black text-primary-400">MK {item.lineTotal.toLocaleString()}</div>
                   </div>
@@ -125,19 +125,19 @@ const SalesPage: React.FC = () => {
             </div>
 
             <div className="bg-surface-bg/60 p-6 rounded-2xl border border-surface-border space-y-3">
-              <div className="flex justify-between text-xs font-bold text-surface-text/40 uppercase tracking-widest">
-                <span>Payment Method</span>
+              <div className="flex justify-between text-xs font-bold text-surface-text/40">
+                <span>Payment method</span>
                 <span className="text-surface-text">{selectedSale.paymentMode}</span>
               </div>
               <div className="flex justify-between items-center pt-3 border-t-2 border-surface-border">
-                <span className="text-lg font-black tracking-tighter uppercase">Grand Total</span>
+                <span className="text-lg font-black tracking-tighter">Grand total</span>
                 <span className="text-2xl font-black text-primary-400">MK {selectedSale.total.toLocaleString()}</span>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <button onClick={() => window.print()} className="flex-1 py-4 bg-surface-card border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest">Reprint Receipt</button>
-              <button onClick={() => setSelectedSale(null)} className="flex-1 btn-primary !py-4 text-[10px] font-black uppercase tracking-widest">Done</button>
+              <button onClick={() => window.print()} className="flex-1 py-4 bg-surface-card border border-surface-border rounded-2xl text-[10px] font-bold">Reprint receipt</button>
+              <button onClick={() => setSelectedSale(null)} className="flex-1 btn-primary !py-4 text-[10px] font-bold">Done</button>
             </div>
           </div>
         )}

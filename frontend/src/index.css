@@ -43,11 +43,11 @@
 }
 
 .dark {
-  --bg-main: #020617;
-  --text-main: #f1f5f9;
-  --bg-card: #0f172a;
-  --bg-card-rgb: 15, 23, 42;
-  --border-color: #1e293b;
+  --bg-main: #09090b;
+  --text-main: #fafafa;
+  --bg-card: #18181b;
+  --bg-card-rgb: 24, 24, 27;
+  --border-color: #27272a;
 }
 
 body {

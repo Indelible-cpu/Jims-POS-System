@@ -54,7 +54,7 @@ const DashboardPage: React.FC = () => {
                 </div>
               </div>
               <div className="text-2xl font-black tracking-tight mb-1">{stat.value}</div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">{stat.label}</div>
+              <div className="text-[10px] font-bold text-surface-text/30">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -63,7 +63,7 @@ const DashboardPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
            <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
               <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black tracking-widest">Recent sales</h3>
+                 <h3 className="text-sm font-black">Recent sales</h3>
                  <button className="text-[10px] font-black text-primary-400 hover:underline">View all</button>
               </div>
               <div className="space-y-4">
@@ -80,19 +80,19 @@ const DashboardPage: React.FC = () => {
                       </div>
                       <div className="text-right">
                          <div className="text-sm font-black">MK {sale.total.toLocaleString()}</div>
-                         <div className="text-[8px] text-surface-text/20 font-black uppercase">{sale.paymentMode}</div>
+                         <div className="text-[8px] text-surface-text/20 font-bold">{sale.paymentMode}</div>
                       </div>
                    </div>
                  ))}
                  {(!sales || sales.length === 0) && (
-                    <div className="p-10 text-center text-surface-text/20 font-black text-xs tracking-widest">No recent activity</div>
+                    <div className="p-10 text-center text-surface-text/20 font-bold text-xs">No recent activity</div>
                  )}
               </div>
            </div>
 
            <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
               <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black tracking-widest">Low stock alert</h3>
+                 <h3 className="text-sm font-black">Low stock alert</h3>
                  <button className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</button>
               </div>
               <div className="space-y-4">
@@ -114,7 +114,7 @@ const DashboardPage: React.FC = () => {
                    </div>
                  ))}
                  {lowStockCount === 0 && (
-                    <div className="p-10 text-center text-emerald-500/20 font-black text-xs tracking-widest">All stock levels healthy</div>
+                    <div className="p-10 text-center text-emerald-500/20 font-bold text-xs">All stock levels healthy</div>
                  )}
               </div>
            </div>

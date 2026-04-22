@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-900/40 backdrop-blur-sm"
         >
           <motion.div 
             initial={{ y: 20, opacity: 0, scale: 0.95 }}
@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({
             className={`bg-surface-card border border-surface-border rounded-3xl w-full ${maxWidth} shadow-2xl overflow-hidden flex flex-col`}
           >
             <div className="p-6 border-b border-surface-border flex justify-between items-center bg-surface-bg/30">
-              <h2 className="text-xl font-black tracking-tighter uppercase">{title}</h2>
+              <h2 className="text-xl font-black tracking-tighter">{title}</h2>
               <button 
                 onClick={onClose}
                 title="Close"
