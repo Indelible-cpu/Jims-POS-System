@@ -5,9 +5,12 @@ export interface LocalProduct {
   categoryId: number;
   sku: string;
   name: string;
+  costPrice: number;
   sellPrice: number;
   quantity: number;
   isService: boolean;
+  status: 'ACTIVE' | 'INACTIVE';
+  createdAt: string;
   updatedAt: string;
 }
 
@@ -34,7 +37,7 @@ export class POSDatabase extends Dexie {
 
   constructor() {
     super('JEF_POS_DB');
-    this.version(1).stores({
+    this.version(2).stores({
       products: 'id, categoryId, sku, name',
       categories: 'id, slug',
       salesQueue: 'id, invoiceNo, synced',

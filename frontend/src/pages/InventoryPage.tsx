@@ -5,8 +5,6 @@ import type { LocalProduct } from '../db/posDB';
 import { 
   Plus, 
   Search, 
-  Filter, 
-  MoreVertical, 
   Package, 
   AlertTriangle, 
   Edit2, 
@@ -54,9 +52,10 @@ const InventoryPage: React.FC = () => {
         });
         toast.success('Product updated');
       } else {
+        const newId = Date.now() + Math.floor(Math.random() * 1000);
         await db.products.add({
           ...formData,
-          id: Math.floor(Math.random() * 1000000), // In production use UUID or server increment
+          id: newId,
           isService: false,
           status: 'ACTIVE',
           createdAt: new Date().toISOString(),
@@ -176,12 +175,20 @@ const InventoryPage: React.FC = () => {
                   <div className="flex justify-between items-start mb-4">
                     <div className="text-[10px] font-black uppercase tracking-widest text-surface-text/30">{product.sku}</div>
                     <div className="flex gap-1">
-                      <button onClick={() => openEditModal(product)} className="p-2 hover:bg-primary-500/10 rounded-lg transition-colors text-primary-400">
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => deleteProduct(product.id)} className="p-2 hover:bg-accent-danger/10 rounded-lg transition-colors text-accent-danger">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                    <button 
+                      title="Edit Product"
+                      onClick={() => openEditModal(product)} 
+                      className="p-2 hover:bg-primary-500/10 rounded-lg transition-colors text-primary-400"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button 
+                      title="Delete Product"
+                      onClick={() => deleteProduct(product.id)} 
+                      className="p-2 hover:bg-accent-danger/10 rounded-lg transition-colors text-accent-danger"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                     </div>
                   </div>
                   <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary-400 transition-colors uppercase tracking-tight">{product.name}</h3>
@@ -254,6 +261,7 @@ const InventoryPage: React.FC = () => {
                     <div className="space-y-2">
                        <label className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Category</label>
                        <select 
+                         title="Select Product Category"
                          className="input-field w-full appearance-none bg-surface-bg"
                          value={formData.categoryId}
                          onChange={(e) => setFormData({...formData, categoryId: parseInt(e.target.value)})}
@@ -269,6 +277,7 @@ const InventoryPage: React.FC = () => {
                     <div className="space-y-2">
                        <label className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Cost (MK)</label>
                        <input 
+                         title="Enter Cost Price"
                          required
                          type="number" 
                          className="input-field w-full text-center"
@@ -279,6 +288,7 @@ const InventoryPage: React.FC = () => {
                     <div className="space-y-2">
                        <label className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Sell (MK)</label>
                        <input 
+                         title="Enter Selling Price"
                          required
                          type="number" 
                          className="input-field w-full text-center font-black text-primary-400"
@@ -289,6 +299,7 @@ const InventoryPage: React.FC = () => {
                     <div className="space-y-2">
                        <label className="text-[10px] font-black uppercase tracking-widest text-surface-text/40 ml-1">Stock</label>
                        <input 
+                         title="Enter Stock Quantity"
                          required
                          type="number" 
                          className="input-field w-full text-center font-bold"
