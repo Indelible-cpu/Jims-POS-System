@@ -22,6 +22,7 @@ import { format } from 'date-fns';
 import { format } from 'date-fns';
 import Modal from '../components/Modal';
 import { Security } from '../utils/security';
+import SecureText from '../components/SecureText';
 
 // Malawi Validation Patterns
 const MW_PHONE_REGEX = /^(\+265|0)[189]\d{8}$/;
@@ -185,11 +186,8 @@ const DebtPage: React.FC = () => {
              <h3 className="font-black text-lg tracking-tighter group-hover:text-primary-400 transition-colors mb-1">{customer.name}</h3>
              <div className="text-[10px] font-bold text-surface-text/30 flex items-center gap-2 mb-6">
                 <Phone className="w-3 h-3" /> 
-                <span className="font-mono">
-                   {/* We use a hook or a simple component for decryption if needed, but since we are in a map, we could decrypt here if we had a state or just use a helper component */}
-                   {customer.phone.length > 20 ? 'Encrypted' : customer.phone}
-                </span>
-                {customer.idNumber && <span className="opacity-50">| Secure</span>}
+                <SecureText data={customer.phone} className="font-mono" />
+                {customer.idNumber && <span className="opacity-50">| <SecureText data={customer.idNumber} /></span>}
              </div>
 
              <div className="flex justify-between items-end pt-6 border-t border-surface-border/50">
@@ -282,7 +280,9 @@ const DebtPage: React.FC = () => {
                      <div className="grid grid-cols-2 gap-6">
                         <div className="bg-surface-bg/40 p-6 rounded-3xl border border-surface-border">
                            <p className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 mb-1">National ID</p>
-                           <p className="text-xl font-black">{selectedCustomer.idNumber || 'Not set'}</p>
+                           <p className="text-xl font-black">
+                              {selectedCustomer.idNumber ? <SecureText data={selectedCustomer.idNumber} /> : 'Not set'}
+                           </p>
                         </div>
                         <div className="bg-surface-bg/40 p-6 rounded-3xl border border-surface-border">
                            <p className="text-[9px] font-black uppercase tracking-widest text-surface-text/30 mb-1">Fingerprint</p>
