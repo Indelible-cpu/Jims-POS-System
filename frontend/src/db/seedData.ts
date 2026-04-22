@@ -108,4 +108,9 @@ export const initDB = async (db: POSDatabase) => {
   if (userCount === 0) {
     await db.users.bulkAdd(seedUsers);
   }
+
+  const hoursSetting = await db.settings.get('lockout_hours');
+  if (!hoursSetting) {
+    await db.settings.put({ key: 'lockout_hours', value: { start: '20:00', end: '06:00' } });
+  }
 };

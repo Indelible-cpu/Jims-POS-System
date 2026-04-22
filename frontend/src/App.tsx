@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import DashboardPage from './pages/DashboardPage';
@@ -12,19 +12,65 @@ import ExpensesPage from './pages/ExpensesPage';
 import TransactionsPage from './pages/TransactionsPage';
 import UsersPage from './pages/UsersPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import LockedPage from './pages/LockedPage';
 import { SyncService } from './services/SyncService';
 import MainLayout from './components/MainLayout';
 import { db } from './db/posDB';
 import { initDB } from './db/seedData';
+import { AuditService } from './services/AuditService';
 
 const App: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+
+  const checkSystemLock = useCallback(async () => {
+    try {
+      const lockSetting = await db.settings.get('system_lock');
+      if (lockSetting && lockSetting.value === true) {
+        setIsLocked(true);
+        return;
+      }
+
+      const hoursSetting = await db.settings.get('lockout_hours');
+      if (hoursSetting) {
+        const { start, end } = hoursSetting.value as { start: string; end: string };
+        const now = new Date();
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+        
+        const [startH, startM] = start.split(':').map(Number);
+        const [endH, endM] = end.split(':').map(Number);
+        const startTime = startH * 60 + startM;
+        const endTime = endH * 60 + endM;
+
+        // Logic for overnight lockout
+        if (startTime > endTime) {
+           if (currentTime >= startTime || currentTime <= endTime) {
+             setIsLocked(true);
+             return;
+           }
+        } else {
+           if (currentTime >= startTime && currentTime <= endTime) {
+             setIsLocked(true);
+             return;
+           }
+        }
+      }
+      setIsLocked(false);
+    } catch (err) {
+      console.error('Lock check failed:', err);
+    }
+  }, []);
 
   const handleSync = async () => {
     if (navigator.onLine) {
       setIsSyncing(true);
-      await SyncService.pushSales();
+      try {
+        await SyncService.pushSales();
+        await AuditService.log('SYNC', 'Background sync completed successfully');
+      } catch (err) {
+        await AuditService.log('SYNC_ERROR', 'Background sync failed', 'ERROR');
+      }
       setTimeout(() => setIsSyncing(false), 2000); // Keep indicator for a bit
     }
   };
@@ -44,15 +90,26 @@ const App: React.FC = () => {
     window.addEventListener('offline', handleStatusChange);
 
     handleSync();
+    checkSystemLock();
 
     const syncInterval = setInterval(handleSync, 60000);
+    const lockInterval = setInterval(checkSystemLock, 300000); // Check lock every 5 mins
 
     return () => {
       window.removeEventListener('online', handleStatusChange);
       window.removeEventListener('offline', handleStatusChange);
       clearInterval(syncInterval);
+      clearInterval(lockInterval);
     };
   }, []);
+
+  const userStr = localStorage.getItem('user');
+  const user = userStr ? JSON.parse(userStr) : null;
+  const isSuperAdmin = user?.role === 'SUPER_ADMIN';
+
+  if (isLocked && !isSuperAdmin) {
+    return <LockedPage />;
+  }
 
   return (
     <Router>

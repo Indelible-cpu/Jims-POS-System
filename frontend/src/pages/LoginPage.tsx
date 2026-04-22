@@ -5,6 +5,7 @@ import { Lock, User as UserIcon, Loader2, Eye, EyeOff, Fingerprint } from 'lucid
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { SyncService } from '../services/SyncService';
+import { AuditService } from '../services/AuditService';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -27,6 +28,7 @@ const LoginPage: React.FC = () => {
         toast.loading('Verifying identity...', { id: 'biometric-auth' });
         // Simulating WebAuthn/Biometric success for this PWA environment
         await new Promise(resolve => setTimeout(resolve, 1500));
+        await AuditService.log('BIOMETRIC_LOGIN', 'User signed in using biometrics');
         toast.success('Identity verified!', { id: 'biometric-auth' });
         navigate('/dashboard');
       }
@@ -85,6 +87,7 @@ const LoginPage: React.FC = () => {
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('deviceId', crypto.randomUUID());
       
+      await AuditService.log('LOGIN', `User ${username} signed in successfully`);
       toast.success('Welcome back!');
       
       if (isBiometricAvailable) {
@@ -115,7 +118,7 @@ const LoginPage: React.FC = () => {
           <div className="inline-flex p-4 rounded-2xl bg-primary-600/20 text-primary-400 mb-4">
             <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-sm font-black mb-1 uppercase tracking-widest text-primary-400">Smart Pos</h1>
+          <h1 className="text-sm font-black mb-1 tracking-widest text-primary-400">Smart Pos</h1>
           <p className="text-surface-text/40 text-xs font-bold tracking-tighter">Please sign in to continue</p>
         </div>
 
@@ -188,7 +191,7 @@ const LoginPage: React.FC = () => {
               className="w-full py-4 glass-card flex items-center justify-center gap-3 font-bold hover:bg-primary-500/5 group transition-all active:scale-95 border-surface-border/50"
             >
               <Fingerprint className="w-6 h-6 text-primary-400 group-hover:scale-110 transition-transform" />
-              <span>Sign in with face or touch ID</span>
+              <span>Use biometrics</span>
             </button>
           </div>
         )}

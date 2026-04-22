@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
+import { db } from '../db/posDB';
+import { AuditService } from '../services/AuditService';
+import { Lock, ShieldAlert, History } from 'lucide-react';
 
 const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +16,19 @@ const SettingsPage: React.FC = () => {
     localStorage.removeItem('user');
     toast.success('Signed out successfully');
     navigate('/login');
+  };
+
+  const isSuperAdmin = user.role === 'SUPER_ADMIN';
+
+  const toggleSystemLock = async (isLocked: boolean) => {
+    try {
+      await db.settings.put({ key: 'system_lock', value: isLocked });
+      await AuditService.log(isLocked ? 'SYSTEM_LOCKED' : 'SYSTEM_UNLOCKED', `System manually ${isLocked ? 'locked' : 'unlocked'} by ${user.username}`);
+      toast.success(`System ${isLocked ? 'Locked' : 'Unlocked'}`);
+      window.location.reload();
+    } catch (err) {
+      toast.error('Failed to update system lock');
+    }
   };
 
   return (
@@ -162,6 +178,46 @@ const SettingsPage: React.FC = () => {
                   </button>
                </div>
             </div>
+
+            {/* Super Admin Security Section */}
+            {isSuperAdmin && (
+              <div className="bg-surface-card md:border md:rounded-2xl overflow-hidden mt-6">
+                 <div className="px-6 py-4 border-b border-surface-border/50 bg-accent-danger/5">
+                    <h3 className="text-[10px] font-black uppercase tracking-widest text-accent-danger">System Security & Control</h3>
+                 </div>
+
+                 <div className="p-6 border-b border-surface-border/50 flex items-center justify-between group hover:bg-accent-danger/5 transition-colors">
+                    <div className="flex items-center gap-4">
+                       <div className="w-10 h-10 bg-accent-danger/10 rounded-xl flex items-center justify-center border border-accent-danger/20">
+                          <ShieldAlert className="w-5 h-5 text-accent-danger" />
+                       </div>
+                       <div>
+                          <div className="font-bold text-sm">Force System Lock</div>
+                          <div className="text-xs text-surface-text/40">Immediately restrict access for all non-admin users</div>
+                       </div>
+                    </div>
+                    <button 
+                       onClick={() => toggleSystemLock(true)}
+                       className="btn-primary !bg-accent-danger hover:!bg-red-600 !px-4 !py-2 text-[10px] font-black uppercase"
+                    >
+                       Lock System
+                    </button>
+                 </div>
+
+                 <div className="p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors">
+                    <div className="flex items-center gap-4">
+                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border">
+                          <History className="w-5 h-5 text-primary-400" />
+                       </div>
+                       <div>
+                          <div className="font-bold text-sm">Working Hours Auto-Lock</div>
+                          <div className="text-xs text-surface-text/40">Access is restricted daily from 8 PM to 6 AM</div>
+                       </div>
+                    </div>
+                    <div className="text-[10px] font-black uppercase text-emerald-500">Active</div>
+                 </div>
+              </div>
+            )}
 
             {/* Logout Action */}
             <div className="p-6 md:px-0">
