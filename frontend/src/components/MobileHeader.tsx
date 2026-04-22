@@ -11,6 +11,14 @@ interface MobileHeaderProps {
 const MobileHeader: React.FC<MobileHeaderProps> = ({ isOnline, isSyncing }) => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState('Jims POS');
+  const [logo, setLogo] = useState<string | null>(null);
+
+  useEffect(() => {
+    const updateLogo = () => setLogo(localStorage.getItem('companyLogo'));
+    updateLogo();
+    window.addEventListener('storage', updateLogo);
+    return () => window.removeEventListener('storage', updateLogo);
+  }, []);
 
   useEffect(() => {
     const path = location.pathname.split('/')[1] || '';
@@ -30,9 +38,16 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOnline, isSyncing }) => {
 
   return (
     <header className="sticky top-0 z-50 md:hidden bg-surface-card border-b border-surface-border px-6 py-4 flex items-center justify-between backdrop-blur-md bg-opacity-80">
-      <div className="flex flex-col">
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-400 leading-none mb-1">Jims POS</span>
-        <h1 className="text-lg font-black tracking-tighter text-surface-text">{pageTitle}</h1>
+      <div className="flex items-center gap-3">
+        {logo && (
+          <div className="w-10 h-10 rounded-full border border-surface-border overflow-hidden shrink-0">
+            <img src={logo} alt="Logo" className="w-full h-full object-cover" />
+          </div>
+        )}
+        <div className="flex flex-col">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-400 leading-none mb-1">Jims POS</span>
+          <h1 className="text-lg font-black tracking-tighter text-surface-text">{pageTitle}</h1>
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
