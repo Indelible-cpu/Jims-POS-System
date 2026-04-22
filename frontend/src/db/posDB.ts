@@ -45,6 +45,10 @@ export interface LocalCustomer {
   name: string;
   phone: string;
   balance: number; 
+  idNumber?: string;
+  village?: string;
+  livePhoto?: string;
+  fingerprintData?: string; // Encrypted representation
   createdAt: string;
   updatedAt: string;
 }
@@ -91,12 +95,12 @@ export class POSDatabase extends Dexie {
 
   constructor() {
     super('JEF_POS_DB');
-    this.version(4).stores({
+    this.version(5).stores({
       products: 'id, categoryId, sku, name',
       categories: 'id, slug',
       salesQueue: 'id, invoiceNo, synced, customerId',
       settings: 'key',
-      customers: 'id, name, phone',
+      customers: 'id, name, phone, idNumber',
       debtPayments: 'id, customerId',
       expenses: 'id, category, date',
       users: 'id, username, role'
