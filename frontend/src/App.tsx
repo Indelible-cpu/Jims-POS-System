@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import POSPage from './pages/POSPage';
 import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
+import InventoryPage from './pages/InventoryPage';
 import { SyncService } from './services/SyncService';
 import MainLayout from './components/MainLayout';
 
@@ -45,7 +46,7 @@ const App: React.FC = () => {
                 <MainLayout isOnline={isOnline}>
                   <Routes>
                     <Route path="pos" element={<POSPage />} />
-                    <Route path="inventory" element={<div className="p-4">Inventory Page coming soon...</div>} />
+                    <Route path="inventory" element={<InventoryPage />} />
                     <Route path="sales" element={<div className="p-4">Sales Reports coming soon...</div>} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="/" element={<Navigate to="/pos" replace />} />
