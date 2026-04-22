@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/posDB';
 import { 
-  TrendingUp, 
   Search, 
   ArrowLeftRight, 
-  RotateCcw, 
   Download, 
-  Eye, 
-  AlertCircle,
   History,
   ArrowRightCircle
 } from 'lucide-react';
 import { format } from 'date-fns';
-import { clsx } from 'clsx';
 import Modal from '../components/Modal';
+
+interface Sale {
+  id: string;
+  invoiceNo: string;
+  createdAt: string;
+  itemsCount: number;
+  total: number;
+  paymentMode: string;
+  items: { productName: string; unitPrice: number; quantity: number; lineTotal: number }[];
+  customerId?: string;
+}
 
 const TransactionsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,7 +35,7 @@ const TransactionsPage: React.FC = () => {
   );
 
   const selectedSale = useLiveQuery(
-    () => selectedSaleId ? db.salesQueue.get(selectedSaleId) : null,
+    async () => selectedSaleId ? await db.salesQueue.get(selectedSaleId) : undefined,
     [selectedSaleId]
   );
 
