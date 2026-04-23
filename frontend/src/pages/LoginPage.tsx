@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
           challenge,
           rp: { name: 'Vendrax POS', id: window.location.hostname },
           user: {
-            id: Uint8Array.from(user.id || '1', c => c.charCodeAt(0)),
+            id: Uint8Array.from(user.id || '1', (c: string) => c.charCodeAt(0)),
             name: user.username || 'user',
             displayName: user.fullname || 'User'
           },
