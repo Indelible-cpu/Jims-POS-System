@@ -30,7 +30,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       {/* Main Content Area */}
       <main className={clsx(
-        "flex-1 w-full mx-auto pb-20 md:pb-0 pt-16 transition-all",
+        "flex-1 w-full mx-auto pb-24 md:pb-0 pt-[calc(64px+env(safe-area-inset-top))] transition-all",
         "px-0 md:px-6 max-w-screen-2xl"
       )}>
         {children}

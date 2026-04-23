@@ -21,7 +21,7 @@ export default function MobileHeader() {
   const getPageTitle = (pathname: string) => {
     switch (pathname) {
       case '/dashboard': return 'Overview';
-      case '/pos': return 'POS';
+      case '/pos': return 'Pos';
       case '/stock': return 'Inventory';
       case '/sales': return 'Sale Logs';
       case '/reports': return 'Analytics';
@@ -36,7 +36,7 @@ export default function MobileHeader() {
   const isBasePage = ['/dashboard', '/pos', '/stock', '/sales', '/reports'].includes(location.pathname);
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-surface-card/95 backdrop-blur-md border-b border-surface-border flex items-center justify-between px-4 z-[50] safe-top shadow-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary-500/20 after:to-transparent">
+    <header className="fixed top-0 left-0 right-0 h-[calc(64px+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] bg-surface-card/95 backdrop-blur-md border-b border-surface-border flex items-center justify-between px-4 z-[50] shadow-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary-500/20 after:to-transparent">
       <div className="flex items-center gap-3 overflow-hidden">
         {isBasePage ? (
           <motion.div 
