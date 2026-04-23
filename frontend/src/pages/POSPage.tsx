@@ -19,8 +19,7 @@ import {
   Wallet,
   Printer,
   Send,
-  ArrowRight,
-  UserPlus
+  ArrowRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -441,7 +440,7 @@ const POSPage: React.FC = () => {
                 await SyncService.pushSales();
                 setIsSyncing(false);
                 toast.success('Synced');
-              }} className={clsx("p-4 bg-surface-card border border-surface-border rounded-2xl text-primary-500", isSyncing && "animate-spin")}>
+              }} className={clsx("p-4 bg-surface-card border border-surface-border rounded-2xl text-primary-500", isSyncing && "animate-spin")} title="Sync Sales" aria-label="Sync Sales">
               <RefreshCw className="w-6 h-6" />
             </button>
           </div>
@@ -532,7 +531,7 @@ const POSPage: React.FC = () => {
                     ].map((mode) => (
                       <button 
                         key={mode.id} 
-                        onClick={() => setPaymentMode(mode.id as any)} 
+                        onClick={() => setPaymentMode(mode.id as 'Cash' | 'Card' | 'Momo' | 'Credit')} 
                         className={clsx(
                           "p-5 rounded-3xl border flex flex-col items-center gap-2 transition-all active:scale-95",
                           paymentMode === mode.id ? `${mode.color} text-white border-transparent shadow-lg scale-105` : "bg-surface-bg border-surface-border text-surface-text/30 hover:border-primary-500/20"
