@@ -29,7 +29,7 @@ const App: React.FC = () => {
       const overrideSetting = await db.settings.get('lockout_override');
       if (overrideSetting && overrideSetting.value === true) {
         const lastActive = parseInt(localStorage.getItem('lastActivity') || '0', 10);
-        if (Date.now() - lastActive > 30 * 60 * 1000) {
+        if (Date.now() - lastActive > 12 * 60 * 60 * 1000) { // 12 Hours
           // Expired
           await db.settings.put({ key: 'lockout_override', value: false });
         } else {
