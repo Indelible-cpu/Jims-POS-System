@@ -647,3 +647,5 @@ const POSPage: React.FC = () => {
 };
 
 export default POSPage;
+/ /   T r i g g e r   b u i l d  
+ 
