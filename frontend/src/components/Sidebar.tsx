@@ -35,8 +35,8 @@ const Sidebar: React.FC = () => {
             <img src="/icon.png" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h1 className="text-xl font-black text-primary-500 tracking-tighter italic leading-none">Vendrax</h1>
-            <p className="text-surface-text/40 text-[8px] font-black tracking-widest mt-1">Cloud POS System</p>
+            <h1 className="text-2xl font-black text-primary-500 tracking-tighter italic leading-none">Vendrax</h1>
+            <p className="text-surface-text font-black text-[9px] tracking-widest mt-1 opacity-60">Cloud POS System</p>
           </div>
         </div>
 
@@ -46,10 +46,10 @@ const Sidebar: React.FC = () => {
               key={tab.id}
               to={tab.path}
               className={({ isActive }) => clsx(
-                "flex items-center gap-4 px-4 h-14 rounded-2xl font-black tracking-widest text-[13px] transition-all group",
+                "flex items-center gap-4 px-4 h-14 rounded-2xl font-black tracking-widest text-[15px] transition-all group",
                 isActive 
                   ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" 
-                  : "text-black hover:text-primary-500 hover:bg-surface-bg border border-transparent hover:border-surface-border"
+                  : "text-surface-text hover:text-primary-500 hover:bg-surface-bg border border-transparent hover:border-surface-border"
               )}
             >
               {({ isActive }) => (
