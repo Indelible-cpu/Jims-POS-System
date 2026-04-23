@@ -12,36 +12,50 @@ interface InvoiceProps {
 }
 
 export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, invoiceNo, date, customerName }) => {
-  const shopName = localStorage.getItem('companyName') || 'VENDRAX';
+  const currentBranchStr = localStorage.getItem('currentBranch');
+  const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  const shopName = branch?.name || localStorage.getItem('companyName') || 'VENDRAX';
+  const shopAddress = branch?.address || 'Excellence in Service'; 
+  const shopTel = branch?.phone || '+265 999 000 000';
+  const shopEmail = branch?.email;
+  const shopSlogan = branch?.slogan;
+  const cashierName = user.fullname || user.username || 'System';
   
   return (
-    <div className="invoice relative p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] border-4 border-double border-black leading-tight">
-      <div className="absolute top-2 right-2 border border-black px-2 py-0.5 font-black text-[8px]  tracking-tighter">
-        Credit Invoice
+    <div className="invoice relative p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] border-4 border-double border-black leading-tight shadow-sm">
+      <div className="absolute top-2 right-2 border border-black px-2 py-0.5 font-black text-[8px] tracking-tighter uppercase bg-black text-white">
+        Credit Note
       </div>
       
       <div className="text-center border-b-2 border-black pb-4 mb-4">
-        <div className="w-12 h-12 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
-           <img src="/icon.png" alt="logo" className="w-full h-full object-contain grayscale" />
+        <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
+           <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
         <h1 className="text-lg font-black tracking-tighter uppercase">{shopName}</h1>
-        <p className="text-[9px] tracking-widest italic uppercase">Official Credit Note</p>
+        {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
+        <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
+        <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
       </div>
 
       <div className="mb-4 text-[9px] space-y-1">
-        <div className="font-bold ">Invoice: {invoiceNo}</div>
-        <div className="">Date: {new Date(date).toLocaleString()}</div>
+        <div className="font-bold flex justify-between">
+           <span>INV: {invoiceNo}</span>
+           <span>{new Date(date).toLocaleDateString()}</span>
+        </div>
+        <div className="uppercase">CASHIER: {cashierName}</div>
       </div>
 
       <div className="mb-4 space-y-1 p-2 bg-zinc-50 border border-black border-dotted">
         <div className="flex gap-2 items-center">
-            <span className="font-black text-[9px] min-w-[60px] ">Client:</span>
-            <span className="font-bold">{customerName || 'N/A'}</span>
+            <span className="font-black text-[9px] min-w-[60px] uppercase">Client:</span>
+            <span className="font-bold uppercase">{customerName || 'N/A'}</span>
         </div>
       </div>
 
       <table className="w-full mb-4 border-b border-black border-dashed">
-        <thead className="border-b border-black text-[9px] ">
+        <thead className="border-b border-black text-[9px]">
           <tr>
             <th className="text-left pb-1">Item</th>
             <th className="text-center pb-1">Qty</th>
@@ -52,7 +66,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, i
           {items.map((item, idx) => (
             <tr key={idx}>
               <td className="py-1">
-                <div className="font-bold ">{item.product.name}</div>
+                <div className="font-bold">{item.product.name}</div>
                 <div className="text-[9px]">MK {item.product.sellPrice.toLocaleString()}</div>
               </td>
               <td className="text-center py-1 font-bold">{item.quantity}</td>
@@ -62,7 +76,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, i
         </tbody>
       </table>
 
-      <div className="space-y-1 font-bold  text-[10px] mb-6">
+      <div className="space-y-1 font-bold text-[10px] mb-6">
         <div className="flex justify-between">
           <span>Subtotal</span>
           <span>MK {subtotal.toLocaleString()}</span>
@@ -79,15 +93,21 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, i
         </div>
       </div>
 
-      <div className="text-center mb-6">
+      <div className="text-center mb-6 flex flex-col items-center">
         <div className="w-32 mx-auto border-t border-black mb-1"></div>
-        <p className="text-[9px] font-black ">Authorized Signature</p>
+        <p className="text-[9px] font-black uppercase tracking-widest">Authorized Signature</p>
+        
+        {/* Barcode Section */}
+        <div className="mt-6 flex flex-col items-center">
+           <img src={`https://barcodeapi.org/api/128/${invoiceNo}?height=40&width=150`} alt="barcode" className="h-10 grayscale invert brightness-0" />
+           <span className="text-[8px] font-bold tracking-[0.3em] mt-1">{invoiceNo}</span>
+        </div>
       </div>
 
       <div className="text-center pt-4 mt-4 border-t border-black border-dashed">
-        <p className="text-[9px] font-bold ">Payment expected by due date.</p>
-        <p className="text-[11px] font-black  mt-2">Thank you for your business!</p>
-        <div className="mt-4 opacity-50 text-[7px]">Powered by Vendrax Cloud POS</div>
+        <p className="text-[9px] font-bold italic">Payment expected by due date.</p>
+        <p className="text-[11px] font-black mt-2">Thank you for your business!</p>
+        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by Vendrax Cloud POS</div>
       </div>
       
       <style dangerouslySetInnerHTML={{ __html: `
@@ -101,6 +121,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, i
             width: 80mm;
             padding: 0;
             margin: 0;
+            box-shadow: none;
           }
           @page { size: 80mm auto; margin: 0; }
         }

@@ -16,7 +16,15 @@ import toast from 'react-hot-toast';
 const BranchesPage: React.FC = () => {
   const branches = useLiveQuery(() => db.branches.toArray());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', address: '', phone: '' });
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    address: '', 
+    phone: '', 
+    email: '', 
+    facebook: '', 
+    slogan: '', 
+    logo: '' 
+  });
 
   const stats = [
     { label: 'Total Branches', value: (branches?.length || 0).toString(), icon: Store, color: 'text-primary-500' },
@@ -35,9 +43,20 @@ const BranchesPage: React.FC = () => {
       });
       toast.success('Branch added successfully');
       setIsModalOpen(false);
-      setFormData({ name: '', address: '', phone: '' });
+      setFormData({ name: '', address: '', phone: '', email: '', facebook: '', slogan: '', logo: '' });
     } catch {
       toast.error('Failed to add branch');
+    }
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, logo: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -82,13 +101,18 @@ const BranchesPage: React.FC = () => {
             className="bg-surface-card md:border border-surface-border md:rounded-3xl overflow-hidden group hover:border-primary-500/30 transition-all border-b border-surface-border/50"
           >
             <div className="h-28 bg-gradient-to-br from-primary-600/10 to-primary-900/40 relative">
-               <div className="absolute -bottom-6 left-6 w-14 h-14 bg-surface-card border-2 border-primary-500/10 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform group-hover:border-primary-500/30">
-                  <Store className="w-7 h-7 text-primary-500" />
+               <div className="absolute -bottom-6 left-6 w-14 h-14 bg-surface-card border-2 border-primary-500/10 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform group-hover:border-primary-500/30 overflow-hidden">
+                  {branch.logo ? (
+                    <img src={branch.logo} alt="Branch Logo" className="w-full h-full object-cover" />
+                  ) : (
+                    <Store className="w-7 h-7 text-primary-500" />
+                  )}
                </div>
             </div>
             
             <div className="p-6 pt-12">
               <h3 className="text-xl font-black tracking-tight mb-1">{branch.name}</h3>
+              {branch.slogan && <p className="text-[9px] text-surface-text/40 font-black italic mb-4">"{branch.slogan}"</p>}
               <div className="flex items-center gap-2 text-surface-text/40 mb-6">
                  <MapPin className="w-3 h-3" />
                  <span className="text-[10px] font-black  tracking-widest">{branch.address || 'Location not set'}</span>
@@ -104,15 +128,17 @@ const BranchesPage: React.FC = () => {
                     </div>
                     <span className="text-[10px] font-black tracking-widest">{branch.phone || 'N/A'}</span>
                  </div>
-                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 bg-surface-bg border border-surface-border rounded-lg flex items-center justify-center">
-                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500/40" />
-                       </div>
-                       <span className="text-[9px] font-black  tracking-widest text-surface-text/60">Status</span>
-                    </div>
-                    <span className="text-[9px] font-black  tracking-[0.2em] text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Active</span>
-                 </div>
+                 {branch.email && (
+                   <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                         <div className="w-8 h-8 bg-surface-bg border border-surface-border rounded-lg flex items-center justify-center">
+                            <Plus className="w-3.5 h-3.5 text-primary-500/40" />
+                         </div>
+                         <span className="text-[9px] font-black  tracking-widest text-surface-text/60">Email</span>
+                      </div>
+                      <span className="text-[10px] font-black tracking-widest lowercase">{branch.email}</span>
+                   </div>
+                 )}
               </div>
 
               <div className="flex gap-3 mt-8">
@@ -121,7 +147,7 @@ const BranchesPage: React.FC = () => {
                  </button>
                   <button 
                     onClick={() => {
-                      localStorage.setItem('currentBranch', branch.name);
+                      localStorage.setItem('currentBranch', JSON.stringify(branch));
                       toast.success(`Switched to ${branch.name}`);
                     }}
                     className="p-4 bg-primary-500 text-white rounded-2xl shadow-xl shadow-primary-500/20 active:scale-95 transition-all"
@@ -149,9 +175,9 @@ const BranchesPage: React.FC = () => {
       <AnimatePresence>
         {isModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card border border-surface-border rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card border border-surface-border rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
               <div className="p-6 border-b border-surface-border flex justify-between items-center bg-surface-bg/30">
-                <h3 className="text-xl font-black tracking-tighter  italic">New Branch</h3>
+                <h3 className="text-xl font-black tracking-tighter  italic">New Branch Registration</h3>
                 <button 
                   onClick={() => setIsModalOpen(false)} 
                   className="p-2 hover:bg-surface-bg rounded-xl"
@@ -161,20 +187,55 @@ const BranchesPage: React.FC = () => {
                   <X className="w-5 h-5"/>
                 </button>
               </div>
-              <form onSubmit={handleAddBranch} className="p-6 space-y-5">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">Branch Name</label>
-                  <input required className="input-field w-full" placeholder="eg. Domasi Branch" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+              <form onSubmit={handleAddBranch} className="p-6 space-y-5 overflow-y-auto custom-scrollbar">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">BRANCH NAME *</label>
+                      <input required className="input-field w-full" placeholder="eg. Domasi Branch" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">LOCATION ADDRESS *</label>
+                      <input required className="input-field w-full" placeholder="eg. Zomba Main Road" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">PHONE CONTACT *</label>
+                      <input required className="input-field w-full" placeholder="eg. +265..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">EMAIL ADDRESS</label>
+                      <input type="email" className="input-field w-full" placeholder="eg. branch@vendrax.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">FACEBOOK PAGE (OPTIONAL)</label>
+                      <input className="input-field w-full" placeholder="eg. facebook.com/vendrax" value={formData.facebook} onChange={e => setFormData({...formData, facebook: e.target.value})} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">BRANCH SLOGAN</label>
+                      <input className="input-field w-full" placeholder="eg. Excellence in Service" value={formData.slogan} onChange={e => setFormData({...formData, slogan: e.target.value})} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">BRANCH LOGO</label>
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-xl bg-surface-bg border border-surface-border flex items-center justify-center overflow-hidden shrink-0">
+                          {formData.logo ? (
+                            <img src={formData.logo} alt="Preview" className="w-full h-full object-cover" />
+                          ) : (
+                            <Store className="w-6 h-6 text-surface-text/10" />
+                          )}
+                        </div>
+                        <label className="btn-primary !px-4 !py-2 text-[8px] font-black tracking-widest cursor-pointer">
+                          CHOOSE IMAGE
+                          <input type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">Location Address</label>
-                  <input required className="input-field w-full" placeholder="eg. Zomba Main Road" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">Phone Contact</label>
-                  <input required className="input-field w-full" placeholder="eg. +265..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-                </div>
-                <button type="submit" className="w-full btn-primary h-14 font-black  tracking-widest mt-4">Create Branch Office</button>
+                <button type="submit" className="w-full btn-primary h-16 font-black  tracking-widest mt-6 shadow-2xl shadow-primary-500/20">REGISTER BRANCH OFFICE</button>
               </form>
             </motion.div>
           </motion.div>

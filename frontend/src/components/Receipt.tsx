@@ -16,24 +16,38 @@ interface ReceiptProps {
 }
 
 export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, invoiceNo, date, paid, change, mode, bankName, accountNumber }) => {
-  const shopName = localStorage.getItem('companyName') || 'VENDRAX';
-  const shopAddress = 'Excellence in Service'; // Default
-  const shopTel = '+265 999 000 000';
+  const currentBranchStr = localStorage.getItem('currentBranch');
+  const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  const shopName = branch?.name || localStorage.getItem('companyName') || 'VENDRAX';
+  const shopAddress = branch?.address || 'Excellence in Service'; 
+  const shopTel = branch?.phone || '+265 999 000 000';
+  const shopEmail = branch?.email;
+  const shopSlogan = branch?.slogan;
+  const shopFB = branch?.facebook;
+  const cashierName = user.fullname || user.username || 'System';
 
   return (
-    <div className="receipt p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] leading-tight">
+    <div className="receipt p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] leading-tight shadow-sm">
       <div className="text-center border-b border-black pb-4 mb-4">
-        <div className="w-12 h-12 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
-           <img src="/icon.png" alt="logo" className="w-full h-full object-contain grayscale" />
+        <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
+           <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
         <h1 className="text-lg font-black tracking-tighter uppercase">{shopName}</h1>
-        <p className="text-[9px] tracking-widest">{shopAddress}</p>
+        {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
+        <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
         <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
+        {shopEmail && <p className="text-[8px] font-bold opacity-60">{shopEmail}</p>}
+        {shopFB && <p className="text-[8px] font-bold opacity-60">FB: {shopFB}</p>}
       </div>
 
-      <div className="flex justify-between mb-4 font-bold  text-[9px]">
-        <span>INV: {invoiceNo}</span>
-        <span>{new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
+      <div className="flex flex-col gap-1 mb-4 font-bold text-[9px]">
+        <div className="flex justify-between">
+          <span>INV: {invoiceNo}</span>
+          <span>{new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
+        </div>
+        <div className="uppercase">CASHIER: {cashierName}</div>
       </div>
 
       <table className="w-full mb-4 border-b border-black border-dashed">
@@ -101,10 +115,17 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, i
         )}
       </div>
 
-      <div className="text-center mt-6 border-t border-black border-dashed pt-4">
+      <div className="text-center mt-6 border-t border-black border-dashed pt-4 flex flex-col items-center">
         <p className="text-[9px] font-bold italic">Goods once sold are not returnable</p>
-        <p className="text-[11px] font-black  mt-2">Thank you for your business!</p>
-        <div className="mt-4 opacity-50 text-[8px]">Powered by Vendrax Cloud POS</div>
+        <p className="text-[11px] font-black mt-2">Thank you for your business!</p>
+        
+        {/* Barcode Section */}
+        <div className="mt-4 flex flex-col items-center">
+           <img src={`https://barcodeapi.org/api/128/${invoiceNo}?height=40&width=150`} alt="barcode" className="h-10 grayscale invert brightness-0" />
+           <span className="text-[8px] font-bold tracking-[0.3em] mt-1">{invoiceNo}</span>
+        </div>
+
+        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by Vendrax Cloud POS</div>
       </div>
       
       <style dangerouslySetInnerHTML={{ __html: `
@@ -118,6 +139,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, i
             width: 80mm;
             padding: 0;
             margin: 0;
+            box-shadow: none;
           }
           @page { size: 80mm auto; margin: 0; }
         }

@@ -89,6 +89,9 @@ export interface LocalBranch {
   address: string;
   phone: string;
   email?: string;
+  facebook?: string;
+  logo?: string;
+  slogan?: string;
   status: 'ACTIVE' | 'INACTIVE';
   createdAt: string;
 }
