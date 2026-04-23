@@ -61,7 +61,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
         {/* Dynamic Mobile Header */}
-        {!hideNav && <MobileHeader />}
+        {!hideNav && (
+          <div className="md:hidden">
+            <MobileHeader />
+          </div>
+        )}
 
         {/* Pull to Refresh Indicator */}
         {pullDistance > 0 && (

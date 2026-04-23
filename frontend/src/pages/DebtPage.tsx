@@ -197,12 +197,7 @@ const DebtPage: React.FC = () => {
               </div>
               <h1 className="text-xl md:text-2xl font-black tracking-tighter  italic">Debt book</h1>
             </div>
-            <button 
-              onClick={() => setIsAddModalOpen(true)}
-              className="btn-primary !px-6 !py-4 text-[10px] font-black  tracking-widest shadow-xl shadow-primary-500/10 w-full md:w-auto"
-            >
-              <Plus className="w-4 h-4 mr-2 inline" /> Add customer
-            </button>
+
           </div>
 
           <div className="relative">

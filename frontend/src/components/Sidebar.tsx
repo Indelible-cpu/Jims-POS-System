@@ -40,13 +40,13 @@ const Sidebar: React.FC = () => {
               key={tab.id}
               to={tab.path}
               className={({ isActive }) => clsx(
-                "flex items-center gap-4 px-4 h-14 rounded-2xl font-black tracking-widest text-[10px] transition-all group",
+                "flex items-center gap-4 px-4 h-14 rounded-2xl font-black tracking-widest text-[13px] transition-all group",
                 isActive 
                   ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" 
-                  : "text-surface-text/40 hover:text-surface-text hover:bg-surface-bg border border-transparent hover:border-surface-border"
+                  : "text-black hover:text-primary-500 hover:bg-surface-bg border border-transparent hover:border-surface-border"
               )}
             >
-              <tab.icon className={clsx("w-5 h-5 transition-transform group-hover:scale-110")} />
+              <tab.icon className={clsx("w-6 h-6 transition-transform group-hover:scale-110")} strokeWidth={isActive ? 2.5 : 2} />
               {tab.label}
             </NavLink>
           ))}
@@ -56,9 +56,9 @@ const Sidebar: React.FC = () => {
       <div className="mt-auto p-8 border-t border-surface-border">
         <button 
           onClick={handleLogout}
-          className="flex items-center gap-4 px-4 h-14 w-full rounded-2xl font-black tracking-widest text-[10px] text-red-500/60 hover:text-red-500 hover:bg-red-500/5 transition-all group border border-transparent hover:border-red-500/10"
+          className="flex items-center gap-4 px-4 h-14 w-full rounded-2xl font-black tracking-widest text-[13px] text-red-500 hover:text-red-600 hover:bg-red-500/5 transition-all group border border-transparent hover:border-red-500/10"
         >
-          <LogOut className="w-5 h-5 transition-transform group-hover:scale-110" />
+          <LogOut className="w-6 h-6 transition-transform group-hover:scale-110" />
           Sign Out
         </button>
       </div>
