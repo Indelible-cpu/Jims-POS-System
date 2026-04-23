@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       if (window.PublicKeyCredential) {
-        toast.loading('Verifying identity...', { id: 'biometric-auth' });
+        toast.loading('Please verify your identity...', { id: 'biometric-auth' });
         
         const challenge = new Uint8Array(32);
         crypto.getRandomValues(challenge);
@@ -54,10 +54,14 @@ const LoginPage: React.FC = () => {
           throw new Error('Please login with password first.');
         }
       }
-    } catch (err) {
-      console.error('Biometric error:', err);
-      toast.error('Biometric verification failed.', { id: 'biometric-auth' });
-      setShowBiometricPrompt(false); // Fallback to password
+    } catch (err: any) {
+      console.warn('Biometric access denied or cancelled:', err);
+      // Don't show an intrusive error for cancellations, just let them use password
+      if (err.name === 'NotAllowedError') {
+        toast.dismiss('biometric-auth');
+      } else {
+        toast.error('Biometric verification failed.', { id: 'biometric-auth' });
+      }
     } finally {
       setLoading(false);
     }
@@ -71,12 +75,10 @@ const LoginPage: React.FC = () => {
           const isRegistered = localStorage.getItem('biometricRegistered') === 'true';
           if (available && isRegistered) {
             setShowBiometricPrompt(true);
-            // Auto-trigger
-            setTimeout(handleBiometricLogin, 800);
           }
         });
     }
-  }, [handleBiometricLogin]);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -163,20 +165,21 @@ const LoginPage: React.FC = () => {
                 <Fingerprint className="w-12 h-12 text-primary-500 animate-pulse" />
              </div>
              <h1 className="text-3xl font-black tracking-tighter mb-2 italic uppercase">{localStorage.getItem('companyName') || 'VENDRAX'}</h1>
-             <p className="text-surface-text/40 font-black uppercase text-[10px] tracking-[0.2em] mb-10">Authenticating Identity...</p>
+             <p className="text-surface-text/40 font-black uppercase text-[10px] tracking-[0.2em] mb-10">Biometric Security Active</p>
              
              <button 
                 onClick={handleBiometricLogin}
-                className="w-full py-5 bg-primary-500 text-white rounded-3xl font-black uppercase tracking-widest shadow-2xl shadow-primary-500/30 active:scale-95 transition-all"
+                className="w-full py-5 bg-primary-500 text-white rounded-3xl font-black uppercase tracking-widest shadow-2xl shadow-primary-500/30 active:scale-95 transition-all flex items-center justify-center gap-3"
              >
-                Try Again
+                <Fingerprint className="w-5 h-5" />
+                Unlock with Biometrics
              </button>
              
              <button 
                 onClick={() => setShowBiometricPrompt(false)}
                 className="mt-6 text-[10px] font-black uppercase tracking-widest text-surface-text/20 hover:text-primary-500 transition-colors"
              >
-                Login with password
+                Login with password instead
              </button>
           </motion.div>
         ) : (
