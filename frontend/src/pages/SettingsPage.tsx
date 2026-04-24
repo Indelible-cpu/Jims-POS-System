@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet, Plus, Package, ShieldAlert, History, TrendingUp, Building2 } from 'lucide-react';
+import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet, Plus, Package, ShieldAlert, History, TrendingUp, Building2, Settings } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
 import { db } from '../db/posDB';
@@ -104,21 +104,29 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface-bg text-surface-text">
-       {/* Mobile Header */}
-       <header className="p-6 bg-surface-card border-b border-surface-border md:hidden">
-          <h1 className="text-2xl font-black tracking-tighter">Account menu</h1>
+    <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-32">
+       {/* Desktop Header */}
+       <header className="hidden md:flex px-10 py-10 bg-surface-card border-b border-surface-border sticky top-0 z-30 shadow-sm">
+          <h2 className="section-title !mb-0">
+            <Settings className="w-6 h-6 text-primary-500" />
+            Account & System Settings
+          </h2>
        </header>
 
-       <div className="p-0 md:p-8 space-y-px md:space-y-6 pb-32">
+       {/* Mobile Header */}
+       <header className="p-6 bg-surface-card border-b border-surface-border md:hidden">
+          <h1 className="text-2xl font-black tracking-tighter italic text-primary-500">Settings</h1>
+       </header>
+
+       <div className="p-4 md:p-10 space-y-6 md:space-y-10">
           {/* User Profile Section */}
-          <div className="bg-surface-card p-6 border-b border-surface-border md:border md:rounded-3xl flex items-center gap-4 group">
-             <div className="relative w-20 h-20 shrink-0">
-                <div className="w-20 h-20 bg-primary-600/20 text-primary-400 rounded-full flex items-center justify-center overflow-hidden border-2 border-primary-500/20 group-hover:border-primary-500 transition-all shadow-xl shadow-primary-500/5">
+          <div className="bg-surface-card p-10 border border-surface-border rounded-[2.5rem] flex flex-col md:flex-row items-center md:items-start gap-8 group shadow-sm hover:shadow-xl transition-all duration-500">
+             <div className="relative w-32 h-32 shrink-0">
+                <div className="w-32 h-32 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center overflow-hidden border-2 border-primary-500/20 group-hover:border-primary-500 transition-all shadow-2xl p-1">
                    {user.profile_pic ? (
-                     <img src={user.profile_pic} alt="Profile" className="w-full h-full object-cover" />
+                     <img src={user.profile_pic} alt="Profile" className="w-full h-full object-cover rounded-full" />
                    ) : (
-                     <User className="w-10 h-10" />
+                     <User className="w-12 h-12" />
                    )}
                 </div>
                 <label className="absolute -bottom-1 -right-1 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg hover:scale-110 transition-transform border-4 border-surface-card" title="Change profile picture">
@@ -145,36 +153,36 @@ const SettingsPage: React.FC = () => {
                    />
                 </label>
              </div>
-             <div>
-                <h2 className="text-xl font-black tracking-tight">{user.fullname || user.username || 'Employee'}</h2>
-                <p className="text-[10px] text-surface-text/40 font-black  tracking-[0.2em] mt-1">Branch: {user.branch_name || 'Domasi Main'}</p>
-                <div className="mt-2 flex gap-2">
-                   <span className="px-2 py-0.5 bg-primary-500/10 text-primary-500 rounded text-[8px] font-black  tracking-widest border border-primary-500/20">{user.role || 'Staff'}</span>
-                   <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 rounded text-[8px] font-black  tracking-widest border border-emerald-500/20">Online</span>
+             <div className="text-center md:text-left flex-1">
+                <h2 className="text-3xl font-black tracking-tighter italic">{user.fullname || user.username || 'Employee'}</h2>
+                <div className="card-label !mt-1">Branch: {user.branch_name || 'Domasi Main'}</div>
+                <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
+                   <span className="px-4 py-1.5 bg-primary-500/10 text-primary-500 rounded-xl text-[10px] font-black tracking-widest border border-primary-500/20 uppercase">Role: {user.role || 'Staff'}</span>
+                   <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-500 rounded-xl text-[10px] font-black tracking-widest border border-emerald-500/20 uppercase">Online Status</span>
                 </div>
              </div>
           </div>
 
           <div className="space-y-px md:space-y-6">
             {/* System Preferences */}
-            <div className="bg-surface-card md:border md:rounded-3xl overflow-hidden">
-               <div className="px-6 py-4 border-b border-surface-border/50">
-                  <h3 className="text-[10px] font-black text-surface-text/30  tracking-[0.2em]">System preferences</h3>
+            <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+               <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
+                  <div className="card-label !mb-0">System preferences</div>
                </div>
                
                {/* Logo Upload Section */}
-               <div className="p-6 border-b border-surface-border/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:bg-primary-500/5 transition-colors">
-                  <div className="flex items-center gap-4">
-                     <div className="w-16 h-16 rounded-full border-2 border-primary-500/40 overflow-hidden bg-surface-bg flex items-center justify-center shrink-0 shadow-lg shadow-primary-500/5 group-hover:border-primary-500 transition-all">
+               <div className="p-8 border-b border-surface-border/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group hover:bg-primary-500/5 transition-colors">
+                  <div className="flex items-center gap-6">
+                     <div className="w-20 h-20 rounded-full border-2 border-primary-500/40 overflow-hidden bg-surface-bg flex items-center justify-center shrink-0 shadow-xl shadow-primary-500/5 group-hover:border-primary-500 transition-all p-1">
                         {localStorage.getItem('companyLogo') ? (
-                           <img src={localStorage.getItem('companyLogo')!} alt="Company Logo" className="w-full h-full object-cover scale-[1.2]" />
+                           <img src={localStorage.getItem('companyLogo')!} alt="Company Logo" className="w-full h-full object-contain rounded-full" />
                         ) : (
-                           <Store className="w-6 h-6 text-surface-text/20" />
+                           <Store className="w-8 h-8 text-surface-text/20" />
                         )}
                      </div>
                      <div>
-                        <div className="font-black text-sm tracking-tight">Company logo</div>
-                        <div className="text-xs text-surface-text/40 font-bold">Set a circular logo for the mobile header</div>
+                        <div className="font-black text-base tracking-tight italic">Company branding</div>
+                        <div className="card-label !mb-0">Set a circular logo for the system header</div>
                      </div>
                   </div>
                   <label className="btn-primary !px-6 !py-3 text-[10px] font-black tracking-widest  cursor-pointer w-full md:w-auto text-center shadow-lg shadow-primary-500/20" title="Upload company logo">

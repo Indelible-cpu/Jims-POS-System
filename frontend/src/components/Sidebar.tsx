@@ -41,21 +41,21 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation - Scrollable */}
-      <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-2 custom-scrollbar">
+      <nav className="flex-1 overflow-y-auto px-6 py-4 space-y-1.5 custom-scrollbar">
         {tabs.map((tab) => (
           <NavLink
             key={tab.id}
             to={tab.path}
             className={({ isActive }) => clsx(
-              "flex items-center gap-4 px-4 h-14 rounded-2xl font-black tracking-widest text-[15px] transition-all group shrink-0",
+              "flex items-center gap-4 px-5 h-14 rounded-[1.5rem] font-black tracking-widest text-[13px] transition-all group shrink-0 uppercase",
               isActive 
-                ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" 
-                : "text-surface-text hover:text-primary-500 hover:bg-surface-bg border border-transparent hover:border-surface-border"
+                ? "bg-primary-500 text-white shadow-xl shadow-primary-500/20 scale-[1.02]" 
+                : "text-surface-text/40 hover:text-primary-500 hover:bg-primary-500/5 border border-transparent hover:border-primary-500/10"
             )}
           >
             {({ isActive }) => (
               <>
-                <tab.icon className={clsx("w-6 h-6 transition-transform group-hover:scale-110")} strokeWidth={isActive ? 2.5 : 2} />
+                <tab.icon className={clsx("w-5 h-5 transition-transform group-hover:scale-110")} strokeWidth={isActive ? 3 : 2} />
                 <span className="truncate">{tab.label}</span>
               </>
             )}

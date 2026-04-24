@@ -218,19 +218,16 @@ const InventoryPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-0 py-0 md:px-6 md:py-6 bg-surface-card md:border-b border-surface-border sticky top-0 z-30">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="hidden md:flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
-                <Package className="w-6 h-6" />
-              </div>
-              <h1 className="text-2xl font-black tracking-tighter  italic">Inventory</h1>
-            </div>
-            <div className="flex flex-1 md:flex-none justify-end gap-2">
+      <header className="px-4 py-4 md:px-10 md:py-10 bg-surface-card md:border-b border-surface-border sticky top-0 z-30 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <h2 className="section-title !mb-0">
+            <Package className="w-6 h-6 text-primary-500" />
+            Inventory Intelligence
+          </h2>
+          <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsCategoryModalOpen(true)}
-                className="px-6 py-4 bg-surface-bg border border-surface-border hover:bg-primary-500/5 transition-all text-surface-text rounded-2xl flex items-center gap-2 text-[10px] font-black  tracking-widest"
+                className="btn-secondary !px-6 !py-4"
                 title="Open Category Manager"
                 aria-label="Open Category Manager"
               >
@@ -238,71 +235,71 @@ const InventoryPage: React.FC = () => {
               </button>
               <button 
                 onClick={() => openAddModal()}
-                className="btn-primary !px-6 !py-4 font-black text-[10px]  tracking-widest shadow-xl shadow-primary-500/20"
+                className="btn-primary !px-6 !py-4"
                 title="Add New Product"
                 aria-label="Add New Product"
               >
                 <Plus className="w-4 h-4 mr-1 inline" /> Add Product
               </button>
-            </div>
           </div>
+        </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div className="bg-surface-bg border border-surface-border p-5 rounded-2xl">
-              <div className="text-[10px] font-black text-surface-text/30 uppercase tracking-widest mb-1">Total Stock Cost</div>
-              <div className="text-xl font-black tracking-tighter">MK {analytics.totalCost.toLocaleString()}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+            <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+              <div className="card-label">Total Stock Cost</div>
+              <div className="text-2xl font-black tracking-tighter italic">MK {analytics.totalCost.toLocaleString()}</div>
             </div>
-            <div className="bg-surface-bg border border-surface-border p-5 rounded-2xl">
-              <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Expected Profit</div>
-              <div className="text-xl font-black tracking-tighter text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
+            <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+              <div className="card-label !text-emerald-500">Expected Profit</div>
+              <div className="text-2xl font-black tracking-tighter italic text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
             </div>
-            <div className="bg-surface-bg border border-surface-border p-5 rounded-2xl">
-              <div className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">Est. Ageing Loss</div>
-              <div className="text-xl font-black tracking-tighter text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
+            <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+              <div className="card-label !text-red-500">Est. Ageing Loss</div>
+              <div className="text-2xl font-black tracking-tighter italic text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
             </div>
-            <div className="bg-surface-bg border border-surface-border p-5 rounded-2xl">
-              <div className="text-[10px] font-black text-primary-500 uppercase tracking-widest mb-1">Low Stock (Real)</div>
-              <div className="text-xl font-black tracking-tighter text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
+            <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+              <div className="card-label !text-primary-500">Low Stock (Real)</div>
+              <div className="text-2xl font-black tracking-tighter italic text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-text/40 w-4 h-4 group-focus-within:text-primary-500 transition-colors" />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5 group-focus-within:text-primary-500 transition-colors" />
               <input 
                 type="text" 
                 placeholder="Search by name or SKU..."
                 title="Search products"
                 aria-label="Search products"
-                className="input-field w-full pl-11 h-14 text-sm font-bold shadow-inner"
+                className="input-field w-full pl-14 shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex gap-2 overflow-x-auto no-scrollbar py-2">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar py-2">
               <button 
                 onClick={() => setSelectedCategory(null)}
                 className={clsx(
-                  "px-6 py-2 rounded-xl border text-[9px] font-black  tracking-widest transition-all whitespace-nowrap",
+                  "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
                   !selectedCategory ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
                 )}
                 title="Show all categories"
                 aria-label="Show all categories"
               >
-                All items
+                ALL ITEMS
               </button>
               {categories?.map(cat => (
                 <button 
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
                   className={clsx(
-                    "px-6 py-2 rounded-xl border text-[9px] font-black  tracking-widest transition-all whitespace-nowrap",
+                    "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
                     selectedCategory === cat.id ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
                   )}
                   title={`Filter by ${cat.title}`}
                   aria-label={`Filter by ${cat.title}`}
                 >
-                  {cat.title}
+                  {cat.title.toUpperCase()}
                 </button>
               ))}
             </div>
@@ -320,7 +317,7 @@ const InventoryPage: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 key={product.id}
-                className="bg-surface-card md:border border-surface-border md:rounded-3xl overflow-hidden group hover:border-primary-500/30 transition-all flex flex-col border-b border-surface-border/50"
+                className="bg-surface-card md:border border-surface-border md:rounded-[2rem] overflow-hidden group hover:border-primary-500/30 transition-all flex flex-col border-b border-surface-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
               >
                 <div className="p-6 flex-1">
                   <div className="flex justify-between items-start mb-4">

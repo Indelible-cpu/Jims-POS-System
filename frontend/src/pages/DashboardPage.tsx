@@ -70,7 +70,16 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <div className="p-0 md:p-8 space-y-8">
+      <div className="p-4 md:p-10 space-y-10">
+        <div className="flex items-center justify-between">
+           <h2 className="section-title !mb-0">
+             <TrendingUp className="w-6 h-6 text-primary-500" />
+             Business Overview
+           </h2>
+           <div className="text-[10px] font-black text-surface-text/30 tracking-widest uppercase bg-surface-card px-4 py-2 rounded-xl border border-surface-border">
+             Real-time Sync Active
+           </div>
+        </div>
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, i) => (
@@ -79,7 +88,7 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-surface-card border border-surface-border p-6 rounded-3xl group hover:border-primary-500/30 transition-all"
+              className="bg-surface-card border border-surface-border p-8 rounded-[2rem] group hover:border-primary-500/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-2xl bg-surface-bg border border-surface-border group-hover:border-primary-500/20 transition-colors ${stat.color}`}>
@@ -90,8 +99,8 @@ const DashboardPage: React.FC = () => {
                   {stat.trend}
                 </div>
               </div>
-              <div className="text-2xl font-black tracking-tight mb-1">{stat.value}</div>
-              <div className="text-[10px] font-bold text-surface-text/30 uppercase tracking-widest">{stat.label}</div>
+              <div className="text-3xl font-black tracking-tighter mb-1 italic">{stat.value}</div>
+              <div className="card-label">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -99,11 +108,11 @@ const DashboardPage: React.FC = () => {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
            {/* Revenue & Customer Flow Chart */}
-           <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-3xl p-8 relative overflow-hidden">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+           <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-[2.5rem] p-10 relative overflow-hidden shadow-sm">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
                  <div>
-                    <h3 className="text-sm font-black italic tracking-tighter text-primary-500">Business Analytics</h3>
-                    <p className="text-[10px] font-bold text-surface-text/30 uppercase tracking-widest">Revenue vs Customer Flow (Last 7 Days)</p>
+                    <h3 className="text-base font-black italic tracking-tighter text-primary-500">Business Analytics</h3>
+                    <div className="card-label">Revenue vs Customer Flow (Last 7 Days)</div>
                  </div>
                  <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
@@ -167,10 +176,10 @@ const DashboardPage: React.FC = () => {
            </div>
 
            {/* Daily Flow Breakdown */}
-           <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
-              <div className="mb-8">
-                 <h3 className="text-sm font-black italic tracking-tighter text-amber-500">Peak Flow</h3>
-                 <p className="text-[10px] font-bold text-surface-text/30 uppercase tracking-widest">Transactions per day</p>
+           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+              <div className="mb-10">
+                 <h3 className="text-base font-black italic tracking-tighter text-amber-500">Peak Flow</h3>
+                 <div className="card-label">Transactions per day</div>
               </div>
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -204,9 +213,9 @@ const DashboardPage: React.FC = () => {
 
         {/* Recent & Alerts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
-              <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black uppercase tracking-widest">Active Credits</h3>
+           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+              <div className="flex justify-between items-center mb-10">
+                 <h3 className="text-sm font-black uppercase tracking-[0.2em] italic text-surface-text/40">Active Credits</h3>
                  <button onClick={() => window.location.href='/debt'} className="text-[10px] font-black text-primary-400 hover:underline">Manage all</button>
               </div>
               <div className="space-y-4">
@@ -218,7 +227,7 @@ const DashboardPage: React.FC = () => {
                          </div>
                          <div>
                             <div className="text-xs font-black">{customer.name}</div>
-                            <div className="text-[9px] text-surface-text/30 font-bold uppercase">Due: 7 Days</div>
+                            <div className="card-label !mb-0">Due: 7 Days</div>
                          </div>
                       </div>
                       <div className="text-right">
@@ -233,9 +242,9 @@ const DashboardPage: React.FC = () => {
               </div>
            </div>
 
-           <div className="bg-surface-card border border-surface-border rounded-3xl p-8">
-              <div className="flex justify-between items-center mb-8">
-                 <h3 className="text-sm font-black uppercase tracking-widest">Low stock alert</h3>
+           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+              <div className="flex justify-between items-center mb-10">
+                 <h3 className="text-sm font-black uppercase tracking-[0.2em] italic text-surface-text/40">Low stock alert</h3>
                  <button className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</button>
               </div>
               <div className="space-y-4">

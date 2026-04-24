@@ -55,7 +55,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }, [pullDistance, isRefreshing]);
 
   return (
-    <div className="min-h-screen flex bg-surface-bg transition-colors duration-300">
+    <div className="min-h-screen flex bg-surface-bg transition-colors duration-300 mesh-bg">
       {/* Desktop Sidebar */}
       {!hideNav && <Sidebar />}
 

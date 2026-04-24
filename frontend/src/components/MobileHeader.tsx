@@ -61,10 +61,10 @@ export default function MobileHeader() {
         )}
         
         <div className="flex flex-col min-w-0">
-          <span className="text-[16px] font-black tracking-tighter italic text-primary-500 leading-none truncate">
+          <span className="text-[14px] font-black tracking-tighter italic text-primary-500 leading-none truncate uppercase">
             {shopName}
           </span>
-          <span className="text-[9px] font-black text-surface-text/30 tracking-[0.2em] leading-none mt-1 truncate">
+          <span className="card-label !mb-0 truncate">
             {getPageTitle(location.pathname)}
           </span>
         </div>

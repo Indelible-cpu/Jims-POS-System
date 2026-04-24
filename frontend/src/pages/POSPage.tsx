@@ -594,10 +594,11 @@ const POSPage: React.FC = () => {
 
         <main className="flex-1 p-4 lg:p-8">
           {/* Products Results Section */}
+          {/* Products Results Section */}
           {searchTerm.length >= 2 && (
             <div className="mb-12">
-              <h2 className="text-[10px] font-black tracking-widest text-surface-text/30 uppercase mb-4 pl-2">Matching Products</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+              <div className="card-label mb-4 pl-2">Matching Products</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 <AnimatePresence mode="popLayout">
                   {products?.map(product => (
                     <motion.div 
@@ -607,14 +608,14 @@ const POSPage: React.FC = () => {
                       exit={{ opacity: 0, scale: 0.9 }} 
                       key={product.id} 
                       onClick={() => addToCart(product)} 
-                      className="bg-surface-card border border-surface-border p-5 rounded-3xl cursor-pointer active:scale-[0.98] transition-all group hover:border-primary-500/40 flex items-center justify-between gap-4"
+                      className="bg-surface-card border border-surface-border p-6 rounded-[2rem] cursor-pointer active:scale-[0.98] transition-all group hover:border-primary-500/40 flex items-center justify-between gap-4 shadow-sm hover:shadow-lg"
                     >
                       <div className="flex flex-col min-w-0">
-                        <div className="text-[8px] font-black text-surface-text/30 tracking-widest uppercase">{product.sku}</div>
+                        <div className="card-label !mb-0">{product.sku}</div>
                         <div className="font-black text-sm text-surface-text group-hover:text-primary-500 transition-colors truncate">{product.name}</div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="text-lg font-black text-primary-500 tracking-tighter italic">MK {product.sellPrice.toLocaleString()}</div>
+                        <div className="text-xl font-black text-primary-500 tracking-tighter italic">MK {product.sellPrice.toLocaleString()}</div>
                       </div>
                     </motion.div>
                   ))}
@@ -625,12 +626,12 @@ const POSPage: React.FC = () => {
 
           {/* Cart Section - Naturally follows products flow */}
           <div className="max-w-4xl mx-auto pb-32">
-            <div className="flex items-center justify-between mb-8 px-2">
-               <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between mb-10 px-4">
+               <h2 className="section-title !mb-0">
                   <ShoppingCart className="w-6 h-6 text-primary-500" />
-                  <h2 className="text-2xl font-black tracking-tighter italic">Order Cart</h2>
-               </div>
-               <div className="text-[10px] font-black tracking-widest text-surface-text/30 uppercase">
+                  Order Cart
+               </h2>
+               <div className="card-label">
                  {cart.length} ITEMS SELECTED
                </div>
             </div>
@@ -647,8 +648,8 @@ const POSPage: React.FC = () => {
                     <motion.div layout initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} key={item.product.id} className="p-6 bg-surface-card border border-surface-border rounded-[2rem] group shadow-sm">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex-1">
-                          <div className="font-black text-base leading-tight">{item.product.name}</div>
-                          <div className="text-[10px] font-bold text-surface-text/30 mt-1 tracking-widest uppercase italic">MK {item.product.sellPrice.toLocaleString()} / UNIT</div>
+                          <div className="font-black text-lg leading-tight">{item.product.name}</div>
+                          <div className="card-label !mt-1 !mb-0">MK {item.product.sellPrice.toLocaleString()} / UNIT</div>
                         </div>
                         <button onClick={() => setCart(prev => prev.filter(i => i.product.id !== item.product.id))} className="p-2 text-surface-text/20 hover:text-red-500 transition-colors" title="Remove item" aria-label="Remove item">
                           <X className="w-6 h-6" />
@@ -684,7 +685,7 @@ const POSPage: React.FC = () => {
                         )}
                       >
                         <mode.icon className="w-6 h-6" />
-                        <span className="text-[9px] font-black uppercase tracking-widest">{mode.label || mode.id}</span>
+                        <span className="card-label !mb-0 !text-inherit">{mode.label || mode.id}</span>
                       </button>
                     ))}
                   </div>
@@ -694,8 +695,8 @@ const POSPage: React.FC = () => {
                     {paymentMode === 'Cash' && (
                       <>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black text-surface-text/40 tracking-widest uppercase ml-1">Cash Received (MK)</label>
-                          <input type="number" placeholder="Enter amount..." className="input-field w-full text-lg font-black" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} onFocus={e => e.target.select()} />
+                          <label className="card-label ml-1">Cash Received (MK)</label>
+                          <input type="number" placeholder="Enter amount..." className="input-field w-full text-xl font-black !rounded-3xl" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} onFocus={e => e.target.select()} />
                         </div>
                         <div className="space-y-1">
                           <label className="text-[9px] font-black text-surface-text/40 tracking-widest uppercase ml-1">Change & Tax Summary</label>
@@ -709,12 +710,12 @@ const POSPage: React.FC = () => {
                     {(paymentMode === 'Card' || paymentMode === 'Momo') && (
                       <>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black text-surface-text/40 tracking-widest uppercase ml-1">{paymentMode === 'Card' ? `Credited To (${paymentConfig.bank})` : `Transfered To (${paymentConfig.momo})`}</label>
-                          <input type="text" placeholder={paymentMode === 'Card' ? `e.g. ${paymentConfig.bank}` : `e.g. ${paymentConfig.momo}`} className="input-field w-full text-sm font-bold" value={bankName} onChange={e => setBankName(e.target.value)} />
+                          <label className="card-label ml-1">{paymentMode === 'Card' ? `Credited To (${paymentConfig.bank})` : `Transfered To (${paymentConfig.momo})`}</label>
+                          <input type="text" placeholder={paymentMode === 'Card' ? `e.g. ${paymentConfig.bank}` : `e.g. ${paymentConfig.momo}`} className="input-field w-full !rounded-3xl" value={bankName} onChange={e => setBankName(e.target.value)} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black text-surface-text/40 tracking-widest uppercase ml-1">Account / Reference Number</label>
-                          <input type="text" placeholder="Enter account or ref..." className="input-field w-full text-sm font-bold" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
+                          <label className="card-label ml-1">Account / Reference Number</label>
+                          <input type="text" placeholder="Enter account or ref..." className="input-field w-full !rounded-3xl" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
                         </div>
                       </>
                     )}
