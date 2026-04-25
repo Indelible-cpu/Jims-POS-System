@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false,
+  service: 'gmail',
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -136,10 +134,10 @@ export const saveUser = async (req: Request, res: Response) => {
         },
       });
 
-      return res.status(201).json({ 
-        success: true, 
-        message: "User created", 
-        data: { username, tempPassword: password ? undefined : tempPassword } 
+      return res.status(201).json({
+        success: true,
+        message: "User created",
+        data: { username, tempPassword: password ? undefined : tempPassword }
       });
     }
   } catch (error: any) {
@@ -149,27 +147,27 @@ export const saveUser = async (req: Request, res: Response) => {
 
 export const updateOnboarding = async (req: Request, res: Response) => {
   const authUser = (req as any).user;
-  const { 
-    fullname, 
+  const {
+    fullname,
     nationalId,
-    phone, 
-    email, 
-    profilePic, 
-    homeAddress, 
-    nextOfKinPhone, 
+    phone,
+    email,
+    profilePic,
+    homeAddress,
+    nextOfKinPhone,
     relationship,
-    newPassword 
+    newPassword
   } = req.body;
 
   try {
     const data: any = {
       fullname,
       nationalId,
-      phone, 
-      email, 
-      profilePic, 
-      homeAddress, 
-      nextOfKinPhone, 
+      phone,
+      email,
+      profilePic,
+      homeAddress,
+      nextOfKinPhone,
       relationship,
       verificationCode: Math.floor(100000 + Math.random() * 900000).toString()
     };
@@ -204,9 +202,9 @@ export const updateOnboarding = async (req: Request, res: Response) => {
       }
     }
 
-    return res.status(200).json({ 
-      success: true, 
-      message: "Profile updated. Verification code sent to email." 
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated. Verification code sent to email."
     });
   } catch (error: any) {
     return res.status(500).json({ success: false, message: 'Onboarding failed', error: error.message });
@@ -257,9 +255,9 @@ export const forgotPassword = async (req: Request, res: Response) => {
         html: `<b>Your reset code is: ${code}</b>`
       }).catch(err => console.error('Forgot password email failed:', err));
 
-      return res.status(200).json({ 
-        success: true, 
-        message: "Verification code sent to email." 
+      return res.status(200).json({
+        success: true,
+        message: "Verification code sent to email."
       });
     } else {
       // Notify Admin
@@ -273,9 +271,9 @@ export const forgotPassword = async (req: Request, res: Response) => {
         }
       });
 
-      return res.status(404).json({ 
-        success: false, 
-        message: "Details not found. Admin has been notified for manual reset." 
+      return res.status(404).json({
+        success: false,
+        message: "Details not found. Admin has been notified for manual reset."
       });
     }
   } catch (error: any) {
