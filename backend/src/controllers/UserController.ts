@@ -189,9 +189,9 @@ export const updateOnboarding = async (req: Request, res: Response) => {
         console.error('❌ SMTP Credentials missing in Environment Variables!');
       } else {
         transporter.sendMail({
-          from: `"Vendrax Security" <${process.env.SMTP_USER}>`,
+          from: `"MsikaPos Security" <${process.env.SMTP_USER}>`,
           to: email,
-          subject: "Vendrax Account Verification",
+          subject: "MsikaPos Account Verification",
           text: `Your verification code is: ${data.verificationCode}`,
           html: `<b>Your verification code is: ${data.verificationCode}</b>`
         }).then(() => {
@@ -248,7 +248,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
       });
 
       transporter.sendMail({
-        from: `"Vendrax Support" <${process.env.SMTP_USER}>`,
+        from: `"MsikaPos Support" <${process.env.SMTP_USER}>`,
         to: email,
         subject: "Password Reset Code",
         text: `Your reset code is: ${code}`,

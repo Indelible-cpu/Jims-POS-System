@@ -23,7 +23,7 @@ const LockedPage: React.FC<LockedPageProps> = ({ isSuperAdmin, onUnlock }) => {
         
         <h1 className="text-2xl font-black tracking-tight mb-4">System locked</h1>
         <p className="text-surface-text/40 text-xs font-bold leading-relaxed mb-8">
-          Access to Vendrax is currently restricted by the Super Administrator or due to non-working hours.
+          Access to MsikaPos is currently restricted by the Super Administrator or due to non-working hours.
         </p>
         
         <div className="flex flex-col items-center gap-4">

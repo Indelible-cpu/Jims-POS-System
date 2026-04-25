@@ -21,7 +21,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
   const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const shopName = branch?.name || localStorage.getItem('companyName') || 'VENDRAX';
+  const shopName = branch?.name || localStorage.getItem('companyName') || 'MSIKAPOS';
   const shopAddress = branch?.address || 'Excellence in Service'; 
   const shopTel = branch?.phone || '+265 999 000 000';
   const shopEmail = branch?.email;
@@ -132,7 +132,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
            <span className="text-[8px] font-bold tracking-[0.3em] mt-1">{invoiceNo}</span>
         </div>
 
-        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by Vendrax Cloud POS</div>
+        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by MsikaPos Cloud POS</div>
       </div>
       
       <style dangerouslySetInnerHTML={{ __html: `

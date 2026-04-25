@@ -19,7 +19,7 @@ api.interceptors.request.use(async (config) => {
   
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    console.log('Using Vendrax Backend Token');
+    console.log('Using MsikaPos Backend Token');
   } else {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {

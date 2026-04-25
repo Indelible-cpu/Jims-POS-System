@@ -208,14 +208,14 @@ const BranchesPage: React.FC = () => {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">EMAIL ADDRESS</label>
-                      <input type="email" className="input-field w-full" placeholder="eg. branch@vendrax.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                      <input type="email" className="input-field w-full" placeholder="eg. branch@msikapos.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                     </div>
                   </div>
                   
                   <div className="space-y-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">FACEBOOK PAGE (OPTIONAL)</label>
-                      <input className="input-field w-full" placeholder="eg. facebook.com/vendrax" value={formData.facebook} onChange={e => setFormData({...formData, facebook: e.target.value})} />
+                      <input className="input-field w-full" placeholder="eg. facebook.com/msikapos" value={formData.facebook} onChange={e => setFormData({...formData, facebook: e.target.value})} />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black  tracking-widest text-surface-text/40 ml-1">BRANCH SLOGAN</label>

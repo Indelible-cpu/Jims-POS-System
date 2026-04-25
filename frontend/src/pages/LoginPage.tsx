@@ -80,7 +80,7 @@ const LoginPage: React.FC = () => {
       const credential = await navigator.credentials.create({
         publicKey: {
           challenge,
-          rp: { name: 'Vendrax POS', id: window.location.hostname },
+          rp: { name: 'MsikaPos', id: window.location.hostname },
           user: {
             id: userId,
             name: user.username || 'user',
@@ -197,10 +197,10 @@ const LoginPage: React.FC = () => {
             animate={{ scale: 1, opacity: 1 }}
             className="w-32 h-32 mx-auto flex items-center justify-center overflow-hidden flex-shrink-0 mb-6 rounded-full bg-surface-bg border border-surface-border shadow-2xl p-1"
           >
-            <img src="/icon.png?v=2" alt="Vendrax Icon" className="w-full h-full object-contain" />
+            <img src="/icon.png?v=2" alt="MsikaPos Icon" className="w-full h-full object-contain" />
           </motion.div>
           <div className="space-y-1">
-            <div className="text-[10px] font-black text-primary-500 tracking-[0.4em] uppercase opacity-60 italic">Vendrax Cloud POS</div>
+            <div className="text-[10px] font-black text-primary-500 tracking-[0.4em] uppercase opacity-60 italic">MsikaPos</div>
             <div className="w-16 h-1 bg-primary-500/10 mx-auto rounded-full"></div>
           </div>
         </div>

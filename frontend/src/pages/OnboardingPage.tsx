@@ -111,7 +111,7 @@ const OnboardingPage: React.FC = () => {
     setLoading(true);
     try {
       await api.post('/users/verify', { code: verificationCode });
-      toast.success("Account verified! Welcome to Vendrax.");
+      toast.success("Account verified! Welcome to MsikaPos.");
       
       // Update local user object
       const updatedUser = { ...user, isVerified: true, fullname, profilePic };
@@ -152,7 +152,7 @@ const OnboardingPage: React.FC = () => {
                 className="space-y-8"
               >
                 <div className="text-center">
-                  <h1 className="text-3xl font-black italic tracking-tighter text-primary-500 mb-2">Welcome to Vendrax</h1>
+                  <h1 className="text-3xl font-black italic tracking-tighter text-primary-500 mb-2">Welcome to MsikaPos</h1>
                   <p className="text-surface-text/40 text-[10px] font-black tracking-widest uppercase">Complete your profile to unlock the system</p>
                 </div>
 
@@ -213,7 +213,7 @@ const OnboardingPage: React.FC = () => {
                         type="email" 
                         title="Enter your working email"
                         className="input-field w-full pl-10 h-12 text-sm font-bold" 
-                        placeholder="john@vendrax.com"
+                        placeholder="john@msikapos.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />

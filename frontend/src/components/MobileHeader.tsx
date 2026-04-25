@@ -6,7 +6,7 @@ import MoreSheet from './MoreSheet';
 
 export default function MobileHeader() {
   const location = useLocation();
-  const [shopName, setShopName] = useState('Vendrax');
+  const [shopName, setShopName] = useState('MsikaPos');
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   useEffect(() => {

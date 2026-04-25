@@ -548,7 +548,7 @@ const POSPage: React.FC = () => {
                     const itemsText = showReceipt.items.map(i => `• ${i.product.name} x${i.quantity} @ MK ${i.product.sellPrice.toLocaleString()}`).join('\n');
                     const bankInfo = showReceipt.bankName ? `\n🏦 *${showReceipt.mode === 'Momo' ? 'Provider' : 'Bank'}*: ${showReceipt.bankName}\n🔢 *Acc/Ref*: ${showReceipt.accountNumber}` : '';
                     const taxText = showReceipt.tax > 0 ? `\nTax: MK ${showReceipt.tax.toLocaleString()}` : '';
-                    const text = `🧾 *RECEIPT: ${showReceipt.invoiceNo}*\n\n*${localStorage.getItem('companyName')?.toUpperCase() || 'VENDRAX'}*\n------------------------------\n${itemsText}\n------------------------------\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_`;
+                    const text = `🧾 *RECEIPT: ${showReceipt.invoiceNo}*\n\n*${localStorage.getItem('companyName')?.toUpperCase() || 'MSIKAPOS'}*\n------------------------------\n${itemsText}\n------------------------------\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_`;
                     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
                   }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-2xl font-black text-[10px] tracking-widest uppercase flex items-center justify-center gap-2 border border-[#25D366]/20">
                   <Send className="w-4 h-4" /> WhatsApp

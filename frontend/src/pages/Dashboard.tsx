@@ -147,10 +147,10 @@ export default function Dashboard() {
         <div className="mb-10 px-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full border border-zinc-200 overflow-hidden shadow-sm">
-              <img src="/vendrax-logo.png" alt="Vendrax" className="w-full h-full object-cover" />
+              <img src="/icon.png" alt="MsikaPos" className="w-full h-full object-cover" />
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tighter text-zinc-900">Vendrax</h1>
+              <h1 className="text-2xl font-black tracking-tighter text-zinc-900">MsikaPos</h1>
               <p className="text-[10px] tracking-[0.2em] text-zinc-700 font-bold -mt-1">{shopName || 'Management suite'}</p>
             </div>
           </div>

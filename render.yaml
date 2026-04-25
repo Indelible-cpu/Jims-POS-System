@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vendrax-backend
+    name: msikapos
     runtime: node
     rootDir: backend
     plan: free
