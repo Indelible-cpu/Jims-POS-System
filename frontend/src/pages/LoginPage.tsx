@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '../api/client';
 import { Lock, User as UserIcon, Loader2, Eye, EyeOff, Fingerprint, ChevronRight, ShieldCheck, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +23,6 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
   const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
-  const navigate = useNavigate();
 
   const handleBiometricLogin = useCallback(async () => {
     try {
