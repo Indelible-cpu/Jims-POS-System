@@ -35,6 +35,7 @@ app.use(morgan('dev'));
 
 // Health Check
 app.get('/ping', (_req, res) => res.send('pong'));
+app.get('/api/ping', (_req, res) => res.send('pong'));
 
 // Public Routes
 app.post('/api/auth/login', UserCtrl.loginUser as any);

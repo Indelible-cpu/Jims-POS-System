@@ -93,6 +93,7 @@ export const fetchUsers = async (req: Request, res: Response) => {
         branch_id: u.branchId,
         branch_name: u.branch?.name || 'N/A',
         isVerified: u.isVerified,
+        status: u.status,
         createdAt: u.createdAt,
       })),
     });

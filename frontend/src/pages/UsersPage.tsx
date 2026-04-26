@@ -228,8 +228,8 @@ const UsersPage: React.FC = () => {
   };
 
   const filteredUsers = users.filter(u => 
-    u.fullname?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    u.username.toLowerCase().includes(searchTerm.toLowerCase())
+    (u.fullname || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (u.username || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -307,7 +307,7 @@ const UsersPage: React.FC = () => {
                       </div>
                       {u.status !== 'ACTIVE' && (
                         <div className={`px-3 py-1 ${u.status === 'SUSPENDED' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'} border rounded-full text-[8px] font-black tracking-widest`}>
-                           {u.status.charAt(0) + u.status.slice(1).toLowerCase()}
+                           {(u.status || 'ACTIVE').length > 0 ? (u.status || 'ACTIVE').charAt(0) + (u.status || 'ACTIVE').slice(1).toLowerCase() : ''}
                         </div>
                       )}
                       {u.isVerified && (

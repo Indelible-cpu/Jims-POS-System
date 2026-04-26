@@ -131,8 +131,8 @@ const DashboardPage: React.FC = () => {
                  </div>
               </div>
 
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
+              <div className="h-[300px] w-full min-h-[300px]">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <AreaChart data={chartData}>
                     <defs>
                       <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
@@ -186,8 +186,8 @@ const DashboardPage: React.FC = () => {
                  <h3 className="text-base font-black italic tracking-tighter text-amber-500">Peak Flow</h3>
                  <div className="card-label">Transactions per day</div>
               </div>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
+              <div className="h-[300px] w-full min-h-[300px]">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <BarChart data={chartData}>
                     <Bar dataKey="customers" radius={[10, 10, 0, 0]}>
                       {chartData.map((_, index) => (
