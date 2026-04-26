@@ -65,7 +65,7 @@ const BranchesPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-0 py-0 md:px-6 md:py-6 bg-surface-card md:border-b border-surface-border sticky top-0 z-30">
+      <header className="px-0 py-0 md:px-6 md:py-6 bg-transparent md:border-b border-surface-border sticky top-0 z-30">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="hidden md:block">
@@ -82,7 +82,7 @@ const BranchesPage: React.FC = () => {
 
           <div className="grid grid-cols-3 gap-2 md:gap-4">
             {stats.map((stat, i) => (
-              <div key={i} className="bg-surface-bg border border-surface-border p-3 md:p-4 rounded-none shadow-inner">
+              <div key={i} className="p-3 md:p-4 border-r border-surface-border/50">
                 <div className={`p-1.5 rounded-lg bg-surface-card border border-surface-border w-fit mb-2 ${stat.color}`}>
                   <stat.icon className="w-3.5 h-3.5" />
                 </div>
@@ -101,7 +101,7 @@ const BranchesPage: React.FC = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-surface-card md:border border-surface-border md:rounded-none overflow-hidden group hover:border-primary-500/30 transition-all border-b border-surface-border/50"
+            className="overflow-hidden group transition-all border-b border-surface-border/50"
           >
             <div className="h-28 bg-gradient-to-br from-primary-600/10 to-primary-900/40 relative">
                <div className="absolute -bottom-6 left-6 w-14 h-14 bg-surface-card border-2 border-primary-500/10 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform group-hover:border-primary-500/30 overflow-hidden">

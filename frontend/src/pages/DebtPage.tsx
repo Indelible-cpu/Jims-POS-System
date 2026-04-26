@@ -159,7 +159,7 @@ const DebtPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-0 py-0 md:px-6 md:py-6 bg-surface-card md:border-b border-surface-border sticky top-0 z-30">
+      <header className="px-0 py-0 md:px-6 md:py-6 bg-transparent md:border-b border-surface-border sticky top-0 z-30">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -200,7 +200,7 @@ const DebtPage: React.FC = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               key={customer.id}
               onClick={() => setSelectedCustomer(customer)}
-              className="bg-surface-card md:border border-surface-border md:rounded-none p-5 group hover:border-primary-500/30 transition-all cursor-pointer border-b md:border-b-surface-border border-b-surface-border/50"
+              className="p-5 group transition-all cursor-pointer border-b border-surface-border/50"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="w-12 h-12 bg-surface-bg rounded-xl overflow-hidden flex items-center justify-center border border-surface-border group-hover:border-primary-500/30 transition-colors">

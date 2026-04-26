@@ -230,7 +230,7 @@ const UsersPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-0 py-0 md:px-0 md:py-0 bg-surface-card md:border-b border-surface-border sticky top-0 z-30">
+      <header className="px-0 py-0 md:px-0 md:py-0 bg-transparent md:border-b border-surface-border sticky top-0 z-30">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="hidden md:flex items-center gap-3">
@@ -265,7 +265,7 @@ const UsersPage: React.FC = () => {
             <div className="col-span-full py-20 text-center text-surface-text/20 font-black text-xs tracking-widest">No team members found</div>
          ) : (
            filteredUsers.map(u => (
-             <div key={u.id} className="bg-surface-card md:border border-surface-border p-8 md:rounded-none group hover:border-primary-500/30 transition-all relative overflow-hidden border-b border-surface-border/50">
+             <div key={u.id} className="p-8 group transition-all relative overflow-hidden border-b border-surface-border/50">
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all z-10">
                    <button title="Edit User" onClick={() => handleEdit(u)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-primary-400 transition-colors"><Edit2 className="w-4 h-4" /></button>
                    {u.status === 'ACTIVE' ? (
@@ -281,9 +281,9 @@ const UsersPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                   <div className="w-24 h-24 bg-primary-600/10 text-primary-400 rounded-none flex items-center justify-center mb-6 border-2 border-primary-500/10 group-hover:border-primary-500/30 group-hover:scale-105 transition-all shadow-xl shadow-primary-500/5 relative">
+                   <div className="w-24 h-24 bg-primary-600/10 text-primary-400 rounded-none flex items-center justify-center mb-6 border-2 border-primary-500/10 group-hover:border-primary-500/30 group-hover:scale-105 transition-all relative">
                       {u.role === 'SUPER_ADMIN' && (
-                        <div className="absolute -top-2 -right-2 bg-emerald-500 text-white p-1.5 rounded-full shadow-lg border-4 border-surface-card">
+                        <div className="absolute -top-2 -right-2 bg-emerald-500 text-white p-1.5 rounded-full border-4 border-surface-bg">
                           <ShieldCheck className="w-3 h-3" />
                         </div>
                       )}

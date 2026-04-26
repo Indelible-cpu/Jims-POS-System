@@ -80,7 +80,7 @@ const DashboardPage: React.FC = () => {
              <TrendingUp className="w-6 h-6 text-primary-500" />
              Business Overview
            </h2>
-           <div className="text-[10px] font-black text-surface-text/30 tracking-widest bg-surface-card px-4 py-2 rounded-xl border border-surface-border">
+           <div className="text-[10px] font-black text-surface-text/30 tracking-widest px-0 py-2 border-b border-surface-border">
              Real-time Sync Active
            </div>
         </div>
@@ -93,7 +93,7 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-surface-card border border-surface-border p-8 rounded-none group hover:border-primary-500/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
+              className="p-8 transition-all duration-500 border-b md:border-b-0 md:border-r border-surface-border/50"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-2xl bg-surface-bg border border-surface-border group-hover:border-primary-500/20 transition-colors ${stat.color}`}>
@@ -111,9 +111,9 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-surface-border">
            {/* Revenue & Customer Flow Chart */}
-           <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-none p-10 relative overflow-hidden shadow-sm">
+           <div className="lg:col-span-2 p-10 relative overflow-hidden md:border-r border-surface-border/50">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
                  <div>
                     <h3 className="text-base font-black italic tracking-tighter text-primary-500">Business Analytics</h3>
@@ -181,7 +181,7 @@ const DashboardPage: React.FC = () => {
            </div>
 
            {/* Daily Flow Breakdown */}
-           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
+           <div className="p-10">
               <div className="mb-10">
                  <h3 className="text-base font-black italic tracking-tighter text-amber-500">Peak Flow</h3>
                  <div className="card-label">Transactions per day</div>
@@ -217,8 +217,8 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Expenses & Low Stock Alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border-t border-surface-border">
+           <div className="p-10 md:border-r border-surface-border/50">
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Recent Expenses</h3>
                  <div className="flex gap-4 items-center">
@@ -230,7 +230,7 @@ const DashboardPage: React.FC = () => {
               </div>
               <div className="space-y-4">
                  {expenses?.slice(0, 5).sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((expense, i) => (
-                   <div key={i} className="flex justify-between items-center p-4 bg-surface-bg/50 rounded-2xl border border-surface-border group hover:border-rose-500/20 transition-all">
+                   <div key={i} className="flex justify-between items-center p-4 bg-transparent border-b border-surface-border/50 group hover:bg-surface-card/5 transition-all">
                       <div className="flex items-center gap-3">
                          <div className="w-10 h-10 bg-rose-500/10 text-rose-500 rounded-xl flex items-center justify-center">
                             <Receipt className="w-5 h-5" />
@@ -251,14 +251,14 @@ const DashboardPage: React.FC = () => {
               </div>
            </div>
 
-           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
+           <div className="p-10">
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Low Stock Alert</h3>
                  <Link to="/inventory" className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</Link>
               </div>
               <div className="space-y-4">
                  {products?.filter(p => !p.isService && p.quantity <= 5).slice(0, 5).map((p, i) => (
-                   <div key={i} className="flex justify-between items-center p-4 bg-red-500/5 rounded-2xl border border-red-500/10">
+                   <div key={i} className="flex justify-between items-center p-4 bg-transparent border-b border-surface-border/50 transition-all">
                       <div className="flex items-center gap-3">
                          <div className="w-10 h-10 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center">
                             <Package className="w-5 h-5" />
@@ -282,14 +282,14 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Credit Customers */}
-        <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
+        <div className="p-10 border-t border-surface-border">
            <div className="flex justify-between items-center mb-10">
               <h3 className="text-sm font-black italic text-surface-text/40">Active Credits</h3>
               <Link to="/debt" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
            </div>
            <div className="p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
               {creditCustomers?.slice(0, 6).map((customer, i) => (
-                <div key={i} className="flex justify-between items-center p-4 bg-surface-bg/50 rounded-2xl border border-surface-border group hover:border-amber-500/20 transition-all">
+                <div key={i} className="flex justify-between items-center p-4 bg-transparent border-b border-surface-border/50 group hover:bg-surface-card/5 transition-all">
                    <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-amber-500/10 text-amber-500 rounded-xl flex items-center justify-center">
                          <Users className="w-5 h-5" />

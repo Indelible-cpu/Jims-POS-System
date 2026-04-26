@@ -587,7 +587,7 @@ const POSPage: React.FC = () => {
       </AnimatePresence>
 
       <div className="flex-1 flex flex-col min-h-0 bg-surface-bg overflow-y-auto custom-scrollbar">
-        <header className="p-4 md:p-6 border-b border-surface-border bg-surface-card shadow-sm sticky top-0 z-10">
+        <header className="p-4 md:p-6 border-b border-surface-border bg-transparent sticky top-0 z-10">
           <div className="flex items-center gap-3">
             <div className="relative flex-1 group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5 group-focus-within:text-primary-500 transition-colors" />
@@ -607,7 +607,7 @@ const POSPage: React.FC = () => {
                 await SyncService.pushSales();
                 setIsSyncing(false);
                 toast.success('Synced');
-              }} className={clsx("p-4 bg-surface-card border border-surface-border rounded-none text-primary-500", isSyncing && "animate-spin")} title="Sync Sales" aria-label="Sync Sales">
+              }} className={clsx("p-4 bg-transparent border border-surface-border rounded-none text-primary-500", isSyncing && "animate-spin")} title="Sync Sales" aria-label="Sync Sales">
               <RefreshCw className="w-6 h-6" />
             </button>
           </div>
@@ -629,7 +629,7 @@ const POSPage: React.FC = () => {
                       exit={{ opacity: 0, scale: 0.9 }} 
                       key={product.id} 
                       onClick={() => addToCart(product)} 
-                      className="bg-surface-card border border-surface-border p-6 rounded-none cursor-pointer active:scale-[0.98] transition-all group hover:border-primary-500/40 flex items-center justify-between gap-4 shadow-sm hover:shadow-lg"
+                      className="p-6 cursor-pointer active:scale-[0.98] transition-all group border-b border-surface-border/50 flex items-center justify-between gap-4"
                     >
                       <div className="flex flex-col min-w-0">
                         <div className="card-label !mb-0">{product.sku}</div>
@@ -663,10 +663,10 @@ const POSPage: React.FC = () => {
                 <p className="text-xs font-black tracking-widest">Cart is ready for products</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-0 border-t border-surface-border">
                 <AnimatePresence mode="popLayout">
                   {cart.map((item) => (
-                    <motion.div layout initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} key={item.product.id} className="p-6 bg-surface-card border border-surface-border rounded-none group shadow-sm">
+                    <motion.div layout initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} key={item.product.id} className="p-6 group border-b border-surface-border">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex-1">
                           <div className="font-black text-lg leading-tight">{item.product.name}</div>
@@ -688,8 +688,8 @@ const POSPage: React.FC = () => {
                   ))}
                 </AnimatePresence>
 
-                {/* Checkout Summary Bar - Centered at the bottom of the list */}
-                <div className="mt-12 bg-surface-card border border-surface-border rounded-[3rem] p-8 shadow-2xl space-y-8">
+                {/* Checkout Summary Bar - Seamless flow */}
+                <div className="mt-12 p-8 border-t border-surface-border space-y-8">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {[
                       { id: 'Cash', icon: Wallet, color: 'bg-primary-500' },

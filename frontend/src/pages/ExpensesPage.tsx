@@ -78,7 +78,7 @@ const ExpensesPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-0 py-0 md:px-6 md:py-6 bg-surface-card md:border-b border-surface-border sticky top-0 z-30">
+      <header className="px-0 py-0 md:px-6 md:py-6 bg-transparent md:border-b border-surface-border sticky top-0 z-30">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="hidden md:flex items-center gap-3">
@@ -96,7 +96,7 @@ const ExpensesPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <div className="bg-surface-bg border border-surface-border p-4 rounded-2xl flex items-center gap-4">
+             <div className="p-4 border-r border-surface-border/50 flex items-center gap-4">
                 <div className="w-12 h-12 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center">
                    <ArrowDownCircle className="w-6 h-6" />
                 </div>
@@ -119,8 +119,8 @@ const ExpensesPage: React.FC = () => {
         </div>
       </header>
 
-      <div className="p-0">
-        <div className="bg-surface-card md:border border-surface-border md:rounded-none overflow-hidden divide-y divide-surface-border">
+      <div className="p-0 border-t border-surface-border">
+        <div className="overflow-hidden divide-y divide-surface-border">
           {expenses?.length === 0 ? (
             <div className="p-20 text-center text-surface-text/20 font-black text-xs  tracking-widest">No expenses recorded</div>
           ) : (

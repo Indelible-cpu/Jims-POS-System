@@ -121,7 +121,7 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full bg-surface-bg transition-all pb-32">
        {/* Desktop Header Only - Mobile uses MainLayout header */}
-       <header className="hidden md:flex px-10 py-10 bg-surface-card border-b border-surface-border sticky top-0 z-30 shadow-sm">
+       <header className="hidden md:flex px-10 py-10 bg-transparent border-b border-surface-border sticky top-0 z-30">
           <h2 className="section-title !mb-0">
             <Settings className="w-6 h-6 text-primary-500" />
             Account & System Settings
@@ -130,7 +130,7 @@ const SettingsPage: React.FC = () => {
 
        <div className="p-4 md:p-10 space-y-6 md:space-y-10">
           {/* User Profile Section */}
-          <div className="bg-surface-card p-10 border border-surface-border rounded-none flex flex-col md:flex-row items-center md:items-start gap-8 group shadow-sm hover:shadow-xl transition-all duration-500">
+          <div className="p-10 border-b border-surface-border/50 flex flex-col md:flex-row items-center md:items-start gap-8 group transition-all duration-500">
              <div className="relative w-32 h-32 shrink-0">
                 <div className="w-32 h-32 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center overflow-hidden border-2 border-primary-500/20 group-hover:border-primary-500 transition-all shadow-2xl p-1">
                    {user.profile_pic ? (
@@ -175,7 +175,7 @@ const SettingsPage: React.FC = () => {
 
           <div className="space-y-px md:space-y-6">
             {/* System Preferences */}
-            <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
+            <div className="border-t border-surface-border overflow-hidden">
                <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
                   <div className="card-label !mb-0">System preferences</div>
                </div>
@@ -309,7 +309,7 @@ const SettingsPage: React.FC = () => {
 
             {/* Super Admin Security Section */}
             {isSuperAdmin && (
-              <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
+              <div className="border-t border-surface-border overflow-hidden">
                  <div className="px-8 py-5 border-b border-surface-border/50 bg-accent-danger/5">
                     <h3 className="text-[10px] font-black text-accent-danger  tracking-[0.2em]">System security & control</h3>
                  </div>
@@ -458,7 +458,7 @@ const SettingsPage: React.FC = () => {
 
                 {/* Support & About Section - SuperAdmin Only */}
             {isSuperAdmin && (
-              <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
+              <div className="border-t border-surface-border overflow-hidden">
                  <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
                     <div className="card-label !mb-0">Support & Information</div>
                  </div>

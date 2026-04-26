@@ -267,19 +267,19 @@ const InventoryPage: React.FC = () => {
         </div>
           
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
+          <div className="p-8 border-b md:border-b-0 md:border-r border-surface-border/50">
             <div className="card-label">Total Stock Cost</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic">MK {analytics.totalCost.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
+          <div className="p-8 border-b md:border-b-0 md:border-r border-surface-border/50">
             <div className="card-label !text-emerald-500">Expected Profit</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
+          <div className="p-8 border-b md:border-b-0 md:border-r border-surface-border/50">
             <div className="card-label !text-red-500">Est. Ageing Loss</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
+          <div className="p-8">
             <div className="card-label !text-primary-500">Low Stock (Real)</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
           </div>
@@ -302,8 +302,8 @@ const InventoryPage: React.FC = () => {
             <button 
               onClick={() => setSelectedCategory(null)}
               className={clsx(
-                "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
-                !selectedCategory ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-card border-surface-border text-surface-text/40"
+                "px-8 py-3 text-[10px] font-black tracking-widest transition-all whitespace-nowrap border-b-2",
+                !selectedCategory ? "border-primary-500 text-primary-500" : "border-transparent text-surface-text/40 hover:text-surface-text"
               )}
               title="Show all categories"
               aria-label="Show all categories"
@@ -315,8 +315,8 @@ const InventoryPage: React.FC = () => {
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
                 className={clsx(
-                  "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
-                  selectedCategory === cat.id ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-card border-surface-border text-surface-text/40"
+                  "px-8 py-3 text-[10px] font-black tracking-widest transition-all whitespace-nowrap border-b-2",
+                  selectedCategory === cat.id ? "border-primary-500 text-primary-500" : "border-transparent text-surface-text/40 hover:text-surface-text"
                 )}
                 title={`Filter by ${cat.title}`}
                 aria-label={`Filter by ${cat.title}`}
@@ -338,7 +338,7 @@ const InventoryPage: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 key={product.id}
-                className="bg-surface-card md:border border-surface-border md:rounded-none overflow-hidden group hover:border-primary-500/30 transition-all flex flex-col border-b border-surface-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
+                className="overflow-hidden group transition-all flex flex-col border-b border-surface-border/50 duration-500"
               >
                 <div className="p-6 flex-1">
                   <div className="flex justify-between items-start mb-4">
