@@ -19,7 +19,7 @@ export const PublicStorefront: React.FC = () => {
       // Load products & services
       const allItems = await db.products.toArray();
       // Only show products with stock or services
-      setProducts(allItems.filter(p => p.isService === 1 || p.quantity > 0)); 
+      setProducts(allItems.filter(p => p.isService || p.quantity > 0)); 
 
       const company = await db.settings.get('company_config');
       if (company?.value) {
