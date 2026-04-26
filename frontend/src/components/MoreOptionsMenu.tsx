@@ -62,35 +62,39 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
                <p className="text-[10px] font-black tracking-widest text-surface-text/30 mt-1">Management & Support</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-4 gap-y-10 gap-x-2 px-6">
               {options.map((opt) => (
                 <NavLink
                   key={opt.id}
                   to={opt.path}
                   onClick={onClose}
-                  className="flex flex-col items-center justify-center gap-3 h-28 bg-surface-bg border border-surface-border rounded-[2rem] active:scale-95 transition-all group"
+                  className="flex flex-col items-center justify-center gap-3 active:scale-95 transition-all group"
                 >
                   <div className={clsx("w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-transform group-active:scale-110", opt.color)}>
                     <opt.icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-black tracking-widest italic">{opt.label}</span>
+                  <span className="text-[10px] font-black tracking-widest italic text-center leading-tight">{opt.label}</span>
                 </NavLink>
               ))}
 
               <button
                 onClick={handleLogout}
-                className="col-span-2 flex items-center justify-center gap-4 h-16 bg-rose-500/10 border border-rose-500/20 rounded-[2rem] text-rose-500 active:scale-95 transition-all mt-4"
+                className="flex flex-col items-center justify-center gap-3 active:scale-95 transition-all group"
               >
-                <LogOut className="w-6 h-6" />
-                <span className="text-sm font-black tracking-widest italic">Sign Out</span>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-rose-500 text-white shadow-lg transition-transform group-active:scale-110">
+                  <LogOut className="w-6 h-6" />
+                </div>
+                <span className="text-[10px] font-black tracking-widest italic text-rose-500">Sign Out</span>
               </button>
               
               <button
                 onClick={onClose}
-                className="col-span-2 flex items-center justify-center gap-3 h-14 bg-surface-bg border border-surface-border rounded-[2rem] text-surface-text/40 active:scale-95 transition-all mt-2 group"
+                className="flex flex-col items-center justify-center gap-3 active:scale-95 transition-all group"
               >
-                <ChevronDown className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
-                <span className="text-xs font-black tracking-widest italic">Close Options</span>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface-bg border border-surface-border text-surface-text/40 shadow-sm transition-transform group-active:scale-110">
+                  <ChevronDown className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
+                </div>
+                <span className="text-[10px] font-black tracking-widest italic text-surface-text/40">Close</span>
               </button>
             </div>
 

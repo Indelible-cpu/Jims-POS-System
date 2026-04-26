@@ -89,8 +89,12 @@ const UsersPage: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      await fetchUsers();
-      await fetchBranches();
+      setLoading(true);
+      try {
+        await Promise.all([fetchUsers(), fetchBranches()]);
+      } finally {
+        setLoading(false);
+      }
     };
     init();
   }, [fetchUsers, fetchBranches]);
@@ -261,7 +265,12 @@ const UsersPage: React.FC = () => {
       </header>
 
       <div className="p-0 md:p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-         {filteredUsers.length === 0 ? (
+         {loading && users.length === 0 ? (
+            <div className="col-span-full py-40 flex flex-col items-center justify-center gap-4">
+               <Loader2 className="w-10 h-10 text-primary-500 animate-spin" />
+               <p className="text-[10px] font-black tracking-[0.3em] text-surface-text/20 uppercase">Retrieving Team Intelligence...</p>
+            </div>
+         ) : filteredUsers.length === 0 ? (
             <div className="col-span-full py-20 text-center text-surface-text/20 font-black text-xs tracking-widest">No team members found</div>
          ) : (
            filteredUsers.map(u => (

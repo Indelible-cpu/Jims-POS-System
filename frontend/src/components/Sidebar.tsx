@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, BarChart3, Receipt, Settings, ShoppingCart, LogOut, Users, Wallet, Package, UserCheck, Building2, Info } from 'lucide-react';
 import { clsx } from 'clsx';
 import toast from 'react-hot-toast';
+import { db } from '../db/posDB';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -31,8 +32,15 @@ const Sidebar: React.FC = () => {
   const [shopLogo, setShopLogo] = React.useState('/icon.png?v=2');
 
   React.useEffect(() => {
-    const storedLogo = localStorage.getItem('companyLogo');
-    if (storedLogo) setShopLogo(storedLogo);
+    const loadSidebar = async () => {
+      const company = await db.settings.get('company_config');
+      if (company?.value) {
+        // Logo is still in storage for now
+      }
+      const storedLogo = localStorage.getItem('companyLogo');
+      if (storedLogo) setShopLogo(storedLogo);
+    };
+    loadSidebar();
   }, []);
 
   return (

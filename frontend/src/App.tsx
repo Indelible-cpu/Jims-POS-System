@@ -145,18 +145,22 @@ const App: React.FC = () => {
       <Toaster 
         position="top-center" 
         toastOptions={{
+          className: 'glass-panel',
           style: {
-            background: 'transparent',
-            boxShadow: 'none',
-            padding: 0,
-            color: 'inherit',
+            background: 'rgba(var(--bg-card-rgb), 0.8)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '1.5rem',
+            padding: '16px 24px',
+            color: 'var(--text-main)',
             fontWeight: '900',
-            fontSize: '12px',
-            letterSpacing: '0.5px'
+            fontSize: '13px',
+            letterSpacing: '0.05em',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            textTransform: 'uppercase',
+            italic: 'true'
           },
-          icon: null,
-          success: { icon: null },
-          error: { icon: null }
+          duration: 3000,
         }} 
       />
       <div className="min-h-screen selection:bg-primary-500/30">

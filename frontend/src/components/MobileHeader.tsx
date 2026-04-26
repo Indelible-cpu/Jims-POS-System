@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Bell, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { db } from '../db/posDB';
 
 export default function MobileHeader() {
   const location = useLocation();
@@ -9,9 +10,16 @@ export default function MobileHeader() {
   const [shopLogo, setShopLogo] = useState('/icon.png?v=2');
 
   useEffect(() => {
-    const updateHeader = () => {
-      const storedName = localStorage.getItem('companyName');
-      if (storedName) setShopName(storedName);
+    const updateHeader = async () => {
+      // Try DB first for persistence across logouts
+      const company = await db.settings.get('company_config');
+      if (company?.value) {
+        setShopName((company.value as { name: string }).name);
+      } else {
+        const storedName = localStorage.getItem('companyName');
+        if (storedName) setShopName(storedName);
+      }
+
       const storedLogo = localStorage.getItem('companyLogo');
       if (storedLogo) setShopLogo(storedLogo);
     };
@@ -44,7 +52,7 @@ export default function MobileHeader() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 h-[calc(64px+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] bg-surface-card/95 backdrop-blur-md border-b border-surface-border flex items-center justify-between px-4 z-[50] shadow-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary-500/20 after:to-transparent">
+      <header className="fixed top-0 left-0 right-0 h-[calc(64px+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] bg-surface-bg/95 backdrop-blur-md border-b border-surface-border flex items-center justify-between px-4 z-[50] shadow-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary-500/20 after:to-transparent">
         <div className="flex items-center gap-3 overflow-hidden">
           {isBasePage ? (
             <motion.div 

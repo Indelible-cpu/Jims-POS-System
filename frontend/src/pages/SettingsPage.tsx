@@ -224,7 +224,7 @@ const SettingsPage: React.FC = () => {
 
                <div className="p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                   <div className="flex items-center gap-4">
-                     <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                     <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                         <Smartphone className="w-5 h-5 text-primary-400" />
                      </div>
                      <div>
@@ -239,7 +239,7 @@ const SettingsPage: React.FC = () => {
                {isSuperAdmin && (
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Building2 className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -268,7 +268,7 @@ const SettingsPage: React.FC = () => {
                {isSuperAdmin && (
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Wallet className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -316,7 +316,7 @@ const SettingsPage: React.FC = () => {
 
                  <div className="p-6 border-b border-surface-border/50 flex items-center justify-between group hover:bg-accent-danger/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-accent-danger/10 rounded-none flex items-center justify-center border border-accent-danger/20 group-hover:border-accent-danger transition-all">
+                       <div className="w-10 h-10 bg-accent-danger/10 rounded-2xl flex items-center justify-center border border-accent-danger/20 group-hover:border-accent-danger transition-all">
                           <ShieldAlert className="w-5 h-5 text-accent-danger" />
                        </div>
                        <div>
@@ -335,7 +335,7 @@ const SettingsPage: React.FC = () => {
 
                   <div className="p-6 border-b border-surface-border/50 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <History className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -376,7 +376,7 @@ const SettingsPage: React.FC = () => {
 
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <TrendingUp className="w-5 h-5 text-emerald-500" />
                        </div>
                        <div>
@@ -423,7 +423,7 @@ const SettingsPage: React.FC = () => {
                 {isSuperAdmin && (
                   <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                        <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                            <Store className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
@@ -468,7 +468,7 @@ const SettingsPage: React.FC = () => {
                     className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors"
                  >
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-2xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Info className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>

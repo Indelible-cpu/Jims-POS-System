@@ -30,6 +30,7 @@ const InventoryPage: React.FC = () => {
   const [editingProduct, setEditingProduct] = useState<LocalProduct | null>(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [newCategoryTitle, setNewCategoryTitle] = useState('');
+  const [deleteConfirmation, setDeleteConfirmation] = useState<number | null>(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -196,9 +197,14 @@ const InventoryPage: React.FC = () => {
   };
 
   const deleteProduct = async (id: number) => {
-    if (confirm('Are you sure you want to delete this product?')) {
-      await db.products.delete(id);
+    setDeleteConfirmation(id);
+  };
+
+  const confirmDelete = async () => {
+    if (deleteConfirmation) {
+      await db.products.delete(deleteConfirmation);
       toast.success('Product removed');
+      setDeleteConfirmation(null);
     }
   };
 
@@ -472,6 +478,23 @@ const InventoryPage: React.FC = () => {
                   </div>
                 ))}
              </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={!!deleteConfirmation} onClose={() => setDeleteConfirmation(null)} title="Confirm Deletion">
+        <div className="p-10 text-center space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto">
+            <Trash2 className="w-8 h-8 text-red-500" />
+          </div>
+          <div>
+            <h2 className="text-xl font-black italic tracking-tighter text-red-500 mb-2">Delete Product?</h2>
+            <p className="text-surface-text/40 text-[10px] font-black tracking-widest px-4 leading-relaxed">This action cannot be undone. The product will be permanently removed from inventory.</p>
+          </div>
+          <div className="flex gap-4">
+            <button onClick={() => setDeleteConfirmation(null)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest">Cancel</button>
+            <button onClick={confirmDelete} className="flex-1 bg-red-500 text-white rounded-2xl text-[10px] font-black tracking-widest shadow-lg shadow-red-500/20 active:scale-95 transition-all">Delete</button>
           </div>
         </div>
       </Modal>
