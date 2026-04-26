@@ -29,7 +29,7 @@ export const globalLimiter = rateLimit({
 // 3. AUTH LIMITER (More strict for login)
 export const authLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // Limit each IP to 5 failed attempts per hour
+  max: 10, // Increased for smoother dev setup, adjust for production later
   message: 'Too many login attempts, your IP has been flagged',
   skipSuccessfulRequests: true,
 });
