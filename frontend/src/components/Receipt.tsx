@@ -140,12 +140,9 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
           body * { visibility: hidden; }
           .receipt, .receipt * { visibility: visible; }
           .receipt { 
-            position: fixed; 
-            left: 0; 
-            top: 0; 
+            margin: 0 auto;
             width: 80mm;
-            padding: 0;
-            margin: 0;
+            padding: 20px;
             box-shadow: none;
           }
           @page { size: 80mm auto; margin: 0; }

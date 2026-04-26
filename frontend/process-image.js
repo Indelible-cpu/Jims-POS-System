@@ -2,8 +2,8 @@ import sharp from 'sharp';
 import fs from 'fs';
 
 async function processImage() {
-  const inputPath = 'c:/Vendrax/uploads/logo.jpg';
-  const outDir = 'c:/Vendrax/frontend/public';
+  const inputPath = 'C:/Users/J DICKSON PETRO/.gemini/antigravity/brain/459f5821-6e86-4ca8-8e90-078deacb32e9/media__1777149413558.jpg';
+  const outDir = 'c:/MsikaPos/frontend/public';
   
   if (!fs.existsSync(inputPath)) {
     console.error('Logo not found at', inputPath);

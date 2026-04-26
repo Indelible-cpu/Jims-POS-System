@@ -123,12 +123,9 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
           body * { visibility: hidden; }
           .invoice, .invoice * { visibility: visible; }
           .invoice { 
-            position: fixed; 
-            left: 0; 
-            top: 0; 
+            margin: 0 auto;
             width: 80mm;
-            padding: 0;
-            margin: 0;
+            padding: 20px;
             box-shadow: none;
           }
           @page { size: 80mm auto; margin: 0; }
