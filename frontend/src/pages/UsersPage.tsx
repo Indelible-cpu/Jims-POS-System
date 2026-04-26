@@ -119,10 +119,45 @@ const UsersPage: React.FC = () => {
     }
   };
 
+  const PREDEFINED_REASONS = {
+    SUSPEND: [
+      "Suspicious login activity detected",
+      "Repeated policy violations",
+      "Stock discrepancy under investigation",
+      "Unauthorized discounts detected",
+      "Misuse of system features",
+      "Temporary suspension for training",
+      "Other (Type manually)"
+    ],
+    DEACTIVATE: [
+      "Employee resigned",
+      "End of employment contract",
+      "Staff on long-term leave",
+      "Account no longer required",
+      "Branch closure",
+      "Other (Type manually)"
+    ],
+    DELETE: [
+      "Duplicate account created by mistake",
+      "Staff member left the company",
+      "Contract terminated for cause",
+      "Account created for testing",
+      "Other (Type manually)"
+    ],
+    HARD_DELETE: [
+      "Privacy request (Right to be forgotten)",
+      "Permanent removal of test data",
+      "Security protocol enforcement",
+      "Other (Type manually)"
+    ]
+  };
+
   const handleAction = async () => {
     if (!actionModal.user || !actionModal.type) return;
-    if (!actionModal.reason && actionModal.type !== 'REACTIVATE') {
-      return toast.error("Please provide a reason for this action");
+    
+    let finalReason = actionModal.reason;
+    if (actionModal.type !== 'REACTIVATE' && !finalReason) {
+      return toast.error("Please provide a reason");
     }
 
     setLoading(true);
@@ -429,15 +464,38 @@ const UsersPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Reason for Action</label>
-            <textarea 
-              className="input-field w-full min-h-[100px] py-4 text-sm font-bold resize-none"
-              placeholder="e.g. Repeated policy violations, end of contract..."
-              value={actionModal.reason}
-              onChange={(e) => setActionModal({ ...actionModal, reason: e.target.value })}
-            />
-          </div>
+          {actionModal.type !== 'REACTIVATE' && (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Select Reason</label>
+                <select 
+                  className="input-field w-full h-14 text-sm font-bold bg-surface-bg appearance-none"
+                  value={PREDEFINED_REASONS[actionModal.type as keyof typeof PREDEFINED_REASONS]?.includes(actionModal.reason) ? actionModal.reason : "Other (Type manually)"}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setActionModal({ ...actionModal, reason: val === "Other (Type manually)" ? "" : val });
+                  }}
+                >
+                  <option value="" disabled>Choose a reason...</option>
+                  {PREDEFINED_REASONS[actionModal.type as keyof typeof PREDEFINED_REASONS]?.map(r => (
+                    <option key={r} value={r}>{r}</option>
+                  ))}
+                </select>
+              </div>
+
+              {(!PREDEFINED_REASONS[actionModal.type as keyof typeof PREDEFINED_REASONS]?.includes(actionModal.reason) || actionModal.reason === "") && (
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Manual Reason</label>
+                  <textarea 
+                    className="input-field w-full min-h-[100px] py-4 text-sm font-bold resize-none"
+                    placeholder="Type your custom reason here..."
+                    value={actionModal.reason}
+                    onChange={(e) => setActionModal({ ...actionModal, reason: e.target.value })}
+                  />
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex gap-4">
             <button 
