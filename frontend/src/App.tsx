@@ -17,6 +17,7 @@ import LockedPage from './pages/LockedPage';
 import ReportsPage from './pages/ReportsPage';
 import BranchesPage from './pages/BranchesPage';
 import AboutPage from './pages/AboutPage';
+import PublicStorefront from './pages/PublicStorefront';
 import { SyncService } from './services/SyncService';
 import MainLayout from './components/MainLayout';
 import { db } from './db/posDB';
@@ -165,17 +166,23 @@ const App: React.FC = () => {
       />
       <div className="min-h-screen selection:bg-primary-500/30">
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/onboarding" element={localStorage.getItem('token') ? <OnboardingPage /> : <Navigate to="/login" replace />} />
+          {/* Public Storefront */}
+          <Route path="/" element={<PublicStorefront />} />
+
+          {/* Staff Auth */}
+          <Route path="/staff/login" element={<LoginPage />} />
+          <Route path="/staff/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/staff/onboarding" element={localStorage.getItem('token') ? <OnboardingPage /> : <Navigate to="/staff/login" replace />} />
+          
+          {/* Private Staff Interface */}
           <Route 
-            path="/*" 
+            path="/staff/*" 
             element={
               localStorage.getItem('token') ? (
                 (() => {
                   const u = JSON.parse(localStorage.getItem('user') || '{}');
                   if (!u.isVerified || u.mustChangePassword) {
-                    return <Navigate to="/onboarding" replace />;
+                    return <Navigate to="/staff/onboarding" replace />;
                   }
                   return (
                     <MainLayout>
@@ -192,16 +199,19 @@ const App: React.FC = () => {
                         <Route path="reports" element={<ReportsPage />} />
                         <Route path="branches" element={<BranchesPage />} />
                         <Route path="about" element={<AboutPage />} />
-                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route path="" element={<Navigate to="dashboard" replace />} />
                       </Routes>
                     </MainLayout>
                   );
                 })()
               ) : (
-                <Navigate to="/login" replace />
+                <Navigate to="/staff/login" replace />
               )
             } 
           />
+          
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>

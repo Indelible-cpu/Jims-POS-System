@@ -8,10 +8,10 @@ const MobileNav: React.FC = () => {
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   const tabs = [
-    { id: 'dashboard', label: 'Home', icon: Home, path: '/dashboard' },
-    { id: 'sales', label: 'Logs', icon: Receipt, path: '/sales' },
-    { id: 'pos', label: 'Pos', icon: ShoppingCart, path: '/pos' },
-    { id: 'reports', label: 'Reports', icon: BarChart3, path: '/reports' },
+    { id: 'dashboard', label: 'Home', icon: Home, path: '/staff/dashboard' },
+    { id: 'sales', label: 'Logs', icon: Receipt, path: '/staff/sales' },
+    { id: 'pos', label: 'Pos', icon: ShoppingCart, path: '/staff/pos' },
+    { id: 'reports', label: 'Reports', icon: BarChart3, path: '/staff/reports' },
   ];
 
   return (

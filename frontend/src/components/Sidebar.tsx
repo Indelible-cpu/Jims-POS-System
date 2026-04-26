@@ -8,25 +8,25 @@ import { db } from '../db/posDB';
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const tabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard' },
-    { id: 'pos', label: 'POS Terminal', icon: ShoppingCart, path: '/pos' },
-    { id: 'sales', label: 'Daily Sales', icon: Receipt, path: '/sales' },
-    { id: 'debt', label: 'Debt Management', icon: Users, path: '/debt' },
-    { id: 'expenses', label: 'Expenses Tracking', icon: Wallet, path: '/expenses' },
-    { id: 'inventory', label: 'Stock Management', icon: Package, path: '/inventory' },
-    { id: 'team', label: 'Team Management', icon: UserCheck, path: '/users' },
-    { id: 'branches', label: 'Branch Management', icon: Building2, path: '/branches' },
-    { id: 'transactions', label: 'Transactions History', icon: BarChart3, path: '/transactions' },
-    { id: 'reports', label: 'Sales Reports', icon: BarChart3, path: '/reports' },
-    { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
-    { id: 'about', label: 'Support & About', icon: Info, path: '/about' },
+    { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/staff/dashboard' },
+    { id: 'pos', label: 'POS Terminal', icon: ShoppingCart, path: '/staff/pos' },
+    { id: 'sales', label: 'Daily Sales', icon: Receipt, path: '/staff/sales' },
+    { id: 'debt', label: 'Debt Management', icon: Users, path: '/staff/debt' },
+    { id: 'expenses', label: 'Expenses Tracking', icon: Wallet, path: '/staff/expenses' },
+    { id: 'inventory', label: 'Stock Management', icon: Package, path: '/staff/inventory' },
+    { id: 'team', label: 'Team Management', icon: UserCheck, path: '/staff/users' },
+    { id: 'branches', label: 'Branch Management', icon: Building2, path: '/staff/branches' },
+    { id: 'transactions', label: 'Transactions History', icon: BarChart3, path: '/staff/transactions' },
+    { id: 'reports', label: 'Sales Reports', icon: BarChart3, path: '/staff/reports' },
+    { id: 'settings', label: 'Settings', icon: Settings, path: '/staff/settings' },
+    { id: 'about', label: 'Support & About', icon: Info, path: '/staff/about' },
   ];
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     toast.success('Signed out successfully');
-    navigate('/login');
+    navigate('/staff/login');
   };
 
   const [shopLogo, setShopLogo] = React.useState('/icon.png?v=2');

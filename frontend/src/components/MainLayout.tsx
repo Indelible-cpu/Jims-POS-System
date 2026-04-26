@@ -12,7 +12,7 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
-  const hideNav = location.pathname === '/login';
+  const hideNav = location.pathname.includes('/login');
 
   return (
     <div className="min-h-screen flex bg-surface-bg transition-colors duration-300 mesh-bg">
