@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import { securityAlert } from '../middleware/security';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -23,12 +24,14 @@ export const loginUser = async (req: Request, res: Response) => {
     });
 
     if (!user || user.deleted) {
+      await securityAlert(req.ip || 'unknown', 'BRUTE_FORCE', `Failed login attempt for non-existent user: ${username}`);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
     const normalizedHash = user.password.replace(/^\$2y\$/, '$2a$');
     const validPassword = await bcrypt.compare(password, normalizedHash);
     if (!validPassword) {
+      await securityAlert(req.ip || 'unknown', 'BRUTE_FORCE', `Incorrect password for user: ${username}`);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 

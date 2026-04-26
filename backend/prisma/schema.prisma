@@ -259,3 +259,20 @@ enum SaleStatus {
   PENDING
   DELETED
 }
+
+model SecurityLog {
+  id        Int      @id @default(autoincrement())
+  ipAddress String
+  event     String   // BRUTE_FORCE, UNAUTHORIZED_ACCESS, XSS_ATTEMPT
+  details   String?
+  createdAt DateTime @default(now())
+}
+
+model BlockedIP {
+  id        Int      @id @default(autoincrement())
+  ipAddress String   @unique
+  reason    String
+  blockedAt DateTime @default(now())
+  expiresAt DateTime?
+}
+

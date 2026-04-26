@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { securityAlert } from '../middleware/security';
 
 interface AuthRequest extends Request {
   user?: {
@@ -17,6 +18,7 @@ export const registerCustomer = async (req: Request, res: Response) => {
   try {
     const existing = await prisma.customer.findUnique({ where: { username: username } });
     if (existing) {
+      await securityAlert(req.ip || 'unknown', 'RECONNAISSANCE', `Registration attempt with existing username: ${username}`);
       return res.status(400).json({ success: false, message: 'Username already taken' });
     }
 
@@ -58,11 +60,13 @@ export const loginCustomer = async (req: Request, res: Response) => {
   try {
     const customer = await prisma.customer.findUnique({ where: { username } });
     if (!customer || !customer.password) {
+      await securityAlert(req.ip || 'unknown', 'BRUTE_FORCE', `Customer login failed: ${username}`);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
     const validPassword = await bcrypt.compare(password, customer.password);
     if (!validPassword) {
+      await securityAlert(req.ip || 'unknown', 'BRUTE_FORCE', `Customer incorrect password: ${username}`);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
