@@ -21,7 +21,6 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
   const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const shopName = branch?.name || localStorage.getItem('companyName') || 'MsikaPos';
   const shopAddress = branch?.address || 'Excellence in Service'; 
   const shopTel = branch?.phone || '+265 999 000 000';
   const shopEmail = branch?.email;
