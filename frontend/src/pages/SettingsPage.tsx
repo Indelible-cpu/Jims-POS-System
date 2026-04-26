@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet, Plus, Package, ShieldAlert, History, TrendingUp, Building2, Settings } from 'lucide-react';
+import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet, Plus, Package, ShieldAlert, History, TrendingUp, Building2, Settings, Info, ChevronRight } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
 import { db } from '../db/posDB';
@@ -487,6 +487,29 @@ const SettingsPage: React.FC = () => {
                  </div>
               </div>
             )}
+
+            {/* Support & About Section */}
+            <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+               <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
+                  <div className="card-label !mb-0">Support & Information</div>
+               </div>
+               
+               <button 
+                  onClick={() => navigate('/about')}
+                  className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors"
+               >
+                  <div className="flex items-center gap-4">
+                     <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                        <Info className="w-5 h-5 text-primary-400" />
+                     </div>
+                     <div>
+                        <div className="font-black text-sm tracking-tight">Support & Documentation</div>
+                        <div className="text-xs text-surface-text/40 font-bold">FAQ, Troubleshooting and Privacy Policy</div>
+                     </div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-surface-text/20 group-hover:text-primary-500 transition-all" />
+               </button>
+            </div>
 
             {/* Logout Action */}
             <div className="p-6 md:px-0 md:hidden">

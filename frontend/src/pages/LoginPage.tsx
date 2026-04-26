@@ -273,8 +273,17 @@ const LoginPage: React.FC = () => {
             </button>
           )}
 
+          <Link to="/about" className="md:hidden w-full h-14 bg-surface-card border border-surface-border rounded-2xl flex items-center justify-center gap-2 text-[10px] font-black tracking-widest text-surface-text/40 active:scale-95 transition-all">
+            <Info className="w-4 h-4" />
+            About MsikaPos
+          </Link>
+
           <Link to="/forgot-password" className="text-[10px] font-black  tracking-widest text-surface-text/20 hover:text-primary-500 transition-colors">
              Forgot Password?
+          </Link>
+
+          <Link to="/about" className="hidden md:block text-[10px] font-black tracking-widest text-surface-text/20 hover:text-primary-500 transition-colors">
+            About MsikaPos
           </Link>
         </div>
 

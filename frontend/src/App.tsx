@@ -16,6 +16,7 @@ import OnboardingPage from './pages/OnboardingPage';
 import LockedPage from './pages/LockedPage';
 import ReportsPage from './pages/ReportsPage';
 import BranchesPage from './pages/BranchesPage';
+import AboutPage from './pages/AboutPage';
 import { SyncService } from './services/SyncService';
 import MainLayout from './components/MainLayout';
 import { db } from './db/posDB';
@@ -162,6 +163,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/onboarding" element={localStorage.getItem('token') ? <OnboardingPage /> : <Navigate to="/login" replace />} />
           <Route 
             path="/*" 

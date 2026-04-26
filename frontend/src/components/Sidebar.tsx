@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, BarChart3, Receipt, Settings, ShoppingCart, LogOut, Users, Wallet, Package, UserCheck, Building2 } from 'lucide-react';
+import { Home, BarChart3, Receipt, Settings, ShoppingCart, LogOut, Users, Wallet, Package, UserCheck, Building2, Info } from 'lucide-react';
 import { clsx } from 'clsx';
 import toast from 'react-hot-toast';
 
@@ -18,6 +18,7 @@ const Sidebar: React.FC = () => {
     { id: 'transactions', label: 'Transactions History', icon: BarChart3, path: '/transactions' },
     { id: 'reports', label: 'Sales Reports', icon: BarChart3, path: '/reports' },
     { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
+    { id: 'about', label: 'Support & About', icon: Info, path: '/about' },
   ];
 
   const handleLogout = () => {
