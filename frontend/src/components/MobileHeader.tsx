@@ -82,18 +82,8 @@ export default function MobileHeader() {
             <Bell className="w-5 h-5" />
             <span className="absolute top-2 right-2 w-2 h-2 bg-primary-500 rounded-full border-2 border-surface-card"></span>
           </button>
-          <button 
-            onClick={() => setIsMoreOpen(true)}
-            className="w-10 h-10 rounded-xl border border-surface-border bg-surface-bg flex items-center justify-center overflow-hidden active:scale-95 transition-all text-surface-text/40 hover:text-primary-500 hover:border-primary-500/20"
-            title="More Options"
-            aria-label="More Options"
-          >
-             <LayoutGrid className="w-5 h-5" />
-          </button>
         </div>
       </header>
-
-      <MoreSheet isOpen={isMoreOpen} onClose={() => setIsMoreOpen(false)} />
     </>
   );
 }

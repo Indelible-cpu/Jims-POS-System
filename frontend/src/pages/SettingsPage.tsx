@@ -170,45 +170,47 @@ const SettingsPage: React.FC = () => {
                   <div className="card-label !mb-0">System preferences</div>
                </div>
                
-               {/* Logo Upload Section */}
-               <div className="p-8 border-b border-surface-border/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group hover:bg-primary-500/5 transition-colors">
-                  <div className="flex items-center gap-6">
-                     <div className="w-20 h-20 rounded-full border-2 border-primary-500/40 overflow-hidden bg-surface-bg flex items-center justify-center shrink-0 shadow-xl shadow-primary-500/5 group-hover:border-primary-500 transition-all p-1">
-                        {localStorage.getItem('companyLogo') ? (
-                           <img src={localStorage.getItem('companyLogo')!} alt="Company Logo" className="w-full h-full object-contain rounded-full" />
-                        ) : (
-                           <Store className="w-8 h-8 text-surface-text/20" />
-                        )}
-                     </div>
-                     <div>
-                        <div className="font-black text-base tracking-tight italic">Company branding</div>
-                        <div className="card-label !mb-0">Set a circular logo for the system header</div>
-                     </div>
+                {/* Logo Upload Section - SuperAdmin Only */}
+                {isSuperAdmin && (
+                  <div className="p-8 border-b border-surface-border/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group hover:bg-primary-500/5 transition-colors">
+                    <div className="flex items-center gap-6">
+                       <div className="w-20 h-20 rounded-full border-2 border-primary-500/40 overflow-hidden bg-surface-bg flex items-center justify-center shrink-0 shadow-xl shadow-primary-500/5 group-hover:border-primary-500 transition-all p-1">
+                          {localStorage.getItem('companyLogo') ? (
+                             <img src={localStorage.getItem('companyLogo')!} alt="Company Logo" className="w-full h-full object-contain rounded-full" />
+                          ) : (
+                             <Store className="w-8 h-8 text-surface-text/20" />
+                          )}
+                       </div>
+                       <div>
+                          <div className="font-black text-base tracking-tight italic">Company branding</div>
+                          <div className="card-label !mb-0">Set a circular logo for the system header</div>
+                       </div>
+                    </div>
+                    <label className="btn-primary !px-6 !py-3 text-[10px] font-black tracking-widest  cursor-pointer w-full md:w-auto text-center shadow-lg shadow-primary-500/20" title="Upload company logo">
+                       Upload logo
+                       <input 
+                          type="file" 
+                          accept="image/*" 
+                          className="hidden" 
+                          title="Choose company logo file"
+                          aria-label="Choose company logo file"
+                          onChange={(e) => {
+                             const file = e.target.files?.[0];
+                             if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                   localStorage.setItem('companyLogo', reader.result as string);
+                                   toast.success('Logo updated');
+                                   window.dispatchEvent(new Event('storage'));
+                                   window.location.reload();
+                                };
+                                reader.readAsDataURL(file);
+                             }
+                          }} 
+                       />
+                    </label>
                   </div>
-                  <label className="btn-primary !px-6 !py-3 text-[10px] font-black tracking-widest  cursor-pointer w-full md:w-auto text-center shadow-lg shadow-primary-500/20" title="Upload company logo">
-                     Upload logo
-                     <input 
-                        type="file" 
-                        accept="image/*" 
-                        className="hidden" 
-                        title="Choose company logo file"
-                        aria-label="Choose company logo file"
-                        onChange={(e) => {
-                           const file = e.target.files?.[0];
-                           if (file) {
-                              const reader = new FileReader();
-                              reader.onloadend = () => {
-                                 localStorage.setItem('companyLogo', reader.result as string);
-                                 toast.success('Logo updated');
-                                 window.dispatchEvent(new Event('storage'));
-                                 window.location.reload();
-                              };
-                              reader.readAsDataURL(file);
-                           }
-                        }} 
-                     />
-                  </label>
-               </div>
+                )}
 
                <div className="p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                   <div className="flex items-center gap-4">
@@ -488,28 +490,30 @@ const SettingsPage: React.FC = () => {
               </div>
             )}
 
-            {/* Support & About Section */}
-            <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
-               <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
-                  <div className="card-label !mb-0">Support & Information</div>
-               </div>
-               
-               <button 
-                  onClick={() => navigate('/about')}
-                  className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors"
-               >
-                  <div className="flex items-center gap-4">
-                     <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                        <Info className="w-5 h-5 text-primary-400" />
-                     </div>
-                     <div>
-                        <div className="font-black text-sm tracking-tight">Support & Documentation</div>
-                        <div className="text-xs text-surface-text/40 font-bold">FAQ, Troubleshooting and Privacy Policy</div>
-                     </div>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-surface-text/20 group-hover:text-primary-500 transition-all" />
-               </button>
-            </div>
+            {/* Support & About Section - SuperAdmin Only */}
+            {isSuperAdmin && (
+              <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+                 <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
+                    <div className="card-label !mb-0">Support & Information</div>
+                 </div>
+                 
+                 <button 
+                    onClick={() => navigate('/about')}
+                    className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors"
+                 >
+                    <div className="flex items-center gap-4">
+                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                          <Info className="w-5 h-5 text-primary-400" />
+                       </div>
+                       <div>
+                          <div className="font-black text-sm tracking-tight">Support & Documentation</div>
+                          <div className="text-xs text-surface-text/40 font-bold">FAQ, Troubleshooting and Privacy Policy</div>
+                       </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-surface-text/20 group-hover:text-primary-500 transition-all" />
+                 </button>
+              </div>
+            )}
 
             {/* Logout Action */}
             <div className="p-6 md:px-0 md:hidden">
