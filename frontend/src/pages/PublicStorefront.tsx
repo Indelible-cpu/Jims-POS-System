@@ -8,7 +8,7 @@ import CustomerAuthModal from '../components/CustomerAuthModal';
 export const PublicStorefront: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [shopName, setShopName] = useState('Storefront');
+  const [shopName, setShopName] = useState('Msika');
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [customer, setCustomer] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -16,13 +16,14 @@ export const PublicStorefront: React.FC = () => {
 
   useEffect(() => {
     const loadStorefront = async () => {
-      // Load products (mocking public fetch with local indexedDB for now)
-      const allProducts = await db.products.where('isService').equals(0).toArray();
-      setProducts(allProducts.filter(p => p.quantity > 0)); 
+      // Load products & services
+      const allItems = await db.products.toArray();
+      // Only show products with stock or services
+      setProducts(allItems.filter(p => p.isService === 1 || p.quantity > 0)); 
 
       const company = await db.settings.get('company_config');
       if (company?.value) {
-        setShopName((company.value as any).name || 'Storefront');
+        setShopName((company.value as any).name || 'Msika');
       }
 
       const storedUser = localStorage.getItem('customerUser');
@@ -115,14 +116,14 @@ export const PublicStorefront: React.FC = () => {
       {/* Hero Search */}
       <div className="w-full bg-primary-500/5 border-b border-surface-border">
         <div className="max-w-5xl mx-auto px-6 py-12 text-center">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter italic mb-4">Discover Our Products</h2>
-          <p className="text-sm font-bold text-surface-text/40 mb-8 max-w-md mx-auto">Browse our latest catalog. See something you like? Send us an inquiry instantly.</p>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter italic mb-4">Marketplace</h2>
+          <p className="text-sm font-bold text-surface-text/40 mb-8 max-w-md mx-auto">Explore premium products and professional services. Quality guaranteed at {shopName}.</p>
           
           <div className="relative max-w-xl mx-auto">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5" />
             <input 
               type="text" 
-              placeholder="Search products..."
+              placeholder="Search products & services..."
               className="w-full py-5 pl-14 pr-6 bg-surface-card border border-surface-border rounded-full outline-none focus:border-primary-500 font-bold text-sm shadow-xl shadow-surface-text/5 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -136,35 +137,55 @@ export const PublicStorefront: React.FC = () => {
         {filteredProducts.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center">
             <Package className="w-16 h-16 text-surface-text/10 mb-4" />
-            <p className="text-[10px] font-black tracking-widest text-surface-text/30 uppercase">No products available</p>
+            <p className="text-[10px] font-black tracking-widest text-surface-text/30 uppercase">No items found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map(p => (
-              <div key={p.id} className="group relative bg-surface-card border border-surface-border rounded-3xl overflow-hidden hover:border-primary-500/30 transition-all hover:shadow-2xl hover:shadow-primary-500/5">
-                <div className="aspect-square bg-surface-bg border-b border-surface-border/50 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500">
+              <div key={p.id} className="group relative bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden hover:border-primary-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-1 flex flex-col h-full">
+                {/* Badge for Product/Service */}
+                <div className="absolute top-6 right-6 z-10">
+                  <div className={`px-4 py-1.5 rounded-full text-[8px] font-black tracking-[0.2em] uppercase backdrop-blur-md border ${
+                    p.isService 
+                      ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' 
+                      : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                  }`}>
+                    {p.isService ? 'SERVICE' : 'PRODUCT'}
+                  </div>
+                </div>
+
+                <div className="aspect-[4/3] bg-surface-bg border-b border-surface-border/30 flex items-center justify-center p-12 relative overflow-hidden shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   {p.imageUrl ? (
-                    <img src={p.imageUrl} alt={p.name} className="w-full h-full object-contain drop-shadow-xl" />
+                    <img src={p.imageUrl} alt={p.name} className="w-full h-full object-contain drop-shadow-2xl scale-110 group-hover:scale-125 transition-transform duration-700" />
                   ) : (
-                    <Package className="w-20 h-20 text-surface-text/10" />
+                    <Package className="w-24 h-24 text-surface-text/5 group-hover:text-primary-500/20 transition-colors" />
                   )}
                 </div>
                 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-black text-lg tracking-tight leading-tight">{p.name}</h3>
-                    <div className="text-[9px] font-black px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full tracking-widest">In Stock</div>
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="mb-6">
+                    <div className="text-[9px] font-black text-primary-500 mb-2 tracking-[0.3em] uppercase opacity-60">
+                      {p.category?.name || 'FEATURED'}
+                    </div>
+                    <h3 className="font-black text-xl tracking-tight leading-tight group-hover:text-primary-500 transition-colors">{p.name}</h3>
                   </div>
-                  <p className="text-xl font-black text-primary-500 italic tracking-tighter mb-6">MK {p.price.toLocaleString()}</p>
-                  
-                  <button 
-                    onClick={() => handleInquiry(p)}
-                    disabled={submitting}
-                    className="w-full py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest hover:bg-primary-500 hover:text-white hover:border-primary-500 transition-all flex items-center justify-center gap-2"
-                  >
-                    {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageSquare className="w-4 h-4" />}
-                    Inquire Now
-                  </button>
+
+                  <div className="mt-auto pt-6 border-t border-surface-border/50 flex flex-col gap-6">
+                    <div className="flex items-end gap-1">
+                      <span className="text-[10px] font-black text-surface-text/20 mb-1.5 uppercase">Starting from</span>
+                      <p className="text-2xl font-black text-primary-500 italic tracking-tighter">MK {p.price.toLocaleString()}</p>
+                    </div>
+                    
+                    <button 
+                      onClick={() => handleInquiry(p)}
+                      disabled={submitting}
+                      className="w-full py-5 bg-surface-bg border border-surface-border rounded-3xl text-[10px] font-black tracking-widest hover:bg-primary-500 hover:text-white hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/30 transition-all flex items-center justify-center gap-3 active:scale-95"
+                    >
+                      {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageSquare className="w-4 h-4" />}
+                      GET A QUOTE
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
