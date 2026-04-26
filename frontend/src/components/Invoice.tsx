@@ -31,9 +31,9 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
       
       <div className="text-center border-b-2 border-black pb-4 mb-4">
         <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
-           <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
+           <img src={branch?.logo || localStorage.getItem('companyLogo') || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
-        <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
+        <h1 className="text-xl font-bold tracking-tight italic">{localStorage.getItem('companyName') || 'MsikaPos'}</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
         <p className="text-[9px] tracking-widest">{shopAddress}</p>
         <p className="text-[9px] font-bold mt-1">Tel: {shopTel}</p>
@@ -43,7 +43,11 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
       <div className="mb-4 text-[9px] space-y-1">
         <div className="font-bold flex justify-between">
            <span>Inv: {invoiceNo}</span>
-           <span>{date ? new Date(date).toLocaleDateString() : new Date().toLocaleDateString()}</span>
+           <span>{(() => {
+             if (!date) return new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+             const d = new Date(date);
+             return isNaN(d.getTime()) ? new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : d.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+           })()}</span>
         </div>
         <div>Cashier: {cashierName}</div>
       </div>

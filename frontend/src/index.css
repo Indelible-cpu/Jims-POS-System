@@ -76,27 +76,27 @@ body {
 
 @layer components {
   .glass-panel {
-    @apply backdrop-blur-xl border rounded-[2.5rem] shadow-2xl transition-all duration-500;
+    @apply backdrop-blur-xl border rounded-none shadow-2xl transition-all duration-500;
     background-color: rgba(var(--bg-card-rgb), 0.7);
     border-color: rgba(var(--bg-card-rgb), 0.1);
   }
   
   .glass-card {
-    @apply backdrop-blur-md border rounded-[2rem] hover:border-primary-500/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply backdrop-blur-md border rounded-none hover:border-primary-500/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
     background-color: rgba(var(--bg-card-rgb), 0.8);
     border-color: var(--border-color);
   }
   
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-black py-4 px-8 rounded-3xl shadow-2xl shadow-primary-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-black py-4 px-8 rounded-none shadow-2xl shadow-primary-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
   }
 
   .btn-secondary {
-    @apply bg-surface-card border border-surface-border text-surface-text/60 hover:text-surface-text font-black py-4 px-8 rounded-3xl active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
+    @apply bg-surface-card border border-surface-border text-surface-text/60 hover:text-surface-text font-black py-4 px-8 rounded-none active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
   }
   
   .input-field {
-    @apply border rounded-2xl py-4 px-6 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all font-bold text-sm;
+    @apply border rounded-none py-4 px-6 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all font-bold text-sm;
     background-color: rgba(var(--bg-card-rgb), 0.5);
     border-color: var(--border-color);
   }

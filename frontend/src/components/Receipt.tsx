@@ -30,11 +30,11 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
 
   return (
     <div className="receipt p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] leading-tight shadow-sm">
-      <div className="text-center border-b border-black pb-4 mb-4">
+      <div className="text-center border-b-2 border-black pb-4 mb-4">
         <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
-           <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
+           <img src={branch?.logo || localStorage.getItem('companyLogo') || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
-            <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
+        <h1 className="text-xl font-bold tracking-tight italic">{localStorage.getItem('companyName') || 'MsikaPos'}</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
         <p className="text-[9px] tracking-widest">{shopAddress}</p>
         <p className="text-[9px] font-bold mt-1">Tel: {shopTel}</p>
@@ -45,7 +45,11 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
       <div className="flex flex-col gap-1 mb-4 font-bold text-[9px]">
         <div className="flex justify-between">
           <span>Inv: {invoiceNo}</span>
-          <span>{date ? new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
+          <span>{(() => {
+            if (!date) return new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+            const d = new Date(date);
+            return isNaN(d.getTime()) ? new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : d.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+          })()}</span>
         </div>
         <div>Cashier: {cashierName}</div>
       </div>

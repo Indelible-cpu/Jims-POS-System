@@ -130,7 +130,7 @@ const SettingsPage: React.FC = () => {
 
        <div className="p-4 md:p-10 space-y-6 md:space-y-10">
           {/* User Profile Section */}
-          <div className="bg-surface-card p-10 border border-surface-border rounded-[2.5rem] flex flex-col md:flex-row items-center md:items-start gap-8 group shadow-sm hover:shadow-xl transition-all duration-500">
+          <div className="bg-surface-card p-10 border border-surface-border rounded-none flex flex-col md:flex-row items-center md:items-start gap-8 group shadow-sm hover:shadow-xl transition-all duration-500">
              <div className="relative w-32 h-32 shrink-0">
                 <div className="w-32 h-32 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center overflow-hidden border-2 border-primary-500/20 group-hover:border-primary-500 transition-all shadow-2xl p-1">
                    {user.profile_pic ? (
@@ -167,15 +167,15 @@ const SettingsPage: React.FC = () => {
                 <h2 className="text-3xl font-black tracking-tighter italic">{user.fullname || user.username || 'Employee'}</h2>
                 <div className="card-label !mt-1">Branch: {user.branch_name || 'Domasi Main'}</div>
                 <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
-                   <span className="px-4 py-1.5 bg-primary-500/10 text-primary-500 rounded-xl text-[10px] font-black tracking-widest border border-primary-500/20">Role: {user.role || 'Staff'}</span>
-                   <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-500 rounded-xl text-[10px] font-black tracking-widest border border-emerald-500/20">Online Status</span>
+                   <span className="px-4 py-1.5 bg-primary-500/10 text-primary-500 rounded-none text-[10px] font-black tracking-widest border border-primary-500/20">Role: {user.role || 'Staff'}</span>
+                   <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-500 rounded-none text-[10px] font-black tracking-widest border border-emerald-500/20">Online Status</span>
                 </div>
              </div>
           </div>
 
           <div className="space-y-px md:space-y-6">
             {/* System Preferences */}
-            <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+            <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
                <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
                   <div className="card-label !mb-0">System preferences</div>
                </div>
@@ -224,7 +224,7 @@ const SettingsPage: React.FC = () => {
 
                <div className="p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                   <div className="flex items-center gap-4">
-                     <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                     <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                         <Smartphone className="w-5 h-5 text-primary-400" />
                      </div>
                      <div>
@@ -239,7 +239,7 @@ const SettingsPage: React.FC = () => {
                {isSuperAdmin && (
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Building2 className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -268,7 +268,7 @@ const SettingsPage: React.FC = () => {
                {isSuperAdmin && (
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Wallet className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -309,14 +309,14 @@ const SettingsPage: React.FC = () => {
 
             {/* Super Admin Security Section */}
             {isSuperAdmin && (
-              <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+              <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
                  <div className="px-8 py-5 border-b border-surface-border/50 bg-accent-danger/5">
                     <h3 className="text-[10px] font-black text-accent-danger  tracking-[0.2em]">System security & control</h3>
                  </div>
 
                  <div className="p-6 border-b border-surface-border/50 flex items-center justify-between group hover:bg-accent-danger/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-accent-danger/10 rounded-xl flex items-center justify-center border border-accent-danger/20 group-hover:border-accent-danger transition-all">
+                       <div className="w-10 h-10 bg-accent-danger/10 rounded-none flex items-center justify-center border border-accent-danger/20 group-hover:border-accent-danger transition-all">
                           <ShieldAlert className="w-5 h-5 text-accent-danger" />
                        </div>
                        <div>
@@ -335,7 +335,7 @@ const SettingsPage: React.FC = () => {
 
                   <div className="p-6 border-b border-surface-border/50 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <History className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>
@@ -376,7 +376,7 @@ const SettingsPage: React.FC = () => {
 
                  <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <TrendingUp className="w-5 h-5 text-emerald-500" />
                        </div>
                        <div>
@@ -423,7 +423,7 @@ const SettingsPage: React.FC = () => {
                 {isSuperAdmin && (
                   <div className="p-6 flex flex-col gap-4 group hover:bg-primary-500/5 transition-colors border-b border-surface-border/50">
                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                        <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                            <Store className="w-5 h-5 text-primary-400" />
                         </div>
                         <div>
@@ -458,7 +458,7 @@ const SettingsPage: React.FC = () => {
 
                 {/* Support & About Section - SuperAdmin Only */}
             {isSuperAdmin && (
-              <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+              <div className="bg-surface-card border border-surface-border rounded-none overflow-hidden shadow-sm">
                  <div className="px-8 py-5 border-b border-surface-border/50 bg-surface-bg/30">
                     <div className="card-label !mb-0">Support & Information</div>
                  </div>
@@ -468,7 +468,7 @@ const SettingsPage: React.FC = () => {
                     className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors"
                  >
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
+                       <div className="w-10 h-10 bg-surface-bg rounded-none flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
                           <Info className="w-5 h-5 text-primary-400" />
                        </div>
                        <div>

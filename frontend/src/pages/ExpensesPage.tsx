@@ -119,8 +119,8 @@ const ExpensesPage: React.FC = () => {
         </div>
       </header>
 
-      <div className="p-0 md:p-8">
-        <div className="bg-surface-card md:border border-surface-border md:rounded-3xl overflow-hidden divide-y divide-surface-border">
+      <div className="p-0">
+        <div className="bg-surface-card md:border border-surface-border md:rounded-none overflow-hidden divide-y divide-surface-border">
           {expenses?.length === 0 ? (
             <div className="p-20 text-center text-surface-text/20 font-black text-xs  tracking-widest">No expenses recorded</div>
           ) : (

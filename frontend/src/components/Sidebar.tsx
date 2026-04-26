@@ -28,12 +28,19 @@ const Sidebar: React.FC = () => {
     navigate('/login');
   };
 
+  const [shopLogo, setShopLogo] = React.useState('/icon.png?v=2');
+
+  React.useEffect(() => {
+    const storedLogo = localStorage.getItem('companyLogo');
+    if (storedLogo) setShopLogo(storedLogo);
+  }, []);
+
   return (
     <aside className="hidden md:flex flex-col w-72 bg-surface-card border-r border-surface-border h-screen sticky top-0 overflow-hidden">
       {/* Brand Header - Fixed */}
       <div className="p-8 pb-4 shrink-0 flex flex-col items-center text-center">
         <div className="w-24 h-24 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-full bg-surface-bg border border-surface-border shadow-2xl p-1 mb-4 group-hover:scale-105 transition-transform">
-          <img src="/icon.png?v=2" alt="MsikaPos Logo" className="w-full h-full object-contain" />
+          <img src={shopLogo} alt="MsikaPos Logo" className="w-full h-full object-contain" />
         </div>
         <div className="space-y-1">
           <div className="text-[10px] font-black text-primary-500 tracking-[0.3em] opacity-80">Cloud POS</div>

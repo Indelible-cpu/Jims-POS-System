@@ -219,7 +219,7 @@ const DebtPage: React.FC = () => {
         </div>
       </header>
 
-      <div className="p-0 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 md:gap-4">
+      <div className="p-0 md:p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
         <AnimatePresence mode="popLayout">
           {customers?.map(customer => (
             <motion.div
@@ -229,7 +229,7 @@ const DebtPage: React.FC = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               key={customer.id}
               onClick={() => setSelectedCustomer(customer)}
-              className="bg-surface-card md:border border-surface-border md:rounded-2xl p-5 group hover:border-primary-500/30 transition-all cursor-pointer border-b md:border-b-surface-border border-b-surface-border/50"
+              className="bg-surface-card md:border border-surface-border md:rounded-none p-5 group hover:border-primary-500/30 transition-all cursor-pointer border-b md:border-b-surface-border border-b-surface-border/50"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="w-12 h-12 bg-surface-bg rounded-xl overflow-hidden flex items-center justify-center border border-surface-border group-hover:border-primary-500/30 transition-colors">
@@ -278,7 +278,7 @@ const DebtPage: React.FC = () => {
         {selectedCustomer && (
           <div className="p-4 md:p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border flex flex-col justify-between">
+              <div className="bg-surface-bg/50 p-6 rounded-none border border-surface-border flex flex-col justify-between">
                 <div>
                   <div className="text-[10px] font-bold text-surface-text/30">Total balance</div>
                   <div className="text-3xl font-black text-amber-500 mt-2">MK {selectedCustomer.balance.toLocaleString()}</div>
@@ -296,18 +296,15 @@ const DebtPage: React.FC = () => {
                         }
                       }
                     }}
-                    className="mt-4 text-[9px] font-black text-rose-500 tracking-widest hover:underline text-left"
+                    className="mt-6 w-full btn-primary !bg-emerald-500 !shadow-emerald-500/20 !py-3 text-[10px] font-black tracking-widest"
                   >
-                    Clear balance manually
+                    Clear balance
                   </button>
                 )}
               </div>
-              <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
-                <div className="text-[10px] font-bold text-surface-text/30">Record payment</div>
-                <div className="flex gap-2 mt-2">
-                  <input type="number" placeholder="Amount" className="input-field flex-1" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} onFocus={(e) => e.target.select()} />
-                  <button onClick={handleRecordPayment} className="btn-primary !px-4 !py-2 text-[10px] font-bold">Record</button>
-                </div>
+              <div className="bg-surface-bg/50 p-6 rounded-none border border-surface-border flex flex-col justify-center items-center text-center opacity-40 italic">
+                <div className="text-[10px] font-bold text-surface-text/30 mb-2 tracking-widest uppercase">Manual Credit Blocked</div>
+                <div className="text-[8px] font-bold">Credit must only be added through POS Terminal for audit security.</div>
               </div>
             </div>
 
@@ -315,7 +312,7 @@ const DebtPage: React.FC = () => {
               <h3 className="text-[10px] font-bold text-surface-text/30 flex items-center gap-2">
                 <History className="w-4 h-4" /> Recent transactions
               </h3>
-              <div className="bg-surface-border/20 rounded-2xl overflow-hidden border border-surface-border divide-y divide-surface-border">
+              <div className="bg-surface-border/20 rounded-none overflow-hidden border border-surface-border divide-y divide-surface-border">
                 {customerSales?.length === 0 && customerPayments?.length === 0 && (
                   <div className="p-12 text-center text-surface-text/20 font-bold text-[10px]">No transaction history</div>
                 )}

@@ -220,7 +220,7 @@ const InventoryPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full bg-surface-bg transition-all pb-24 md:pb-0">
-      <div className="px-4 py-6 md:px-10 md:py-10">
+      <div className="p-0">
         <header className="hidden md:flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <h2 className="section-title !mb-0">
             <Package className="w-6 h-6 text-primary-500" />
@@ -267,19 +267,19 @@ const InventoryPage: React.FC = () => {
         </div>
           
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
             <div className="card-label">Total Stock Cost</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic">MK {analytics.totalCost.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
             <div className="card-label !text-emerald-500">Expected Profit</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
             <div className="card-label !text-red-500">Est. Ageing Loss</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-8 rounded-none shadow-sm">
             <div className="card-label !text-primary-500">Low Stock (Real)</div>
             <div className="text-xl md:text-2xl font-black tracking-tighter italic text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
           </div>
@@ -328,8 +328,8 @@ const InventoryPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-0 md:p-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 md:gap-6">
+      <div className="p-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
           <AnimatePresence mode="popLayout">
             {filteredProducts?.map(product => (
               <motion.div
@@ -338,7 +338,7 @@ const InventoryPage: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 key={product.id}
-                className="bg-surface-card md:border border-surface-border md:rounded-[2rem] overflow-hidden group hover:border-primary-500/30 transition-all flex flex-col border-b border-surface-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
+                className="bg-surface-card md:border border-surface-border md:rounded-none overflow-hidden group hover:border-primary-500/30 transition-all flex flex-col border-b border-surface-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
               >
                 <div className="p-6 flex-1">
                   <div className="flex justify-between items-start mb-4">

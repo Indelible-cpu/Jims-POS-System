@@ -11,7 +11,6 @@ import {
   ChevronRight, 
   Plus, 
   Minus, 
-  X, 
   PackageSearch, 
   Scan, 
   CreditCard, 
@@ -35,6 +34,7 @@ import clsx from 'clsx';
 import { Receipt } from '../components/Receipt';
 import { Invoice } from '../components/Invoice';
 import BarcodeScanner from '../components/BarcodeScanner';
+import html2canvas from 'html2canvas';
 
 const generateInvoiceNo = () => `INV-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
@@ -357,7 +357,7 @@ const POSPage: React.FC = () => {
 
         {showCustomerSelector && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[120] flex items-center justify-center md:p-4 bg-black/60 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card md:border md:border-surface-border md:rounded-3xl w-full max-w-md h-full md:h-auto md:max-h-[80vh] shadow-2xl flex flex-col overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card md:border md:border-surface-border md:rounded-none w-full max-w-md h-full md:h-auto md:max-h-[80vh] shadow-2xl flex flex-col overflow-hidden">
               <div className="p-6 border-b border-surface-border bg-surface-bg/30">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-xl font-black tracking-tighter italic">Attach Customer</h3>
@@ -413,7 +413,7 @@ const POSPage: React.FC = () => {
                         {/* Photo Capture */}
                         <div className="space-y-2">
                           <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Live photo</label>
-                          <div className="w-full aspect-square bg-surface-bg border border-surface-border rounded-2xl overflow-hidden relative flex flex-col items-center justify-center">
+                          <div className="w-full aspect-square bg-surface-bg border border-surface-border rounded-none overflow-hidden relative flex flex-col items-center justify-center">
                             {custForm.livePhoto ? (
                               <img src={custForm.livePhoto} alt="Preview" className="w-full h-full object-cover" />
                             ) : useCamera ? (
@@ -449,7 +449,7 @@ const POSPage: React.FC = () => {
                             type="button" 
                             onClick={captureFingerprint}
                             disabled={!!custForm.fingerprintData}
-                            className={`w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-2 border transition-all ${custForm.fingerprintData ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500' : 'bg-surface-bg border-surface-border text-surface-text/60'}`}
+                            className={`w-full aspect-square rounded-none flex flex-col items-center justify-center gap-2 border transition-all ${custForm.fingerprintData ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500' : 'bg-surface-bg border-surface-border text-surface-text/60'}`}
                           >
                             {custForm.fingerprintData ? <CheckCircle2 className="w-8 h-8" /> : <Fingerprint className="w-8 h-8" />}
                             <span className="text-[8px] font-bold">{custForm.fingerprintData ? 'Captured' : 'Scan'}</span>
@@ -502,14 +502,14 @@ const POSPage: React.FC = () => {
 
         {showReceipt && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card max-w-lg w-full p-8 rounded-3xl flex flex-col items-center shadow-2xl">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-surface-card max-w-lg w-full p-8 rounded-none flex flex-col items-center shadow-2xl">
               <div className="w-16 h-16 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mb-6 border-2 border-emerald-500/20">
                 <ShoppingCart className="w-8 h-8" />
               </div>
               <h2 className="text-2xl font-black mb-2 tracking-tight italic">Sale Completed</h2>
               <p className="text-surface-text/40 mb-8 text-center text-[10px] font-black tracking-widest">Inv: {showReceipt.invoiceNo}</p>
               
-              <div className="w-full bg-white rounded-2xl overflow-hidden mb-8 shadow-inner border border-zinc-100 p-4 max-h-[40vh] overflow-y-auto text-black">
+              <div className="w-full bg-white rounded-none overflow-hidden mb-8 shadow-inner border border-zinc-100 p-4 max-h-[40vh] overflow-y-auto text-black">
                 {showReceipt.mode === 'Credit' ? (
                   <Invoice 
                     items={showReceipt.items}
@@ -538,17 +538,40 @@ const POSPage: React.FC = () => {
               </div>
               
               <div className="flex gap-3 w-full">
-                <button onClick={() => window.print()} className="flex-1 px-4 py-3 bg-surface-bg hover:bg-surface-border/50 rounded-2xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-surface-border">
+                <button onClick={() => window.print()} className="flex-1 px-4 py-3 bg-surface-bg hover:bg-surface-border/50 rounded-none font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-surface-border">
                   <Printer className="w-4 h-4" /> Print
                 </button>
-                <button onClick={() => {
-                    const itemsText = showReceipt.items.map(i => `▫️ ${i.product.name}\n   ${i.quantity} x MK ${i.product.sellPrice.toLocaleString()} = *MK ${(i.product.sellPrice * i.quantity).toLocaleString()}*`).join('\n\n');
-                    const bankInfo = showReceipt.bankName ? `\n\n🏦 *${showReceipt.mode === 'Momo' ? 'Provider' : 'Bank'}*: ${showReceipt.bankName}\n🔢 *Acc/Ref*: ${showReceipt.accountNumber}` : '';
-                    const taxText = showReceipt.tax > 0 ? `\nTax: MK ${showReceipt.tax.toLocaleString()}` : '';
-                    const text = `*${localStorage.getItem('companyName') || 'MsikaPos'}*\n━━━━━━━━━━━━━━━━\n🧾 *DIGITAL RECEIPT*\n━━━━━━━━━━━━━━━━\n\n*Inv*: ${showReceipt.invoiceNo}\n*Date*: ${showReceipt.date}\n\n*ITEMS:*\n${itemsText}\n\n━━━━━━━━━━━━━━━━\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n━━━━━━━━━━━━━━━━\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_\n_Powered by MsikaPos_`;
-                    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
-                  }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-2xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-[#25D366]/20">
-                  <Send className="w-4 h-4" /> WhatsApp
+                <button onClick={async () => {
+                    try {
+                      const receiptElement = document.querySelector('.invoice') || document.querySelector('.receipt');
+                      if (receiptElement) {
+                        toast.loading('Generating receipt...', { id: 'receipt' });
+                        const canvas = await html2canvas(receiptElement as HTMLElement, { scale: 2 });
+                        canvas.toBlob(async (blob) => {
+                          if (blob) {
+                            const file = new File([blob], `receipt_${showReceipt.invoiceNo}.png`, { type: 'image/png' });
+                            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                              await navigator.share({
+                                files: [file],
+                                title: `Receipt ${showReceipt.invoiceNo}`
+                              });
+                              toast.success('Shared successfully', { id: 'receipt' });
+                            } else {
+                              const itemsText = showReceipt.items.map(i => `▫️ ${i.product.name}\n   ${i.quantity} x MK ${i.product.sellPrice.toLocaleString()} = *MK ${(i.product.sellPrice * i.quantity).toLocaleString()}*`).join('\n\n');
+                              const bankInfo = showReceipt.bankName ? `\n\n🏦 *${showReceipt.mode === 'Momo' ? 'Provider' : 'Bank'}*: ${showReceipt.bankName}\n🔢 *Acc/Ref*: ${showReceipt.accountNumber}` : '';
+                              const taxText = showReceipt.tax > 0 ? `\nTax: MK ${showReceipt.tax.toLocaleString()}` : '';
+                              const text = `*${localStorage.getItem('companyName') || 'MsikaPos'}*\n━━━━━━━━━━━━━━━━\n🧾 *DIGITAL RECEIPT*\n━━━━━━━━━━━━━━━━\n\n*Inv*: ${showReceipt.invoiceNo}\n*Date*: ${showReceipt.date}\n\n*ITEMS:*\n${itemsText}\n\n━━━━━━━━━━━━━━━━\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n━━━━━━━━━━━━━━━━\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_\n_Powered by MsikaPos_`;
+                              window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+                              toast.success('Generated text receipt fallback', { id: 'receipt' });
+                            }
+                          }
+                        }, 'image/png');
+                      }
+                    } catch (error) {
+                      toast.error('Failed to generate receipt image', { id: 'receipt' });
+                    }
+                  }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-none font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-[#25D366]/20">
+                  <Send className="w-4 h-4" /> Share Receipt
                 </button>
               </div>
               <button onClick={() => setShowReceipt(null)} className="w-full mt-4 btn-primary !py-4 font-black text-[10px] tracking-widest">
@@ -575,7 +598,7 @@ const POSPage: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)} 
               />
             </div>
-            <button onClick={() => setShowScanner(true)} className="p-4 bg-primary-500 text-white rounded-2xl active:scale-95 transition-all" title="Scan Barcode" aria-label="Scan Barcode">
+            <button onClick={() => setShowScanner(true)} className="p-4 bg-primary-500 text-white rounded-none active:scale-95 transition-all" title="Scan Barcode" aria-label="Scan Barcode">
               <Scan className="w-6 h-6" />
             </button>
             <button onClick={async () => {
@@ -583,7 +606,7 @@ const POSPage: React.FC = () => {
                 await SyncService.pushSales();
                 setIsSyncing(false);
                 toast.success('Synced');
-              }} className={clsx("p-4 bg-surface-card border border-surface-border rounded-2xl text-primary-500", isSyncing && "animate-spin")} title="Sync Sales" aria-label="Sync Sales">
+              }} className={clsx("p-4 bg-surface-card border border-surface-border rounded-none text-primary-500", isSyncing && "animate-spin")} title="Sync Sales" aria-label="Sync Sales">
               <RefreshCw className="w-6 h-6" />
             </button>
           </div>
@@ -605,7 +628,7 @@ const POSPage: React.FC = () => {
                       exit={{ opacity: 0, scale: 0.9 }} 
                       key={product.id} 
                       onClick={() => addToCart(product)} 
-                      className="bg-surface-card border border-surface-border p-6 rounded-[2rem] cursor-pointer active:scale-[0.98] transition-all group hover:border-primary-500/40 flex items-center justify-between gap-4 shadow-sm hover:shadow-lg"
+                      className="bg-surface-card border border-surface-border p-6 rounded-none cursor-pointer active:scale-[0.98] transition-all group hover:border-primary-500/40 flex items-center justify-between gap-4 shadow-sm hover:shadow-lg"
                     >
                       <div className="flex flex-col min-w-0">
                         <div className="card-label !mb-0">{product.sku}</div>
@@ -642,7 +665,7 @@ const POSPage: React.FC = () => {
               <div className="space-y-4">
                 <AnimatePresence mode="popLayout">
                   {cart.map((item) => (
-                    <motion.div layout initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} key={item.product.id} className="p-6 bg-surface-card border border-surface-border rounded-[2rem] group shadow-sm">
+                    <motion.div layout initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} key={item.product.id} className="p-6 bg-surface-card border border-surface-border rounded-none group shadow-sm">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex-1">
                           <div className="font-black text-lg leading-tight">{item.product.name}</div>
@@ -654,9 +677,9 @@ const POSPage: React.FC = () => {
                       </div>
                       <div className="flex items-center justify-between pt-5 border-t border-surface-border/50">
                         <div className="flex items-center gap-2">
-                          <button onClick={() => setCart(prev => prev.map(i => i.product.id === item.product.id ? { ...i, quantity: Math.max(1, i.quantity - 1) } : i))} className="w-11 h-11 bg-surface-bg border border-surface-border rounded-2xl flex items-center justify-center hover:bg-surface-border/30 transition-all" title="Decrease quantity" aria-label="Decrease quantity"><Minus className="w-5 h-5" /></button>
+                          <button onClick={() => setCart(prev => prev.map(i => i.product.id === item.product.id ? { ...i, quantity: Math.max(1, i.quantity - 1) } : i))} className="w-11 h-11 bg-surface-bg border border-surface-border rounded-none flex items-center justify-center hover:bg-surface-border/30 transition-all" title="Decrease quantity" aria-label="Decrease quantity"><Minus className="w-5 h-5" /></button>
                           <div className="w-14 text-center font-black text-lg">{item.quantity}</div>
-                          <button onClick={() => addToCart(item.product)} className="w-11 h-11 bg-surface-bg border border-surface-border rounded-2xl flex items-center justify-center hover:bg-surface-border/30 transition-all" title="Increase quantity" aria-label="Increase quantity"><Plus className="w-5 h-5" /></button>
+                          <button onClick={() => addToCart(item.product)} className="w-11 h-11 bg-surface-bg border border-surface-border rounded-none flex items-center justify-center hover:bg-surface-border/30 transition-all" title="Increase quantity" aria-label="Increase quantity"><Plus className="w-5 h-5" /></button>
                         </div>
                         <div className="font-black text-primary-500 text-2xl tracking-tighter italic">MK {(item.product.sellPrice * item.quantity).toLocaleString()}</div>
                       </div>
@@ -677,7 +700,7 @@ const POSPage: React.FC = () => {
                         key={mode.id} 
                         onClick={() => setPaymentMode(mode.id as 'Cash' | 'Card' | 'Momo' | 'Credit')} 
                         className={clsx(
-                          "p-5 rounded-3xl border flex flex-col items-center gap-2 transition-all active:scale-95",
+                          "p-5 rounded-none border flex flex-col items-center gap-2 transition-all active:scale-95",
                           paymentMode === mode.id ? `${mode.color} text-white border-transparent shadow-lg scale-105` : "bg-surface-bg border-surface-border text-surface-text/30 hover:border-primary-500/20"
                         )}
                       >
@@ -693,11 +716,11 @@ const POSPage: React.FC = () => {
                       <>
                         <div className="space-y-1">
                           <label className="card-label ml-1">Cash Received (MK)</label>
-                          <input type="number" placeholder="Enter amount..." className="input-field w-full text-xl font-black !rounded-3xl" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} onFocus={e => e.target.select()} />
+                          <input type="number" placeholder="Enter amount..." className="input-field w-full text-xl font-black !rounded-none" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} onFocus={e => e.target.select()} />
                         </div>
                         <div className="space-y-1">
                           <label className="text-[9px] font-black text-surface-text/40 tracking-widest ml-1">Change & Tax Summary</label>
-                          <div className={clsx("h-14 flex flex-col justify-center px-6 rounded-2xl border font-black", parseFloat(amountReceived) >= finalTotal ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500" : "bg-surface-bg border-surface-border text-surface-text/10")}>
+                          <div className={clsx("h-14 flex flex-col justify-center px-6 rounded-none border font-black", parseFloat(amountReceived) >= finalTotal ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500" : "bg-surface-bg border-surface-border text-surface-text/10")}>
                             <div className="text-[10px] opacity-60">CHANGE: MK {changeDue.toLocaleString()}</div>
                             <div className="text-[10px] opacity-60">TAX: MK {taxAmount.toLocaleString()}</div>
                           </div>
@@ -708,11 +731,11 @@ const POSPage: React.FC = () => {
                       <>
                         <div className="space-y-1">
                           <label className="card-label ml-1">{paymentMode === 'Card' ? `Credited To (${paymentConfig.bank})` : `Transfered To (${paymentConfig.momo})`}</label>
-                          <input type="text" placeholder={paymentMode === 'Card' ? `e.g. ${paymentConfig.bank}` : `e.g. ${paymentConfig.momo}`} className="input-field w-full !rounded-3xl" value={bankName} onChange={e => setBankName(e.target.value)} />
+                          <input type="text" placeholder={paymentMode === 'Card' ? `e.g. ${paymentConfig.bank}` : `e.g. ${paymentConfig.momo}`} className="input-field w-full !rounded-none" value={bankName} onChange={e => setBankName(e.target.value)} />
                         </div>
                         <div className="space-y-1">
                           <label className="card-label ml-1">Account / Reference Number</label>
-                          <input type="text" placeholder="Enter account or ref..." className="input-field w-full !rounded-3xl" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
+                          <input type="text" placeholder="Enter account or ref..." className="input-field w-full !rounded-none" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
                         </div>
                       </>
                     )}
@@ -766,7 +789,7 @@ const POSPage: React.FC = () => {
                         ((paymentMode === 'Card' || paymentMode === 'Momo') && (!bankName || !accountNumber))
                       }
                       className={clsx(
-                        "w-full md:w-auto px-16 py-7 rounded-[2rem] font-black text-sm tracking-widest transition-all flex items-center justify-center gap-4 shadow-2xl active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed",
+                        "w-full md:w-auto px-16 py-7 rounded-none font-black text-sm tracking-widest transition-all flex items-center justify-center gap-4 shadow-2xl active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed",
                         paymentMode === 'Credit' ? "bg-amber-500 text-white" : "bg-primary-500 text-white shadow-primary-500/20"
                       )}
                     >

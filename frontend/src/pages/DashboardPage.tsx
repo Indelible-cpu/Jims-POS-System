@@ -9,9 +9,11 @@ import {
   DollarSign, 
   ArrowUpRight,
   Wallet,
-  Receipt
+  Receipt,
+  Plus
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   AreaChart, 
   Area, 
@@ -86,14 +88,14 @@ const DashboardPage: React.FC = () => {
         </div>
         
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           {stats.map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-surface-card border border-surface-border p-8 rounded-[2rem] group hover:border-primary-500/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
+              className="bg-surface-card border border-surface-border p-8 rounded-none group hover:border-primary-500/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-2xl bg-surface-bg border border-surface-border group-hover:border-primary-500/20 transition-colors ${stat.color}`}>
@@ -111,9 +113,9 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
            {/* Revenue & Customer Flow Chart */}
-           <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-[2.5rem] p-10 relative overflow-hidden shadow-sm">
+           <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-none p-10 relative overflow-hidden shadow-sm">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
                  <div>
                     <h3 className="text-base font-black italic tracking-tighter text-primary-500">Business Analytics</h3>
@@ -181,7 +183,7 @@ const DashboardPage: React.FC = () => {
            </div>
 
            {/* Daily Flow Breakdown */}
-           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
               <div className="mb-10">
                  <h3 className="text-base font-black italic tracking-tighter text-amber-500">Peak Flow</h3>
                  <div className="card-label">Transactions per day</div>
@@ -217,11 +219,16 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Expenses & Low Stock Alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Recent Expenses</h3>
-                 <button onClick={() => navigate('/expenses')} className="text-[10px] font-black text-primary-400 hover:underline">Manage all</button>
+                 <div className="flex gap-4 items-center">
+                    <Link to="/expenses" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
+                    <Link to="/expenses" className="p-2 bg-primary-500 text-white rounded-lg active:scale-95 transition-all shadow-lg shadow-primary-500/20" title="Add Expense">
+                       <Plus className="w-3 h-3" />
+                    </Link>
+                 </div>
               </div>
               <div className="space-y-4">
                  {expenses?.slice(0, 5).sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((expense, i) => (
@@ -246,10 +253,10 @@ const DashboardPage: React.FC = () => {
               </div>
            </div>
 
-           <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+           <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Low Stock Alert</h3>
-                 <button onClick={() => navigate('/inventory')} className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</button>
+                 <Link to="/inventory" className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</Link>
               </div>
               <div className="space-y-4">
                  {products?.filter(p => !p.isService && p.quantity <= 5).slice(0, 5).map((p, i) => (
@@ -277,10 +284,10 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* Credit Customers */}
-        <div className="bg-surface-card border border-surface-border rounded-[2.5rem] p-10 shadow-sm">
+        <div className="bg-surface-card border border-surface-border rounded-none p-10 shadow-sm">
            <div className="flex justify-between items-center mb-10">
               <h3 className="text-sm font-black italic text-surface-text/40">Active Credits</h3>
-              <button onClick={() => navigate('/debt')} className="text-[10px] font-black text-primary-400 hover:underline">Manage all</button>
+              <Link to="/debt" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
            </div>
            <div className="p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
               {creditCustomers?.slice(0, 6).map((customer, i) => (

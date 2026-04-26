@@ -55,7 +55,7 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-0 right-0 bg-surface-card border-t border-surface-border rounded-t-[3rem] z-[70] p-8 pb-12 max-h-[90vh] overflow-y-auto"
+            className="fixed bottom-0 left-0 right-0 bg-surface-card border-t border-surface-border rounded-t-[3rem] z-[70] p-0 pb-12 max-h-[90vh] overflow-y-auto"
           >
             <div className="text-center mb-8">
                <h2 className="text-2xl font-black tracking-tighter italic">More Options</h2>
