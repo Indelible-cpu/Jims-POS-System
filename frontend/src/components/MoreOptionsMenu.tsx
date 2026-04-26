@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   Settings, 
+  Package,
   Users,
   Wallet,
   Building2,
@@ -21,6 +22,7 @@ interface MoreOptionsMenuProps {
 const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) => {
   
   const options = [
+    { id: 'inventory', label: 'Inventory', icon: Package, path: '/inventory', color: 'bg-emerald-500' },
     { id: 'debt', label: 'Debt', icon: Users, path: '/debt', color: 'bg-orange-500' },
     { id: 'expenses', label: 'Expenses', icon: Wallet, path: '/expenses', color: 'bg-rose-500' },
     { id: 'team', label: 'Staff', icon: Users, path: '/users', color: 'bg-primary-500' },
