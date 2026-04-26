@@ -11,10 +11,14 @@ import {
   User as UserIcon,
   ShieldCheck,
   Store,
-  Key,
   Copy,
   Check,
-  Loader2
+  Loader2,
+  Ban,
+  UserX,
+  Power,
+  Info,
+  Trash
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Modal from '../components/Modal';
@@ -29,6 +33,7 @@ interface User {
   branch_id: number | null;
   branch_name: string;
   isVerified: boolean;
+  status: 'ACTIVE' | 'SUSPENDED' | 'DEACTIVATED';
   createdAt: string;
 }
 
@@ -41,6 +46,19 @@ const UsersPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [tempPassword, setTempPassword] = useState<string | null>(null);
   const [magicToken, setMagicToken] = useState<string | null>(null);
+  
+  // Action Modal State
+  const [actionModal, setActionModal] = useState<{
+    isOpen: boolean,
+    type: 'SUSPEND' | 'DEACTIVATE' | 'REACTIVATE' | 'DELETE' | 'HARD_DELETE' | null,
+    user: User | null,
+    reason: string
+  }>({
+    isOpen: false,
+    type: null,
+    user: null,
+    reason: ''
+  });
 
   const [formData, setFormData] = useState({
     username: '',
@@ -101,15 +119,41 @@ const UsersPage: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm('Delete this user account?')) {
-      try {
-        await api.delete(`/users/${id}`);
-        toast.success('User deleted');
-        fetchUsers();
-      } catch {
-        toast.error('Failed to delete user');
+  const handleAction = async () => {
+    if (!actionModal.user || !actionModal.type) return;
+    if (!actionModal.reason && actionModal.type !== 'REACTIVATE') {
+      return toast.error("Please provide a reason for this action");
+    }
+
+    setLoading(true);
+    try {
+      if (actionModal.type === 'DELETE' || actionModal.type === 'HARD_DELETE') {
+        await api.delete(`/users/${actionModal.user.id}`, {
+          data: { 
+            reason: actionModal.reason,
+            hardDelete: actionModal.type === 'HARD_DELETE' 
+          }
+        });
+      } else {
+        const statusMap: any = {
+          SUSPEND: 'SUSPENDED',
+          DEACTIVATE: 'DEACTIVATED',
+          REACTIVATE: 'ACTIVE'
+        };
+        await api.post('/users/status', {
+          id: actionModal.user.id,
+          status: statusMap[actionModal.type],
+          reason: actionModal.reason
+        });
       }
+
+      toast.success("Action completed successfully");
+      setActionModal({ isOpen: false, type: null, user: null, reason: '' });
+      fetchUsers();
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Action failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -183,9 +227,18 @@ const UsersPage: React.FC = () => {
          ) : (
            filteredUsers.map(u => (
              <div key={u.id} className="bg-surface-card md:border border-surface-border p-8 md:rounded-3xl group hover:border-primary-500/30 transition-all relative overflow-hidden border-b border-surface-border/50">
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all z-10">
                    <button title="Edit User" onClick={() => handleEdit(u)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-primary-400 transition-colors"><Edit2 className="w-4 h-4" /></button>
-                   <button title="Delete User" onClick={() => handleDelete(u.id)} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                   {u.status === 'ACTIVE' ? (
+                     <>
+                       <button title="Suspend User" onClick={() => setActionModal({ isOpen: true, type: 'SUSPEND', user: u, reason: '' })} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-orange-500 transition-colors"><Ban className="w-4 h-4" /></button>
+                       <button title="Deactivate User" onClick={() => setActionModal({ isOpen: true, type: 'DEACTIVATE', user: u, reason: '' })} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-red-500 transition-colors"><UserX className="w-4 h-4" /></button>
+                     </>
+                   ) : (
+                     <button title="Reactivate User" onClick={() => setActionModal({ isOpen: true, type: 'REACTIVATE', user: u, reason: '' })} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-emerald-500 transition-colors"><Power className="w-4 h-4" /></button>
+                   )}
+                   <button title="Soft Delete" onClick={() => setActionModal({ isOpen: true, type: 'DELETE', user: u, reason: '' })} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-red-600 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                   <button title="Hard Delete (Permanent)" onClick={() => setActionModal({ isOpen: true, type: 'HARD_DELETE', user: u, reason: '' })} className="p-2 bg-surface-bg border border-surface-border rounded-xl text-surface-text/40 hover:text-black transition-colors"><Trash className="w-4 h-4" /></button>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
@@ -201,9 +254,14 @@ const UsersPage: React.FC = () => {
                    <p className="text-[10px] font-black text-surface-text/30 mb-4 tracking-[0.2em]">@{u.username}</p>
                    
                    <div className="flex gap-2 mb-6">
-                      <div className="px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[8px] font-black tracking-widest">
+                      <div className="px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[8px] font-black tracking-widest uppercase">
                          {u.role}
                       </div>
+                      {u.status !== 'ACTIVE' && (
+                        <div className={`px-3 py-1 ${u.status === 'SUSPENDED' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'} border rounded-full text-[8px] font-black tracking-widest uppercase`}>
+                           {u.status}
+                        </div>
+                      )}
                       {u.isVerified && (
                         <div className="px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full text-[8px] font-black tracking-widest">
                            VERIFIED
@@ -353,6 +411,54 @@ const UsersPage: React.FC = () => {
             </button>
           </div>
         )}
+      </Modal>
+
+      {/* Action Confirmation Modal */}
+      <Modal
+        isOpen={actionModal.isOpen}
+        onClose={() => setActionModal({ ...actionModal, isOpen: false })}
+        title={actionModal.type?.replace('_', ' ') || 'Action'}
+        maxWidth="max-w-md"
+      >
+        <div className="p-8 space-y-6">
+          <div className="flex items-start gap-4 p-4 bg-primary-500/5 rounded-2xl border border-primary-500/10">
+            <Info className="w-5 h-5 text-primary-500 mt-0.5" />
+            <p className="text-[11px] font-bold text-surface-text/60 leading-relaxed">
+              You are about to <strong>{actionModal.type?.toLowerCase().replace('_', ' ')}</strong> the account for <strong>{actionModal.user?.fullname}</strong>. 
+              The user will receive an email notification with your reason.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Reason for Action</label>
+            <textarea 
+              className="input-field w-full min-h-[100px] py-4 text-sm font-bold resize-none"
+              placeholder="e.g. Repeated policy violations, end of contract..."
+              value={actionModal.reason}
+              onChange={(e) => setActionModal({ ...actionModal, reason: e.target.value })}
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <button 
+              onClick={() => setActionModal({ ...actionModal, isOpen: false })}
+              className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest uppercase"
+            >
+              Cancel
+            </button>
+            <button 
+              onClick={handleAction}
+              disabled={loading}
+              className={`flex-1 py-4 rounded-2xl text-[10px] font-black tracking-widest uppercase shadow-lg transition-all ${
+                actionModal.type === 'REACTIVATE' ? 'bg-emerald-500 text-white shadow-emerald-500/20' : 
+                actionModal.type === 'HARD_DELETE' ? 'bg-black text-white shadow-black/20' :
+                'bg-red-500 text-white shadow-red-500/20'
+              }`}
+            >
+              {loading ? <Loader2 className="animate-spin mx-auto" /> : `Confirm ${actionModal.type?.replace('_', ' ')}`}
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );

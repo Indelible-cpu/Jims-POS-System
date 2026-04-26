@@ -32,6 +32,10 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
+    if (user.status !== 'ACTIVE') {
+      return res.status(403).json({ success: false, message: `Account is ${user.status.toLowerCase()}` });
+    }
+
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role.name, branchId: user.branchId },
       process.env.JWT_SECRET || 'secret',
@@ -303,16 +307,78 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { reason, hardDelete } = req.body;
 
   try {
+    const user = await prisma.user.findUnique({ where: { id: parseInt(id as string) } });
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+    if (hardDelete) {
+      await prisma.user.delete({ where: { id: parseInt(id as string) } });
+    } else {
+      await prisma.user.update({
+        where: { id: parseInt(id as string) },
+        data: { deleted: true },
+      });
+    }
+
+    if (user.email) {
+      transporter.sendMail({
+        from: `"MsikaPos Security" <${process.env.SMTP_USER}>`,
+        to: user.email,
+        subject: `Account ${hardDelete ? 'Permanently Removed' : 'Deleted'}`,
+        text: `Your account (${user.username}) has been ${hardDelete ? 'permanently removed' : 'deleted'} from MsikaPos.\n\nReason: ${reason || 'No reason provided.'}`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #ef4444;">Account Notification</h2>
+            <p>Your account (<strong>${user.username}</strong>) has been ${hardDelete ? 'permanently removed' : 'deleted'}.</p>
+            <p><strong>Reason:</strong> ${reason || 'No reason provided.'}</p>
+            <hr>
+            <p style="font-size: 12px; color: #666;">If you believe this was an error, please contact the Super Administrator.</p>
+          </div>
+        `
+      }).catch(console.error);
+    }
+
+    return res.status(200).json({ success: true, message: hardDelete ? "User permanently deleted" : "User soft-deleted" });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, message: 'Action failed', error: error.message });
+  }
+};
+
+export const updateUserStatus = async (req: Request, res: Response) => {
+  const { id, status, reason } = req.body; // ACTIVE, SUSPENDED, DEACTIVATED
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id: parseInt(id as string) } });
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
     await prisma.user.update({
       where: { id: parseInt(id as string) },
-      data: { deleted: true },
+      data: { status }
     });
 
-    return res.status(200).json({ success: true, message: "User deleted" });
+    if (user.email) {
+      transporter.sendMail({
+        from: `"MsikaPos Security" <${process.env.SMTP_USER}>`,
+        to: user.email,
+        subject: `Account Status Update: ${status}`,
+        text: `Your account status has been changed to ${status}.\n\nReason: ${reason || 'Administrative action.'}`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #3b82f6;">Account Status Update</h2>
+            <p>Your account (<strong>${user.username}</strong>) status is now: <strong style="color: ${status === 'ACTIVE' ? '#10b981' : '#ef4444'};">${status}</strong></p>
+            <p><strong>Reason:</strong> ${reason || 'Administrative action.'}</p>
+            <hr>
+            <p style="font-size: 12px; color: #666;">Contact the Super Administrator for more details.</p>
+          </div>
+        `
+      }).catch(console.error);
+    }
+
+    return res.status(200).json({ success: true, message: `User ${status.toLowerCase()} successfully` });
   } catch (error: any) {
-    return res.status(500).json({ success: false, message: 'Failed to delete user', error: error.message });
+    return res.status(500).json({ success: false, message: 'Status update failed', error: error.message });
   }
 };
 
@@ -329,8 +395,8 @@ export const magicLogin = async (req: Request, res: Response) => {
       include: { role: true }
     });
 
-    if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid or expired magic link' });
+    if (!user || user.status !== 'ACTIVE') {
+      return res.status(401).json({ success: false, message: 'Account is not active' });
     }
 
     const jwtToken = jwt.sign(

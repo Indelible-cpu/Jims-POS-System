@@ -50,6 +50,7 @@ app.get('/api/dashboard/stats', DashboardCtrl.getDashboardStats);
 // Users
 app.get('/api/users', UserCtrl.fetchUsers);
 app.post('/api/users', UserCtrl.saveUser);
+app.post('/api/users/status', UserCtrl.updateUserStatus);
 app.delete('/api/users/:id', UserCtrl.deleteUser);
 app.post('/api/users/onboarding', UserCtrl.updateOnboarding);
 app.post('/api/users/verify', UserCtrl.verifyEmail);
