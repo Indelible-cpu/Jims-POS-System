@@ -19,7 +19,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const startY = useRef(0);
   const mainRef = useRef<HTMLElement>(null);
 
-  const hideNav = location.pathname === '/login';
+  const hideNav = ['/login', '/onboarding', '/forgot-password'].includes(location.pathname);
 
   const PULL_THRESHOLD = 80;
 
