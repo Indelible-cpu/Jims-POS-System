@@ -158,7 +158,7 @@ const App: React.FC = () => {
             letterSpacing: '0.05em',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             textTransform: 'uppercase',
-            italic: 'true'
+            fontStyle: 'italic'
           },
           duration: 3000,
         }} 
