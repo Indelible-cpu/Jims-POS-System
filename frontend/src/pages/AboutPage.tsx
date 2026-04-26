@@ -6,7 +6,6 @@ import {
   ShieldCheck, 
   MessageSquare,
   ExternalLink,
-  Info,
   Phone,
   Mail,
   Wrench
