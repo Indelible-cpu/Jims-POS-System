@@ -75,7 +75,7 @@ export default function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps)
             
             <button 
               onClick={onClose}
-              className="w-full py-5 bg-zinc-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl active:scale-95 transition-all"
+              className="w-full py-5 bg-zinc-900 text-white rounded-2xl font-black text-[11px] tracking-widest shadow-xl active:scale-95 transition-all"
             >
               Close Camera
             </button>

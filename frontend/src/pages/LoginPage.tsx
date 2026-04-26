@@ -217,7 +217,7 @@ const LoginPage: React.FC = () => {
             <img src="/icon.png?v=2" alt="MsikaPos Icon" className="w-full h-full object-contain" />
           </motion.div>
           <div className="space-y-1">
-            <div className="text-[10px] font-black text-primary-500 tracking-[0.4em] uppercase opacity-60 italic">MsikaPos</div>
+            <div className="text-[10px] font-black text-primary-500 tracking-[0.4em] opacity-60 italic">MsikaPos</div>
             <div className="w-16 h-1 bg-primary-500/10 mx-auto rounded-full"></div>
           </div>
         </div>
@@ -304,7 +304,7 @@ const LoginPage: React.FC = () => {
           </Link>
 
           <div className="pt-4 text-center">
-            <p className="text-[8px] font-black tracking-[0.3em] text-surface-text/10 uppercase italic">Developed by James Dickson Petro</p>
+            <p className="text-[8px] font-black tracking-[0.3em] text-surface-text/10 italic">Developed by James Dickson Petro</p>
           </div>
         </div>
 
@@ -333,7 +333,7 @@ const LoginPage: React.FC = () => {
               <div className="flex flex-col w-full gap-4">
                 <button 
                   onClick={registerBiometrics}
-                  className="w-full h-16 bg-primary-500 text-white rounded-3xl font-black tracking-widest text-[10px] uppercase transition-all active:scale-95 shadow-xl shadow-primary-500/30 flex items-center justify-center gap-2"
+                  className="w-full h-16 bg-primary-500 text-white rounded-3xl font-black tracking-widest text-[10px] transition-all active:scale-95 shadow-xl shadow-primary-500/30 flex items-center justify-center gap-2"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   Enable Biometric Login
@@ -343,7 +343,7 @@ const LoginPage: React.FC = () => {
                     setShowBiometricPrompt(false);
                     window.location.href = '/dashboard';
                   }}
-                  className="w-full h-14 bg-transparent text-surface-text/30 rounded-2xl font-black tracking-widest text-[10px] uppercase transition-all hover:text-surface-text active:scale-95"
+                  className="w-full h-14 bg-transparent text-surface-text/30 rounded-2xl font-black tracking-widest text-[10px] transition-all hover:text-surface-text active:scale-95"
                 >
                   Skip for now
                 </button>

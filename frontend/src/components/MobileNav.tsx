@@ -36,7 +36,7 @@ const MobileNav: React.FC = () => {
                     <tab.icon className={clsx("w-5 h-5")} strokeWidth={isActive ? 3 : 2} />
                   </div>
                   <span className={clsx(
-                    "text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all uppercase italic",
+                    "text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all italic",
                     isActive ? "text-black dark:text-white opacity-100" : "text-surface-text opacity-80"
                   )}>
                     {tab.label}
@@ -55,7 +55,7 @@ const MobileNav: React.FC = () => {
             <div className="transition-all duration-300 flex items-center justify-center opacity-60">
               <MoreHorizontal className="w-5 h-5" strokeWidth={2} />
             </div>
-            <span className="text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all uppercase italic opacity-80 text-surface-text">
+            <span className="text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all italic opacity-80 text-surface-text">
               More
             </span>
           </button>

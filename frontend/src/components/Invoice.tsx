@@ -25,7 +25,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
   
   return (
     <div className="invoice relative p-6 bg-white text-black font-mono w-[80mm] mx-auto text-[11px] border-4 border-double border-black leading-tight shadow-sm">
-      <div className="absolute top-2 right-2 border border-black px-2 py-0.5 font-black text-[8px] tracking-tighter uppercase bg-black text-white">
+      <div className="absolute top-2 right-2 border border-black px-2 py-0.5 font-black text-[8px] tracking-tighter bg-black text-white">
         Credit Note
       </div>
       
@@ -35,9 +35,9 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
         </div>
         <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
-        <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
-        <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
-        {shopEmail && <p className="text-[8px] font-bold opacity-60 uppercase">{shopEmail}</p>}
+        <p className="text-[9px] tracking-widest">{shopAddress}</p>
+        <p className="text-[9px] font-bold mt-1">Tel: {shopTel}</p>
+        {shopEmail && <p className="text-[8px] font-bold opacity-60">{shopEmail}</p>}
       </div>
 
       <div className="mb-4 text-[9px] space-y-1">
@@ -50,8 +50,8 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
 
       <div className="mb-4 space-y-1 p-2 bg-zinc-50 border border-black border-dotted">
         <div className="flex gap-2 items-center">
-            <span className="font-black text-[9px] min-w-[60px] uppercase">Client:</span>
-            <span className="font-bold uppercase">{customerName || 'N/A'}</span>
+            <span className="font-black text-[9px] min-w-[60px]">Client:</span>
+            <span className="font-bold">{customerName || 'N/A'}</span>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
 
       <div className="text-center mb-6 flex flex-col items-center">
         <div className="w-32 mx-auto border-t border-black mb-1"></div>
-        <p className="text-[9px] font-black uppercase tracking-widest">Authorized Signature</p>
+        <p className="text-[9px] font-black tracking-widest">Authorized Signature</p>
         
         {/* Barcode Section */}
         <div className="mt-6 flex flex-col items-center">

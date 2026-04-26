@@ -49,7 +49,7 @@ const AboutPage: React.FC = () => {
           </div>
           <div>
             <h2 className="text-3xl font-black tracking-tight italic">MsikaPos</h2>
-            <p className="text-surface-text/40 text-xs font-black tracking-widest uppercase">Version 2.4.0 • Cloud Powered</p>
+            <p className="text-surface-text/40 text-xs font-black tracking-widest">Version 2.4.0 • Cloud Powered</p>
           </div>
         </section>
 
@@ -91,7 +91,7 @@ const AboutPage: React.FC = () => {
 
         <footer className="text-center pt-10 space-y-8">
           <div className="space-y-2">
-            <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em] uppercase">Technical Support</p>
+            <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em]">Technical Support</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
               {/* WhatsApp Support */}
               <a href="https://wa.me/265993732694" className="p-4 bg-surface-card border border-surface-border rounded-2xl flex items-center gap-3 hover:border-emerald-500/30 transition-all group">
@@ -101,7 +101,7 @@ const AboutPage: React.FC = () => {
                   </svg>
                 </div>
                 <div className="text-left">
-                  <div className="text-[10px] font-black uppercase tracking-tighter opacity-40">WhatsApp Support</div>
+                  <div className="text-[10px] font-black tracking-tighter opacity-40">WhatsApp Support</div>
                   <div className="text-xs font-black">+265 993 732 694</div>
                 </div>
               </a>
@@ -114,7 +114,7 @@ const AboutPage: React.FC = () => {
                   </svg>
                 </div>
                 <div className="text-left">
-                  <div className="text-[10px] font-black uppercase tracking-tighter opacity-40">Facebook Page</div>
+                  <div className="text-[10px] font-black tracking-tighter opacity-40">Facebook Page</div>
                   <div className="text-xs font-black">JEF Investment</div>
                 </div>
               </a>
@@ -125,7 +125,7 @@ const AboutPage: React.FC = () => {
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[10px] font-black uppercase tracking-tighter opacity-40">Calls Only</div>
+                  <div className="text-[10px] font-black tracking-tighter opacity-40">Calls Only</div>
                   <div className="text-xs font-black">+265 885 892 269</div>
                 </div>
               </a>
@@ -136,7 +136,7 @@ const AboutPage: React.FC = () => {
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-[10px] font-black uppercase tracking-tighter opacity-40">Email Support</div>
+                  <div className="text-[10px] font-black tracking-tighter opacity-40">Email Support</div>
                   <div className="text-xs font-black italic">msikaposmw@gmail.com</div>
                 </div>
               </a>
@@ -144,11 +144,11 @@ const AboutPage: React.FC = () => {
           </div>
           
           <div className="space-y-1">
-            <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em] uppercase italic">System Developer</p>
+            <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em] italic">System Developer</p>
             <p className="text-sm font-black italic tracking-tight text-primary-500">James Dickson Petro</p>
           </div>
           
-          <p className="text-[9px] font-black text-surface-text/10 tracking-[0.4em] uppercase pb-10">© 2026 MsikaPos • Indelible-cpu</p>
+          <p className="text-[9px] font-black text-surface-text/10 tracking-[0.4em] pb-10">© 2026 MsikaPos • Indelible-cpu</p>
         </footer>
       </main>
     </div>

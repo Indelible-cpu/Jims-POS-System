@@ -88,11 +88,11 @@ body {
   }
   
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-black py-4 px-8 rounded-3xl shadow-2xl shadow-primary-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px] uppercase;
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-black py-4 px-8 rounded-3xl shadow-2xl shadow-primary-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
   }
 
   .btn-secondary {
-    @apply bg-surface-card border border-surface-border text-surface-text/60 hover:text-surface-text font-black py-4 px-8 rounded-3xl active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px] uppercase;
+    @apply bg-surface-card border border-surface-border text-surface-text/60 hover:text-surface-text font-black py-4 px-8 rounded-3xl active:scale-95 transition-all flex items-center justify-center gap-2 tracking-widest text-[11px];
   }
   
   .input-field {
@@ -114,7 +114,7 @@ body {
   }
 
   .card-label {
-    @apply text-[10px] font-black tracking-[0.2em] uppercase text-surface-text/20 mb-2 block italic;
+    @apply text-[10px] font-black tracking-[0.2em] text-surface-text/20 mb-2 block italic;
   }
 }
 

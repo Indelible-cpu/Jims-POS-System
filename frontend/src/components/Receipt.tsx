@@ -36,8 +36,8 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
         </div>
             <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
-        <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
-        <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
+        <p className="text-[9px] tracking-widest">{shopAddress}</p>
+        <p className="text-[9px] font-bold mt-1">Tel: {shopTel}</p>
         {shopEmail && <p className="text-[8px] font-bold opacity-60">{shopEmail}</p>}
         {shopFB && <p className="text-[8px] font-bold opacity-60">FB: {shopFB}</p>}
       </div>

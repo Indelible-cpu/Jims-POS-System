@@ -145,8 +145,8 @@ const SettingsPage: React.FC = () => {
                 <h2 className="text-3xl font-black tracking-tighter italic">{user.fullname || user.username || 'Employee'}</h2>
                 <div className="card-label !mt-1">Branch: {user.branch_name || 'Domasi Main'}</div>
                 <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
-                   <span className="px-4 py-1.5 bg-primary-500/10 text-primary-500 rounded-xl text-[10px] font-black tracking-widest border border-primary-500/20 uppercase">Role: {user.role || 'Staff'}</span>
-                   <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-500 rounded-xl text-[10px] font-black tracking-widest border border-emerald-500/20 uppercase">Online Status</span>
+                   <span className="px-4 py-1.5 bg-primary-500/10 text-primary-500 rounded-xl text-[10px] font-black tracking-widest border border-primary-500/20">Role: {user.role || 'Staff'}</span>
+                   <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-500 rounded-xl text-[10px] font-black tracking-widest border border-emerald-500/20">Online Status</span>
                 </div>
              </div>
           </div>

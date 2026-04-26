@@ -289,17 +289,17 @@ const UsersPage: React.FC = () => {
                    <p className="text-[10px] font-black text-surface-text/30 mb-4 tracking-[0.2em]">@{u.username}</p>
                    
                    <div className="flex gap-2 mb-6">
-                      <div className="px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[8px] font-black tracking-widest uppercase">
+                      <div className="px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 rounded-full text-[8px] font-black tracking-widest">
                          {u.role}
                       </div>
                       {u.status !== 'ACTIVE' && (
-                        <div className={`px-3 py-1 ${u.status === 'SUSPENDED' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'} border rounded-full text-[8px] font-black tracking-widest uppercase`}>
-                           {u.status}
+                        <div className={`px-3 py-1 ${u.status === 'SUSPENDED' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'} border rounded-full text-[8px] font-black tracking-widest`}>
+                           {u.status.charAt(0) + u.status.slice(1).toLowerCase()}
                         </div>
                       )}
                       {u.isVerified && (
                         <div className="px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full text-[8px] font-black tracking-widest">
-                           VERIFIED
+                           Verified
                         </div>
                       )}
                    </div>
@@ -340,17 +340,17 @@ const UsersPage: React.FC = () => {
           <form onSubmit={handleSave} className="p-8 space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label htmlFor="username" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Username</label>
+                <label htmlFor="username" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Username</label>
                 <input id="username" required type="text" className="input-field w-full" placeholder="staff.user" value={formData.username} onChange={(e) => setFormData({...formData, username: e.target.value})} />
               </div>
               <div className="space-y-1">
-                <label htmlFor="fullname" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Full name</label>
+                <label htmlFor="fullname" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Full name</label>
                 <input id="fullname" required type="text" className="input-field w-full" placeholder="John Doe" value={formData.fullname} onChange={(e) => setFormData({...formData, fullname: e.target.value})} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
-                  <label htmlFor="role" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Role</label>
+                  <label htmlFor="role" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Role</label>
                   <select id="role" title="Select User Role" className="input-field w-full appearance-none bg-surface-bg font-bold" value={formData.roleId} onChange={(e) => setFormData({...formData, roleId: Number(e.target.value)})}>
                      <option value={1}>SuperAdmin</option>
                      <option value={2}>Cashier</option>
@@ -358,7 +358,7 @@ const UsersPage: React.FC = () => {
                   </select>
                </div>
                <div className="space-y-1">
-                  <label htmlFor="branch" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Branch</label>
+                  <label htmlFor="branch" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Branch</label>
                   <select id="branch" title="Select Branch" className="input-field w-full appearance-none bg-surface-bg font-bold" value={formData.branchId} onChange={(e) => setFormData({...formData, branchId: e.target.value})}>
                      <option value="">Select Branch</option>
                      {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
@@ -367,18 +367,18 @@ const UsersPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
-                  <label htmlFor="phone" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Phone</label>
+                  <label htmlFor="phone" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Phone</label>
                   <input id="phone" type="text" className="input-field w-full" placeholder="+265..." value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                </div>
                <div className="space-y-1">
-                  <label htmlFor="email" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Email address</label>
+                  <label htmlFor="email" className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Email address</label>
                   <input id="email" type="email" className="input-field w-full" placeholder="staff@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
                </div>
             </div>
             
             <div className="flex gap-4 pt-4">
-              <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest uppercase">Cancel</button>
-              <button type="submit" disabled={loading} className="flex-1 btn-primary !py-4 text-[10px] font-black tracking-widest uppercase shadow-lg shadow-primary-500/20">
+              <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest">Cancel</button>
+              <button type="submit" disabled={loading} className="flex-1 btn-primary !py-4 text-[10px] font-black tracking-widest shadow-lg shadow-primary-500/20">
                 {loading ? <Loader2 className="animate-spin" /> : (editingUser ? 'Save Changes' : 'Create Account')}
               </button>
             </div>
@@ -395,7 +395,7 @@ const UsersPage: React.FC = () => {
 
             <div className="space-y-4">
               <div className="space-y-1 text-left">
-                <label className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Temporary Password</label>
+                <label className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Temporary Password</label>
                 <div className="p-4 bg-surface-bg rounded-2xl border border-surface-border flex items-center justify-between">
                   <span className="font-black tracking-widest text-primary-500">{tempPassword}</span>
                   <button 
@@ -412,7 +412,7 @@ const UsersPage: React.FC = () => {
 
               {magicToken && (
                 <div className="space-y-1 text-left">
-                  <label className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Magic Invite Link</label>
+                  <label className="text-[9px] font-black tracking-widest text-surface-text/30 ml-1">Magic Invite Link</label>
                   <div className="p-4 bg-surface-bg rounded-2xl border border-surface-border flex items-center justify-between gap-3">
                     <span className="text-[10px] font-bold text-surface-text/50 truncate">
                       {window.location.origin}/onboarding?magicToken={magicToken}
@@ -467,7 +467,7 @@ const UsersPage: React.FC = () => {
           {actionModal.type !== 'REACTIVATE' && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Select Reason</label>
+                <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1">Select Reason</label>
                 <select 
                   className="input-field w-full h-14 text-sm font-bold bg-surface-bg appearance-none"
                   value={PREDEFINED_REASONS[actionModal.type as keyof typeof PREDEFINED_REASONS]?.includes(actionModal.reason) ? actionModal.reason : "Other (Type manually)"}
@@ -485,7 +485,7 @@ const UsersPage: React.FC = () => {
 
               {(!PREDEFINED_REASONS[actionModal.type as keyof typeof PREDEFINED_REASONS]?.includes(actionModal.reason) || actionModal.reason === "") && (
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1 uppercase">Manual Reason</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 ml-1">Manual Reason</label>
                   <textarea 
                     className="input-field w-full min-h-[100px] py-4 text-sm font-bold resize-none"
                     placeholder="Type your custom reason here..."
@@ -500,14 +500,14 @@ const UsersPage: React.FC = () => {
           <div className="flex gap-4">
             <button 
               onClick={() => setActionModal({ ...actionModal, isOpen: false })}
-              className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest uppercase"
+              className="flex-1 py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest"
             >
               Cancel
             </button>
             <button 
               onClick={handleAction}
               disabled={loading}
-              className={`flex-1 py-4 rounded-2xl text-[10px] font-black tracking-widest uppercase shadow-lg transition-all ${
+              className={`flex-1 py-4 rounded-2xl text-[10px] font-black tracking-widest shadow-lg transition-all ${
                 actionModal.type === 'REACTIVATE' ? 'bg-emerald-500 text-white shadow-emerald-500/20' : 
                 actionModal.type === 'HARD_DELETE' ? 'bg-black text-white shadow-black/20' :
                 'bg-red-500 text-white shadow-red-500/20'

@@ -183,7 +183,7 @@ const OnboardingPage: React.FC = () => {
               >
                 <div className="text-center">
                   <h1 className="text-3xl font-black italic tracking-tighter text-primary-500 mb-2">Welcome to MsikaPos</h1>
-                  <p className="text-surface-text/40 text-[10px] font-black tracking-widest uppercase">Complete your profile to unlock the system</p>
+                  <p className="text-surface-text/40 text-[10px] font-black tracking-widest">Complete your profile to unlock the system</p>
                 </div>
 
                 <div className="flex justify-center">
@@ -204,7 +204,7 @@ const OnboardingPage: React.FC = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="fullname" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Full Name</label>
+                    <label htmlFor="fullname" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Full Name</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -219,7 +219,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="nationalId" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">National ID</label>
+                    <label htmlFor="nationalId" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">National ID</label>
                     <div className="relative">
                       <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -227,7 +227,7 @@ const OnboardingPage: React.FC = () => {
                         type="text" 
                         title="Enter your 8-character national ID"
                         maxLength={8}
-                        className="input-field w-full pl-10 h-12 text-sm font-bold uppercase" 
+                        className="input-field w-full pl-10 h-12 text-sm font-bold" 
                         placeholder="ABC12345"
                         value={nationalId}
                         onChange={(e) => setNationalId(e.target.value)}
@@ -235,7 +235,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Email Address</label>
+                    <label htmlFor="email" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Email Address</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -250,7 +250,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Phone Number</label>
+                    <label htmlFor="phone" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Phone Number</label>
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -265,7 +265,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label htmlFor="homeAddress" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Home Address</label>
+                    <label htmlFor="homeAddress" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Home Address</label>
                     <div className="relative">
                       <Home className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -303,12 +303,12 @@ const OnboardingPage: React.FC = () => {
               >
                 <div className="text-center">
                   <h1 className="text-2xl font-black italic tracking-tighter text-primary-500 mb-2">Security & Contacts</h1>
-                  <p className="text-surface-text/40 text-[10px] font-black tracking-widest uppercase">Protect your account and emergency info</p>
+                  <p className="text-surface-text/40 text-[10px] font-black tracking-widest">Protect your account and emergency info</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="nok-name" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Next of Kin Name</label>
+                    <label htmlFor="nok-name" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Next of Kin Name</label>
                     <div className="relative">
                       <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -323,7 +323,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="nok-phone" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Next of Kin Phone</label>
+                    <label htmlFor="nok-phone" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Next of Kin Phone</label>
                     <div className="relative">
                       <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -338,7 +338,7 @@ const OnboardingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="relationship" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Relationship</label>
+                    <label htmlFor="relationship" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Relationship</label>
                     <div className="relative">
                       <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                       <input 
@@ -357,7 +357,7 @@ const OnboardingPage: React.FC = () => {
                 {user.mustChangePassword && (
                   <div className="space-y-4 pt-4 border-t border-surface-border/50">
                     <div className="space-y-2">
-                      <label htmlFor="newPassword" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Create New Password</label>
+                      <label htmlFor="newPassword" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Create New Password</label>
                       <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                         <input 
@@ -379,7 +379,7 @@ const OnboardingPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="confirmPassword" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Confirm New Password</label>
+                      <label htmlFor="confirmPassword" className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Confirm New Password</label>
                       <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                         <input 
@@ -404,7 +404,7 @@ const OnboardingPage: React.FC = () => {
                 )}
 
                 <div className="flex justify-between items-center pt-4">
-                  <button onClick={() => setStep(1)} className="text-[10px] font-black tracking-widest uppercase text-surface-text/30 hover:text-surface-text transition-all">Go Back</button>
+                  <button onClick={() => setStep(1)} className="text-[10px] font-black tracking-widest text-surface-text/30 hover:text-surface-text transition-all">Go Back</button>
                   <button 
                     onClick={handleUpdateProfile}
                     disabled={loading}

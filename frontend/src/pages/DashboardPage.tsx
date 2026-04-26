@@ -122,11 +122,11 @@ const DashboardPage: React.FC = () => {
                  <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                        <div className="w-3 h-3 rounded-full bg-primary-500" />
-                       <span className="text-[9px] font-black text-surface-text/40">REVENUE</span>
+                       <span className="text-[9px] font-black text-surface-text/40">Revenue</span>
                     </div>
                     <div className="flex items-center gap-2">
                        <div className="w-3 h-3 rounded-full bg-amber-500" />
-                       <span className="text-[9px] font-black text-surface-text/40">FLOW</span>
+                       <span className="text-[9px] font-black text-surface-text/40">Flow</span>
                     </div>
                  </div>
               </div>
@@ -241,7 +241,7 @@ const DashboardPage: React.FC = () => {
                    </div>
                  ))}
                  {(!expenses || expenses.length === 0) && (
-                    <div className="p-10 text-center text-surface-text/20 font-bold text-xs tracking-widest uppercase">No expenses recorded</div>
+                    <div className="p-10 text-center text-surface-text/20 font-bold text-xs tracking-widest">No expenses recorded</div>
                  )}
               </div>
            </div>
@@ -265,12 +265,12 @@ const DashboardPage: React.FC = () => {
                       </div>
                       <div className="text-right">
                          <div className="text-sm font-black text-red-500">{p.quantity}</div>
-                         <div className="text-[8px] text-surface-text/20 font-black uppercase">Left in stock</div>
+                         <div className="text-[8px] text-surface-text/20 font-black">Left in stock</div>
                       </div>
                    </div>
                  ))}
                  {lowStockCount === 0 && (
-                    <div className="p-10 text-center text-emerald-500/20 font-bold text-xs tracking-widest uppercase">All stock levels healthy</div>
+                    <div className="p-10 text-center text-emerald-500/20 font-bold text-xs tracking-widest">All stock levels healthy</div>
                  )}
               </div>
            </div>
@@ -300,7 +300,7 @@ const DashboardPage: React.FC = () => {
                 </div>
               ))}
               {(!creditCustomers || creditCustomers.length === 0) && (
-                 <div className="col-span-full p-10 text-center text-surface-text/20 font-bold text-xs tracking-widest uppercase">No active credits</div>
+                 <div className="col-span-full p-10 text-center text-surface-text/20 font-bold text-xs tracking-widest">No active credits</div>
               )}
            </div>
         </div>

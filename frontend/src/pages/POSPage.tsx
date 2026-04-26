@@ -374,7 +374,7 @@ const POSPage: React.FC = () => {
                     </div>
                     <button 
                       onClick={() => setIsAddingCustomer(true)}
-                      className="w-full py-3 bg-primary-500/10 text-primary-500 rounded-xl font-black text-[10px] tracking-widest uppercase flex items-center justify-center gap-2"
+                      className="w-full py-3 bg-primary-500/10 text-primary-500 rounded-xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2"
                     >
                       <Plus className="w-4 h-4" /> Add New Customer
                     </button>
@@ -395,19 +395,19 @@ const POSPage: React.FC = () => {
                     <div className="flex flex-col gap-6">
                       <div className="space-y-4">
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">Full name</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Full name</label>
                           <input required type="text" className="input-field w-full" placeholder="e.g. John Phiri" value={custForm.name} onChange={e => setCustForm({...custForm, name: e.target.value})} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">Phone number</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Phone number</label>
                           <input required type="text" className="input-field w-full" placeholder="e.g. 0881234567 or +265..." value={custForm.phone} onChange={e => setCustForm({...custForm, phone: e.target.value})} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">National ID (8 chars)</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">National ID (8 chars)</label>
                           <input type="text" className="input-field w-full" placeholder="e.g. ABC12345" value={custForm.idNumber} onChange={e => setCustForm({...custForm, idNumber: e.target.value})} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">Village / location</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Village / location</label>
                           <input type="text" className="input-field w-full" placeholder="e.g. Lilongwe" value={custForm.village} onChange={e => setCustForm({...custForm, village: e.target.value})} />
                         </div>
                       </div>
@@ -415,7 +415,7 @@ const POSPage: React.FC = () => {
                       <div className="grid grid-cols-2 gap-4">
                         {/* Photo Capture */}
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">Live photo</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Live photo</label>
                           <div className="w-full aspect-square bg-surface-bg border border-surface-border rounded-2xl overflow-hidden relative flex flex-col items-center justify-center">
                             {custForm.livePhoto ? (
                               <img src={custForm.livePhoto} alt="Preview" className="w-full h-full object-cover" />
@@ -447,7 +447,7 @@ const POSPage: React.FC = () => {
 
                         {/* Fingerprint Capture */}
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1 uppercase">Biometrics</label>
+                          <label className="text-[9px] font-black tracking-widest text-surface-text/40 pl-1">Biometrics</label>
                           <button 
                             type="button" 
                             onClick={captureFingerprint}
@@ -461,7 +461,7 @@ const POSPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <button type="submit" className="w-full btn-primary !py-4 text-[10px] font-black uppercase tracking-widest mt-6">
+                    <button type="submit" className="w-full btn-primary !py-4 text-[10px] font-black tracking-widest mt-6">
                       Create secure profile
                     </button>
                   </form>
@@ -470,7 +470,7 @@ const POSPage: React.FC = () => {
                     {customers?.length === 0 ? (
                       <div className="p-12 text-center opacity-20">
                         <Users className="w-12 h-12 mx-auto mb-4" />
-                        <p className="text-xs font-black tracking-widest uppercase">No customers found</p>
+                        <p className="text-xs font-black tracking-widest">No customers found</p>
                       </div>
                     ) : (
                       customers?.map(c => (
@@ -494,7 +494,7 @@ const POSPage: React.FC = () => {
               <div className="p-4 border-t border-surface-border bg-surface-bg/10">
                 <button 
                   onClick={() => { setShowCustomerSelector(false); stopCamera(); }}
-                  className="w-full py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-surface-border/50 transition-all active:scale-[0.98]"
+                  className="w-full py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest hover:bg-surface-border/50 transition-all active:scale-[0.98]"
                 >
                   Cancel & Close
                 </button>
@@ -541,7 +541,7 @@ const POSPage: React.FC = () => {
               </div>
               
               <div className="flex gap-3 w-full">
-                <button onClick={() => window.print()} className="flex-1 px-4 py-3 bg-surface-bg hover:bg-surface-border/50 rounded-2xl font-black text-[10px] tracking-widest uppercase flex items-center justify-center gap-2 border border-surface-border">
+                <button onClick={() => window.print()} className="flex-1 px-4 py-3 bg-surface-bg hover:bg-surface-border/50 rounded-2xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-surface-border">
                   <Printer className="w-4 h-4" /> Print
                 </button>
                 <button onClick={() => {
@@ -550,14 +550,14 @@ const POSPage: React.FC = () => {
                     const taxText = showReceipt.tax > 0 ? `\nTax: MK ${showReceipt.tax.toLocaleString()}` : '';
                     const text = `*${localStorage.getItem('companyName') || 'MsikaPos'}*\n━━━━━━━━━━━━━━━━\n🧾 *DIGITAL RECEIPT*\n━━━━━━━━━━━━━━━━\n\n*Inv*: ${showReceipt.invoiceNo}\n*Date*: ${showReceipt.date}\n\n*ITEMS:*\n${itemsText}\n\n━━━━━━━━━━━━━━━━\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n━━━━━━━━━━━━━━━━\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_\n_Powered by MsikaPos_`;
                     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
-                  }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-2xl font-black text-[10px] tracking-widest uppercase flex items-center justify-center gap-2 border border-[#25D366]/20">
+                  }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-2xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 border border-[#25D366]/20">
                   <Send className="w-4 h-4" /> WhatsApp
                 </button>
               </div>
-              <button onClick={() => setShowReceipt(null)} className="w-full mt-4 btn-primary !py-4 font-black text-[10px] tracking-widest uppercase">
+              <button onClick={() => setShowReceipt(null)} className="w-full mt-4 btn-primary !py-4 font-black text-[10px] tracking-widest">
                 New Transaction
               </button>
-              <button onClick={() => setShowReceipt(null)} className="w-full mt-2 py-3 text-[10px] font-black tracking-widest uppercase text-surface-text/20 hover:text-surface-text transition-colors">
+              <button onClick={() => setShowReceipt(null)} className="w-full mt-2 py-3 text-[10px] font-black tracking-widest text-surface-text/40 hover:text-surface-text transition-colors">
                 Dismiss
               </button>
             </motion.div>
@@ -639,7 +639,7 @@ const POSPage: React.FC = () => {
             {cart.length === 0 ? (
               <div className="py-24 flex flex-col items-center justify-center opacity-10">
                 <PackageSearch className="w-20 h-20 mb-4" />
-                <p className="text-xs font-black tracking-widest uppercase">Cart is ready for products</p>
+                <p className="text-xs font-black tracking-widest">Cart is ready for products</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -699,7 +699,7 @@ const POSPage: React.FC = () => {
                           <input type="number" placeholder="Enter amount..." className="input-field w-full text-xl font-black !rounded-3xl" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} onFocus={e => e.target.select()} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[9px] font-black text-surface-text/40 tracking-widest uppercase ml-1">Change & Tax Summary</label>
+                          <label className="text-[9px] font-black text-surface-text/40 tracking-widest ml-1">Change & Tax Summary</label>
                           <div className={clsx("h-14 flex flex-col justify-center px-6 rounded-2xl border font-black", parseFloat(amountReceived) >= finalTotal ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500" : "bg-surface-bg border-surface-border text-surface-text/10")}>
                             <div className="text-[10px] opacity-60">CHANGE: MK {changeDue.toLocaleString()}</div>
                             <div className="text-[10px] opacity-60">TAX: MK {taxAmount.toLocaleString()}</div>
@@ -729,7 +729,7 @@ const POSPage: React.FC = () => {
                           <span className="text-sm font-black">MK {cartSubtotal.toLocaleString()}</span>
                         </div>
                         <div className="flex flex-col">
-                          <label className="text-[8px] font-black text-surface-text/30 tracking-widest uppercase block">Discount</label>
+                          <label className="text-[8px] font-black text-surface-text/30 tracking-widest block">Discount</label>
                           <input 
                             type="number" 
                             value={discount || ''} 
@@ -740,7 +740,7 @@ const POSPage: React.FC = () => {
                         </div>
                         {taxAmount > 0 && (
                           <div>
-                            <span className="text-[8px] font-black text-surface-text/30 tracking-widest uppercase block">Tax ({taxConfig.rate}%)</span>
+                            <span className="text-[8px] font-black text-surface-text/30 tracking-widest block">Tax ({taxConfig.rate}%)</span>
                             <span className="text-sm font-black text-primary-500">MK {taxAmount.toLocaleString()}</span>
                           </div>
                         )}
@@ -753,10 +753,10 @@ const POSPage: React.FC = () => {
                           onChange={(e) => setPrintReceipt(e.target.checked)}
                           className="w-4 h-4 rounded border-surface-border text-primary-500 focus:ring-primary-500"
                         />
-                        <label htmlFor="printReceipt" className="text-[10px] font-black tracking-widest uppercase text-surface-text/60 cursor-pointer">Print Receipt After Checkout</label>
+                        <label htmlFor="printReceipt" className="text-[10px] font-black tracking-widest text-surface-text/60 cursor-pointer">Print Receipt After Checkout</label>
                       </div>
                       <div className="text-center md:text-left mt-4">
-                        <span className="text-[10px] font-black text-surface-text/30 tracking-widest uppercase mb-1 block">Final Order Total</span>
+                        <span className="text-[10px] font-black text-surface-text/30 tracking-widest mb-1 block">Final Order Total</span>
                         <div className={clsx("text-3xl sm:text-5xl font-black tracking-tighter italic", paymentMode === 'Credit' ? 'text-amber-500' : 'text-primary-500')}>
                             MK {finalTotal.toLocaleString()}
                         </div>
@@ -769,7 +769,7 @@ const POSPage: React.FC = () => {
                         ((paymentMode === 'Card' || paymentMode === 'Momo') && (!bankName || !accountNumber))
                       }
                       className={clsx(
-                        "w-full md:w-auto px-16 py-7 rounded-[2rem] font-black text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-4 shadow-2xl active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed",
+                        "w-full md:w-auto px-16 py-7 rounded-[2rem] font-black text-sm tracking-widest transition-all flex items-center justify-center gap-4 shadow-2xl active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed",
                         paymentMode === 'Credit' ? "bg-amber-500 text-white" : "bg-primary-500 text-white shadow-primary-500/20"
                       )}
                     >

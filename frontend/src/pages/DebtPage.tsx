@@ -200,7 +200,7 @@ const DebtPage: React.FC = () => {
 
             <button 
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center gap-2 px-6 h-12 bg-primary-500 text-white rounded-2xl font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary-500/20 active:scale-95 transition-all"
+              className="flex items-center gap-2 px-6 h-12 bg-primary-500 text-white rounded-2xl font-black text-[10px] tracking-widest shadow-lg shadow-primary-500/20 active:scale-95 transition-all"
             >
               <Plus className="w-4 h-4" /> Add Customer
             </button>
@@ -296,7 +296,7 @@ const DebtPage: React.FC = () => {
                         }
                       }
                     }}
-                    className="mt-4 text-[9px] font-black text-rose-500 uppercase tracking-widest hover:underline text-left"
+                    className="mt-4 text-[9px] font-black text-rose-500 tracking-widest hover:underline text-left"
                   >
                     Clear balance manually
                   </button>

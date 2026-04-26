@@ -74,12 +74,12 @@ const ForgotPasswordPage: React.FC = () => {
             >
               <div className="text-center">
                 <h1 className="text-3xl font-black italic tracking-tighter text-primary-500 mb-2">Reset Password</h1>
-                <p className="text-surface-text/40 text-[10px] font-black tracking-widest uppercase">Enter your registered details</p>
+                <p className="text-surface-text/40 text-[10px] font-black tracking-widest">Enter your registered details</p>
               </div>
 
               <form onSubmit={handleRequestReset} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Username</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Username</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-text/20" />
                     <input 
@@ -94,7 +94,7 @@ const ForgotPasswordPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Email Address</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Email Address</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-text/20" />
                     <input 
@@ -135,12 +135,12 @@ const ForgotPasswordPage: React.FC = () => {
                   <ShieldCheck className="w-8 h-8 text-emerald-500" />
                 </div>
                 <h1 className="text-2xl font-black italic tracking-tighter text-emerald-500 mb-2">Check Your Email</h1>
-                <p className="text-surface-text/40 text-[10px] font-black tracking-widest uppercase">Enter code and new password</p>
+                <p className="text-surface-text/40 text-[10px] font-black tracking-widest">Enter code and new password</p>
               </div>
 
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">6-Digit Code</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">6-Digit Code</label>
                   <OTPInput 
                     value={code}
                     onChange={setCode}
@@ -149,7 +149,7 @@ const ForgotPasswordPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">New Password</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">New Password</label>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                     <input 
@@ -164,7 +164,7 @@ const ForgotPasswordPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1 uppercase">Confirm Password</label>
+                  <label className="text-[10px] font-black tracking-widest text-surface-text/30 pl-1">Confirm Password</label>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-text/20" />
                     <input 

@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
           <img src="/icon.png?v=2" alt="MsikaPos Logo" className="w-full h-full object-contain" />
         </div>
         <div className="space-y-1">
-          <div className="text-[10px] font-black text-primary-500 tracking-[0.3em] uppercase opacity-80">Cloud POS</div>
+          <div className="text-[10px] font-black text-primary-500 tracking-[0.3em] opacity-80">Cloud POS</div>
           <div className="w-12 h-1 bg-primary-500/20 mx-auto rounded-full"></div>
         </div>
       </div>
@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
             key={tab.id}
             to={tab.path}
             className={({ isActive }) => clsx(
-              "flex items-center gap-4 px-5 h-14 rounded-[1.5rem] font-black tracking-widest text-[13px] transition-all group shrink-0 uppercase",
+              "flex items-center gap-4 px-5 h-14 rounded-[1.5rem] font-black tracking-widest text-[13px] transition-all group shrink-0",
               isActive 
                 ? "bg-primary-500 text-white shadow-xl shadow-primary-500/20 scale-[1.02]" 
                 : "text-surface-text/40 hover:text-primary-500 hover:bg-primary-500/5 border border-transparent hover:border-primary-500/10"

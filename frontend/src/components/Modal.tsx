@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
             <div className="p-4 border-t border-surface-border bg-surface-bg/10">
               <button 
                 onClick={onClose}
-                className="w-full py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-surface-border/50 transition-all active:scale-[0.98]"
+                className="w-full py-4 bg-surface-bg border border-surface-border rounded-2xl text-[10px] font-black tracking-widest hover:bg-surface-border/50 transition-all active:scale-[0.98]"
               >
                 Close Window
               </button>

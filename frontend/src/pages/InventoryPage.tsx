@@ -306,7 +306,7 @@ const InventoryPage: React.FC = () => {
               title="Show all categories"
               aria-label="Show all categories"
             >
-              ALL ITEMS
+              All Items
             </button>
             {categories?.map(cat => (
               <button 
@@ -319,7 +319,7 @@ const InventoryPage: React.FC = () => {
                 title={`Filter by ${cat.title}`}
                 aria-label={`Filter by ${cat.title}`}
               >
-                {cat.title.toUpperCase()}
+                {cat.title}
               </button>
             ))}
           </div>
@@ -424,7 +424,7 @@ const InventoryPage: React.FC = () => {
                   className="w-5 h-5 rounded border-surface-border text-primary-500 focus:ring-primary-500"
                 />
                 <div>
-                  <div className="text-[10px] font-black uppercase tracking-widest">Service / Non-Stock Item</div>
+                  <div className="text-[10px] font-black tracking-widest">Service / Non-Stock Item</div>
                   <div className="text-[9px] text-surface-text/30 font-bold">Exclude from stock alerts and inventory value</div>
                 </div>
               </label>

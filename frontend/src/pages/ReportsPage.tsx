@@ -84,12 +84,12 @@ const ReportsPage: React.FC = () => {
             <div className="p-2 bg-primary-500/10 text-primary-500 rounded-lg">
               <BarChart3 className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-black tracking-wider uppercase">{label}</h3>
+            <h3 className="text-sm font-black tracking-wider">{label}</h3>
           </div>
         </div>
         <div className="h-64 flex items-end justify-between gap-2 pt-4">
           {data.length === 0 ? (
-            <div className="w-full h-full flex items-center justify-center text-surface-text/10 font-black text-xs uppercase tracking-widest">No data available</div>
+            <div className="w-full h-full flex items-center justify-center text-surface-text/10 font-black text-xs tracking-widest">No data available</div>
           ) : data.map((item, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
               <div className="relative w-full flex flex-col justify-end h-full">
@@ -103,7 +103,7 @@ const ReportsPage: React.FC = () => {
                   </div>
                 </motion.div>
               </div>
-              <span className="text-[9px] font-bold text-surface-text/30 truncate w-full text-center uppercase tracking-tighter">{item.label}</span>
+              <span className="text-[9px] font-bold text-surface-text/30 truncate w-full text-center tracking-tighter">{item.label}</span>
             </div>
           ))}
         </div>
@@ -117,7 +117,7 @@ const ReportsPage: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-black tracking-tight italic">Business Reports</h1>
-            <p className="text-[10px] text-surface-text/40 font-black tracking-widest mt-1 uppercase">Live Performance Analytics</p>
+            <p className="text-[10px] text-surface-text/40 font-black tracking-widest mt-1">Live Performance Analytics</p>
           </div>
         </div>
       </header>
@@ -128,7 +128,7 @@ const ReportsPage: React.FC = () => {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={clsx(
-              "px-6 py-3 rounded-xl text-[9px] font-black tracking-widest transition-all whitespace-nowrap uppercase",
+              "px-6 py-3 rounded-xl text-[9px] font-black tracking-widest transition-all whitespace-nowrap",
               activeTab === tab ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" : "text-surface-text/40 hover:bg-surface-bg"
             )}
           >
@@ -151,7 +151,7 @@ const ReportsPage: React.FC = () => {
               <stat.icon className="w-5 h-5" />
             </div>
             <div className="text-lg font-black tracking-tighter">{stat.value}</div>
-            <div className="text-[9px] font-black text-surface-text/30 tracking-[0.15em] mt-1 uppercase">{stat.label}</div>
+            <div className="text-[9px] font-black text-surface-text/30 tracking-[0.15em] mt-1">{stat.label}</div>
           </motion.div>
         ))}
       </div>
@@ -173,7 +173,7 @@ const ReportsPage: React.FC = () => {
       </div>
 
       <div className="mt-8 bg-surface-card border border-surface-border rounded-3xl p-6">
-        <h4 className="text-[10px] font-black tracking-widest text-surface-text/30 mb-4 uppercase">Market Intelligence</h4>
+        <h4 className="text-[10px] font-black tracking-widest text-surface-text/30 mb-4">Market Intelligence</h4>
         <p className="text-xs font-bold leading-relaxed text-surface-text/60">
           Your revenue is currently driven primarily by <span className="text-primary-500">{analyticsData.payment[0]?.label || 'Cash'}</span> transactions. 
           {analyticsData.staff[0] && <span> <span className="text-emerald-500 font-black">{analyticsData.staff[0].label}</span> is your highest grossing seller this period.</span>}

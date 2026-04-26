@@ -59,7 +59,7 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
           >
             <div className="text-center mb-8">
                <h2 className="text-2xl font-black tracking-tighter italic">More Options</h2>
-               <p className="text-[10px] font-black tracking-widest text-surface-text/30 uppercase mt-1">Management & Support</p>
+               <p className="text-[10px] font-black tracking-widest text-surface-text/30 mt-1">Management & Support</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -73,7 +73,7 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
                   <div className={clsx("w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-transform group-active:scale-110", opt.color)}>
                     <opt.icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-black tracking-widest uppercase italic">{opt.label}</span>
+                  <span className="text-[11px] font-black tracking-widest italic">{opt.label}</span>
                 </NavLink>
               ))}
 
@@ -82,7 +82,7 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
                 className="col-span-2 flex items-center justify-center gap-4 p-6 bg-rose-500/10 border border-rose-500/20 rounded-[2rem] text-rose-500 active:scale-95 transition-all mt-4"
               >
                 <LogOut className="w-6 h-6" />
-                <span className="text-sm font-black tracking-widest uppercase italic">Sign Out</span>
+                <span className="text-sm font-black tracking-widest italic">Sign Out</span>
               </button>
               
               <button
@@ -90,12 +90,12 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({ isOpen, onClose }) =>
                 className="col-span-2 flex items-center justify-center gap-3 p-6 bg-surface-bg border border-surface-border rounded-[2rem] text-surface-text/40 active:scale-95 transition-all mt-2 group"
               >
                 <ChevronDown className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
-                <span className="text-xs font-black tracking-widest uppercase italic">Close Options</span>
+                <span className="text-xs font-black tracking-widest italic">Close Options</span>
               </button>
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em] uppercase">MsikaPos v2.4.0</p>
+              <p className="text-[10px] font-black text-surface-text/20 tracking-[0.3em]">MsikaPos v2.4.0</p>
             </div>
           </motion.div>
         </>
