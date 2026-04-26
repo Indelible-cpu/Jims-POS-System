@@ -510,7 +510,7 @@ const POSPage: React.FC = () => {
                 <ShoppingCart className="w-8 h-8" />
               </div>
               <h2 className="text-2xl font-black mb-2 tracking-tight italic">Sale Completed</h2>
-              <p className="text-surface-text/40 mb-8 text-center text-[10px] font-black tracking-widest uppercase">Invoice: {showReceipt.invoiceNo}</p>
+              <p className="text-surface-text/40 mb-8 text-center text-[10px] font-black tracking-widest">Inv: {showReceipt.invoiceNo}</p>
               
               <div className="w-full bg-white rounded-2xl overflow-hidden mb-8 shadow-inner border border-zinc-100 p-4 max-h-[40vh] overflow-y-auto text-black">
                 {showReceipt.mode === 'Credit' ? (
@@ -545,10 +545,10 @@ const POSPage: React.FC = () => {
                   <Printer className="w-4 h-4" /> Print
                 </button>
                 <button onClick={() => {
-                    const itemsText = showReceipt.items.map(i => `• ${i.product.name} x${i.quantity} @ MK ${i.product.sellPrice.toLocaleString()}`).join('\n');
-                    const bankInfo = showReceipt.bankName ? `\n🏦 *${showReceipt.mode === 'Momo' ? 'Provider' : 'Bank'}*: ${showReceipt.bankName}\n🔢 *Acc/Ref*: ${showReceipt.accountNumber}` : '';
+                    const itemsText = showReceipt.items.map(i => `▫️ ${i.product.name}\n   ${i.quantity} x MK ${i.product.sellPrice.toLocaleString()} = *MK ${(i.product.sellPrice * i.quantity).toLocaleString()}*`).join('\n\n');
+                    const bankInfo = showReceipt.bankName ? `\n\n🏦 *${showReceipt.mode === 'Momo' ? 'Provider' : 'Bank'}*: ${showReceipt.bankName}\n🔢 *Acc/Ref*: ${showReceipt.accountNumber}` : '';
                     const taxText = showReceipt.tax > 0 ? `\nTax: MK ${showReceipt.tax.toLocaleString()}` : '';
-                    const text = `🧾 *RECEIPT: ${showReceipt.invoiceNo}*\n\n*${localStorage.getItem('companyName')?.toUpperCase() || 'MSIKAPOS'}*\n------------------------------\n${itemsText}\n------------------------------\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_`;
+                    const text = `*${localStorage.getItem('companyName') || 'MsikaPos'}*\n━━━━━━━━━━━━━━━━\n🧾 *DIGITAL RECEIPT*\n━━━━━━━━━━━━━━━━\n\n*Inv*: ${showReceipt.invoiceNo}\n*Date*: ${showReceipt.date}\n\n*ITEMS:*\n${itemsText}\n\n━━━━━━━━━━━━━━━━\nSubtotal: MK ${showReceipt.subtotal.toLocaleString()}${taxText}\n*TOTAL: MK ${showReceipt.total.toLocaleString()}*\n━━━━━━━━━━━━━━━━\n\n*Payment*: ${showReceipt.mode}${bankInfo}\n\n_Thank you for your business!_\n_Powered by MsikaPos_`;
                     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
                   }} className="flex-1 px-4 py-3 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white rounded-2xl font-black text-[10px] tracking-widest uppercase flex items-center justify-center gap-2 border border-[#25D366]/20">
                   <Send className="w-4 h-4" /> WhatsApp
@@ -631,9 +631,9 @@ const POSPage: React.FC = () => {
                   <ShoppingCart className="w-6 h-6 text-primary-500" />
                   Order Cart
                </h2>
-               <div className="card-label">
-                 {cart.length} ITEMS SELECTED
-               </div>
+                <div className="card-label">
+                  {cart.length} items selected
+                </div>
             </div>
 
             {cart.length === 0 ? (
@@ -725,7 +725,7 @@ const POSPage: React.FC = () => {
                     <div className="flex flex-col gap-1 w-full md:w-auto">
                       <div className="flex justify-between md:justify-start gap-8 items-center border-b border-surface-border/30 pb-2 mb-2">
                         <div>
-                          <span className="text-[8px] font-black text-surface-text/30 tracking-widest uppercase block">Subtotal</span>
+                          <span className="text-[8px] font-black text-surface-text/30 tracking-widest block">Subtotal</span>
                           <span className="text-sm font-black">MK {cartSubtotal.toLocaleString()}</span>
                         </div>
                         <div className="flex flex-col">
@@ -774,7 +774,7 @@ const POSPage: React.FC = () => {
                       )}
                     >
                       {paymentMode === 'Credit' ? <Users className="w-6 h-6" /> : <Power className="w-6 h-6" />}
-                      {paymentMode === 'Credit' ? 'PROCESS CREDIT' : 'COMPLETE SALE'}
+                      {paymentMode === 'Credit' ? 'Process Credit' : 'Complete Sale'}
                       <ArrowRight className="w-6 h-6" />
                     </button>
                   </div>

@@ -17,7 +17,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
   const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const shopName = branch?.name || localStorage.getItem('companyName') || 'MSIKAPOS';
+  const shopName = branch?.name || localStorage.getItem('companyName') || 'MsikaPos';
   const shopAddress = branch?.address || 'Excellence in Service'; 
   const shopTel = branch?.phone || '+265 999 000 000';
   const shopEmail = branch?.email;
@@ -34,7 +34,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
         <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
            <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
-        <h1 className="text-lg font-black tracking-tighter uppercase">{shopName}</h1>
+        <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
         <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
         <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
@@ -43,10 +43,10 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
 
       <div className="mb-4 text-[9px] space-y-1">
         <div className="font-bold flex justify-between">
-           <span>INV: {invoiceNo}</span>
-           <span>{new Date(date).toLocaleDateString()}</span>
+           <span>Inv: {invoiceNo}</span>
+           <span>{date ? new Date(date).toLocaleDateString() : new Date().toLocaleDateString()}</span>
         </div>
-        <div className="uppercase">CASHIER: {cashierName}</div>
+        <div>Cashier: {cashierName}</div>
       </div>
 
       <div className="mb-4 space-y-1 p-2 bg-zinc-50 border border-black border-dotted">
@@ -115,7 +115,7 @@ export const Invoice: React.FC<InvoiceProps> = ({ items, total, subtotal, tax, d
       <div className="text-center pt-4 mt-4 border-t border-black border-dashed">
         <p className="text-[9px] font-bold italic">Payment expected by due date.</p>
         <p className="text-[11px] font-black mt-2">Thank you for your business!</p>
-        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by MsikaPos Cloud POS</div>
+        <div className="mt-4 opacity-30 text-[7px] font-bold tracking-widest">Powered by MsikaPos Cloud POS</div>
       </div>
       
       <style dangerouslySetInnerHTML={{ __html: `

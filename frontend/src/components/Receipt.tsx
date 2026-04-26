@@ -21,7 +21,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
   const branch = currentBranchStr ? JSON.parse(currentBranchStr) : null;
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const shopName = branch?.name || localStorage.getItem('companyName') || 'MSIKAPOS';
+  const shopName = branch?.name || localStorage.getItem('companyName') || 'MsikaPos';
   const shopAddress = branch?.address || 'Excellence in Service'; 
   const shopTel = branch?.phone || '+265 999 000 000';
   const shopEmail = branch?.email;
@@ -35,7 +35,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
         <div className="w-14 h-14 mx-auto mb-2 rounded-full border border-black/10 flex items-center justify-center overflow-hidden">
            <img src={branch?.logo || "/icon.png"} alt="logo" className="w-full h-full object-contain grayscale" />
         </div>
-        <h1 className="text-lg font-black tracking-tighter uppercase">{shopName}</h1>
+            <h1 className="text-xl font-bold tracking-tight italic">MsikaPos</h1>
         {shopSlogan && <p className="text-[8px] italic font-bold mb-1 opacity-60">"{shopSlogan}"</p>}
         <p className="text-[9px] tracking-widest uppercase">{shopAddress}</p>
         <p className="text-[9px] font-bold mt-1 uppercase">TEL: {shopTel}</p>
@@ -45,10 +45,10 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
 
       <div className="flex flex-col gap-1 mb-4 font-bold text-[9px]">
         <div className="flex justify-between">
-          <span>INV: {invoiceNo}</span>
-          <span>{new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
+          <span>Inv: {invoiceNo}</span>
+          <span>{date ? new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
         </div>
-        <div className="uppercase">CASHIER: {cashierName}</div>
+        <div>Cashier: {cashierName}</div>
       </div>
 
       <table className="w-full mb-4 border-b border-black border-dashed">
@@ -132,7 +132,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ items, total, subtotal, tax, d
            <span className="text-[8px] font-bold tracking-[0.3em] mt-1">{invoiceNo}</span>
         </div>
 
-        <div className="mt-4 opacity-30 text-[7px] uppercase font-bold tracking-widest">Powered by MsikaPos Cloud POS</div>
+        <div className="mt-4 opacity-30 text-[7px] font-bold tracking-widest">Powered by MsikaPos Cloud POS</div>
       </div>
       
       <style dangerouslySetInnerHTML={{ __html: `
