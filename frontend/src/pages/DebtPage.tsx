@@ -278,9 +278,29 @@ const DebtPage: React.FC = () => {
         {selectedCustomer && (
           <div className="p-4 md:p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
-                <div className="text-[10px] font-bold text-surface-text/30">Total balance</div>
-                <div className="text-3xl font-black text-amber-500 mt-2">MK {selectedCustomer.balance.toLocaleString()}</div>
+              <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border flex flex-col justify-between">
+                <div>
+                  <div className="text-[10px] font-bold text-surface-text/30">Total balance</div>
+                  <div className="text-3xl font-black text-amber-500 mt-2">MK {selectedCustomer.balance.toLocaleString()}</div>
+                </div>
+                {selectedCustomer.balance > 0 && (
+                  <button 
+                    onClick={async () => {
+                      if (confirm(`Are you sure you want to clear MK ${selectedCustomer.balance.toLocaleString()} for ${selectedCustomer.name}? This cannot be undone.`)) {
+                        try {
+                          await db.customers.update(selectedCustomer.id, { balance: 0, updatedAt: new Date().toISOString() });
+                          setSelectedCustomer({ ...selectedCustomer, balance: 0 });
+                          toast.success('Balance cleared successfully');
+                        } catch {
+                          toast.error('Failed to clear balance');
+                        }
+                      }
+                    }}
+                    className="mt-4 text-[9px] font-black text-rose-500 uppercase tracking-widest hover:underline text-left"
+                  >
+                    Clear balance manually
+                  </button>
+                )}
               </div>
               <div className="bg-surface-bg/50 p-6 rounded-2xl border border-surface-border">
                 <div className="text-[10px] font-bold text-surface-text/30">Record payment</div>

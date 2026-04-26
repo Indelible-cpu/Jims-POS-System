@@ -7,12 +7,9 @@ import {
   Users, 
   Package, 
   DollarSign, 
-  Activity,
   ArrowUpRight,
-  ArrowDownRight,
   Wallet,
-  Receipt,
-  ChevronRight
+  Receipt
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { 
@@ -38,7 +35,6 @@ const DashboardPage: React.FC = () => {
   const totalRevenue = sales?.reduce((sum, s) => sum + s.total, 0) || 0;
   const totalExpenses = expenses?.reduce((sum, e) => sum + e.amount, 0) || 0;
   const netProfit = totalRevenue - totalExpenses;
-  const totalOrders = sales?.length || 0;
   const creditCustomers = customers?.filter(c => c.balance > 0) || [];
   const totalCreditAmount = creditCustomers.reduce((sum, c) => sum + c.balance, 0);
   const lowStockCount = products?.filter(p => !p.isService && p.quantity <= 5).length || 0;

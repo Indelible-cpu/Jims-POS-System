@@ -6,11 +6,14 @@ import { motion } from 'framer-motion';
 export default function MobileHeader() {
   const location = useLocation();
   const [shopName, setShopName] = useState('MsikaPos');
+  const [shopLogo, setShopLogo] = useState('/icon.png?v=2');
 
   useEffect(() => {
     const updateHeader = () => {
       const storedName = localStorage.getItem('companyName');
       if (storedName) setShopName(storedName);
+      const storedLogo = localStorage.getItem('companyLogo');
+      if (storedLogo) setShopLogo(storedLogo);
     };
 
     updateHeader();
@@ -49,7 +52,7 @@ export default function MobileHeader() {
               animate={{ scale: 1, opacity: 1 }}
               className="w-10 h-10 rounded-full border border-primary-500/20 bg-surface-bg flex items-center justify-center overflow-hidden flex-shrink-0 shadow-sm"
             >
-              <img src="/icon.png?v=2" alt="Logo" className="w-full h-full object-contain" />
+              <img src={shopLogo} alt="Logo" className="w-full h-full object-contain" />
             </motion.div>
           ) : (
             <button 
