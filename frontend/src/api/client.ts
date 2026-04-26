@@ -3,10 +3,10 @@ import { supabase } from './supabase';
 
 const api = axios.create({
   baseURL: (() => {
-    const url = (import.meta.env.VITE_API_URL as string) || '';
+    const url = (import.meta.env.VITE_API_URL as string) || 'https://msikapos.onrender.com';
     if (url.endsWith('/api')) return url;
     if (url.endsWith('/')) return url + 'api';
-    return url ? url + '/api' : '/api';
+    return url + '/api';
   })(),
   headers: {
     'Content-Type': 'application/json',
