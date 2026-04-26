@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { X } from 'lucide-react';
+
 
 interface BarcodeScannerProps {
   onScan: (decodedText: string) => void;

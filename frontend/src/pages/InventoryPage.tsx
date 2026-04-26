@@ -10,7 +10,8 @@ import {
   Edit2, 
   Trash2, 
   ArrowUpRight,
-  Barcode
+  Barcode,
+  CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
