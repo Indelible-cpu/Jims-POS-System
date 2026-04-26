@@ -117,7 +117,7 @@ export const PublicStorefront: React.FC = () => {
       </header>
 
       {/* Hero Search */}
-      <div className="w-full bg-primary-500/5 border-b border-surface-border">
+      <div className="w-full bg-surface-bg border-b border-surface-border transition-colors">
         <div className="max-w-5xl mx-auto px-6 py-12 text-center">
           <h2 className="text-3xl md:text-5xl font-black tracking-tighter italic mb-4">Marketplace</h2>
           <p className="text-sm font-bold text-surface-text/40 mb-8 max-w-md mx-auto">Explore premium products and professional services. Quality guaranteed at {shopName}.</p>
@@ -150,7 +150,7 @@ export const PublicStorefront: React.FC = () => {
                 <div className="absolute top-6 right-6 z-10">
                   <div className={`px-4 py-1.5 rounded-full text-[8px] font-black tracking-[0.2em] uppercase backdrop-blur-md border ${
                     p.isService 
-                      ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' 
+                      ? 'bg-primary-500/10 text-primary-500 border-primary-500/20' 
                       : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
                   }`}>
                     {p.isService ? 'SERVICE' : 'PRODUCT'}
@@ -158,11 +158,11 @@ export const PublicStorefront: React.FC = () => {
                 </div>
 
                 <div className="aspect-[4/3] bg-surface-bg border-b border-surface-border/30 flex items-center justify-center p-12 relative overflow-hidden shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   {p.imageUrl ? (
                     <img src={p.imageUrl} alt={p.name} className="w-full h-full object-contain drop-shadow-2xl scale-110 group-hover:scale-125 transition-transform duration-700" />
                   ) : (
-                    <Package className="w-24 h-24 text-surface-text/5 group-hover:text-primary-500/20 transition-colors" />
+                    <Package className="w-24 h-24 text-surface-text/5 group-hover:text-zinc-500/20 transition-colors" />
                   )}
                 </div>
                 
