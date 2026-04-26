@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, BarChart3, Receipt, ShoppingCart, MoreHorizontal, MessageSquare } from 'lucide-react';
+import { Home, Receipt, ShoppingCart, MoreHorizontal, MessageSquare } from 'lucide-react';
 import { clsx } from 'clsx';
 import MoreOptionsMenu from './MoreOptionsMenu';
 import api from '../api/client';

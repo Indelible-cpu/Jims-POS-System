@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Search, MessageSquare, ShoppingBag, Loader2, CheckCircle2, User as UserIcon } from 'lucide-react';
+import { Package, Search, MessageSquare, ShoppingBag, Loader2, User as UserIcon } from 'lucide-react';
 import { db } from '../db/posDB';
-import { clsx } from 'clsx';
 import toast from 'react-hot-toast';
 import api from '../api/client';
 import CustomerAuthModal from '../components/CustomerAuthModal';
@@ -55,7 +54,7 @@ export const PublicStorefront: React.FC = () => {
     }
   };
 
-  const handleAuthSuccess = (token: string, user: any) => {
+  const handleAuthSuccess = (_token: string, user: any) => {
     setCustomer(user);
     if (selectedProduct) {
       handleInquiry(selectedProduct);

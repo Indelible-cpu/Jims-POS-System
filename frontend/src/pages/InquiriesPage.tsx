@@ -7,8 +7,7 @@ import {
   User, 
   Package, 
   Loader2, 
-  Search,
-  Filter
+  Search
 } from 'lucide-react';
 import api from '../api/client';
 import toast from 'react-hot-toast';

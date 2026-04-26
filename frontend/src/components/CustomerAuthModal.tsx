@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Lock, Loader2, CheckCircle2 } from 'lucide-react';
+import { User, Lock, Loader2 } from 'lucide-react';
 import api from '../api/client';
 import toast from 'react-hot-toast';
 import Modal from './Modal';
