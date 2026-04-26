@@ -169,6 +169,8 @@ export const updateOnboarding = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
+    const data: any = {
+      fullname,
       nationalId,
       phone,
       email,
