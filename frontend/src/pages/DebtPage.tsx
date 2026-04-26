@@ -32,7 +32,6 @@ const DebtPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<LocalCustomer | null>(null);
-  const [paymentAmount, setPaymentAmount] = useState<string>('');
 
   // Form State
   const [custForm, setCustForm] = useState({ 
@@ -156,35 +155,7 @@ const DebtPage: React.FC = () => {
     }
   };
 
-  const handleRecordPayment = async () => {
-    if (!selectedCustomer || !paymentAmount || parseFloat(paymentAmount) <= 0) return;
 
-    const amount = parseFloat(paymentAmount);
-    try {
-      await db.debtPayments.add({
-        id: crypto.randomUUID(),
-        customerId: selectedCustomer.id,
-        amount,
-        paymentMethod: 'CASH',
-        createdAt: new Date().toISOString(),
-      });
-
-      await db.customers.update(selectedCustomer.id, {
-        balance: selectedCustomer.balance - amount,
-        updatedAt: new Date().toISOString()
-      });
-
-      setSelectedCustomer({
-        ...selectedCustomer,
-        balance: selectedCustomer.balance - amount
-      });
-
-      toast.success(`Payment recorded`);
-      setPaymentAmount('');
-    } catch {
-      toast.error('Failed to record payment');
-    }
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-24 md:pb-0">

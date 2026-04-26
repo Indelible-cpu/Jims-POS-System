@@ -22,7 +22,8 @@ import {
   Camera,
   Upload,
   Fingerprint,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';

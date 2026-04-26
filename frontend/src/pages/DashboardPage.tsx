@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/posDB';
-import { useNavigate } from 'react-router-dom';
 import { 
   TrendingUp, 
   Users, 
@@ -28,7 +27,6 @@ import {
 } from 'recharts';
 
 const DashboardPage: React.FC = () => {
-  const navigate = useNavigate();
   const sales = useLiveQuery(() => db.salesQueue.toArray());
   const customers = useLiveQuery(() => db.customers.toArray());
   const products = useLiveQuery(() => db.products.toArray());

@@ -7,8 +7,7 @@ import {
   Phone, 
   Plus, 
   ExternalLink,
-  ShieldCheck,
-  X
+  ShieldCheck
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
