@@ -2,7 +2,6 @@ import React from 'react';
 import { 
   HelpCircle, 
   ShieldCheck, 
-  MessageSquare,
   Phone,
   Mail,
   Wrench
