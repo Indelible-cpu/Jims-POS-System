@@ -12,6 +12,7 @@ import * as ReportCtrl from './controllers/ReportController.js';
 import * as DashboardCtrl from './controllers/DashboardController.js';
 import * as CreditCtrl from './controllers/CreditController.js';
 import * as CustomerCtrl from './controllers/CustomerController.js';
+import * as ExpenseCtrl from './controllers/ExpenseController.js';
 import * as Security from './middleware/security.js';
 
 dotenv.config();
@@ -113,6 +114,11 @@ app.get('/api/reports/summary', ReportCtrl.getSummary);
 // Credits
 app.get('/api/credits', CreditCtrl.listCredits);
 app.post('/api/credits/payment', CreditCtrl.recordPayment);
+
+// Expenses
+app.get('/api/expenses', ExpenseCtrl.listExpenses as any);
+app.post('/api/expenses', ExpenseCtrl.saveExpense as any);
+app.delete('/api/expenses/:id', ExpenseCtrl.deleteExpense as any);
 
 // Inquiries
 app.post('/api/inquiries', CustomerCtrl.createInquiry as any);

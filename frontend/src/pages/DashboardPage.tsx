@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../db/posDB';
+import React, { useState, useEffect } from 'react';
+import api from '../api/client';
 import { 
   TrendingUp, 
   Users, 
@@ -27,49 +26,48 @@ import {
 } from 'recharts';
 
 const DashboardPage: React.FC = () => {
-  const sales = useLiveQuery(() => db.salesQueue.toArray());
-  const customers = useLiveQuery(() => db.customers.toArray());
-  const products = useLiveQuery(() => db.products.toArray());
-  const expenses = useLiveQuery(() => db.expenses.toArray());
+  const [stats, setStats] = useState<any>(null);
+  const [expenses, setExpenses] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [credits, setCredits] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const totalRevenue = sales?.reduce((sum, s) => sum + s.total, 0) || 0;
-  const totalExpenses = expenses?.reduce((sum, e) => sum + e.amount, 0) || 0;
-  const netProfit = totalRevenue - totalExpenses;
-  const creditCustomers = customers?.filter(c => c.balance > 0) || [];
-  const totalCreditAmount = creditCustomers.reduce((sum, c) => sum + c.balance, 0);
-  const lowStockCount = products?.filter(p => !p.isService && p.quantity <= 5).length || 0;
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      try {
+        const [dashRes, expRes, prodRes, credRes] = await Promise.all([
+          api.get('/dashboard/stats'),
+          api.get('/expenses'),
+          api.get('/products'),
+          api.get('/credits'),
+        ]);
+        if (dashRes.data.success) setStats(dashRes.data.data);
+        if (expRes.data.success) setExpenses(expRes.data.data);
+        if (prodRes.data.success) setProducts(prodRes.data.data);
+        if (credRes.data.success) setCredits(credRes.data.data);
+      } catch (e) {
+        console.error('Dashboard load error:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
-  // Process data for charts
-  const chartData = useMemo(() => {
-    if (!sales) return [];
-    
-    // Group by last 7 days
-    const last7Days = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date();
-      d.setDate(d.getDate() - (6 - i));
-      return d.toLocaleDateString();
-    });
+  const totalRevenue = stats?.today_sales || 0;
+  const totalExpensesAmt = expenses.reduce((sum: number, e: any) => sum + e.amount, 0);
+  const netProfit = totalRevenue - totalExpensesAmt;
+  const activeCredits = credits.filter((c: any) => c.status !== 'Paid');
+  const totalCreditAmount = activeCredits.reduce((sum: number, c: any) => sum + (c.current_total - c.paid_amount), 0);
+  const lowStockItems = products.filter((p: any) => !p.isService && p.quantity <= 5);
+  const chartData = stats?.chart_data || [];
 
-    const groups = sales.reduce((acc: any, sale) => {
-      const date = new Date(sale.createdAt).toLocaleDateString();
-      if (!acc[date]) acc[date] = { revenue: 0, count: 0 };
-      acc[date].revenue += sale.total;
-      acc[date].count += 1;
-      return acc;
-    }, {});
-
-    return last7Days.map(date => ({
-      name: date.split('/')[0] + '/' + date.split('/')[1], // Short date
-      revenue: groups[date]?.revenue || 0,
-      customers: groups[date]?.count || 0 // Customer flow = transaction count
-    }));
-  }, [sales]);
-
-  const stats = [
-    { label: 'Total Revenue', value: `MK ${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-emerald-500', trend: '+12.5%' },
-    { label: 'Total Expenses', value: `MK ${totalExpenses.toLocaleString()}`, icon: Wallet, color: 'text-rose-500', trend: 'Monthly Spending' },
+  const statCards = [
+    { label: "Today's Sales", value: `MK ${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-emerald-500', trend: '+Today' },
+    { label: 'Total Expenses', value: `MK ${totalExpensesAmt.toLocaleString()}`, icon: Wallet, color: 'text-rose-500', trend: 'Monthly Spending' },
     { label: 'Net Profit', value: `MK ${netProfit.toLocaleString()}`, icon: TrendingUp, color: 'text-primary-400', trend: 'After Expenses' },
-    { label: 'Active Credits', value: `MK ${totalCreditAmount.toLocaleString()}`, icon: Users, color: 'text-amber-500', trend: `${creditCustomers.length} Users` },
+    { label: 'Active Credits', value: `MK ${totalCreditAmount.toLocaleString()}`, icon: Users, color: 'text-amber-500', trend: `${activeCredits.length} Users` },
   ];
 
   return (
@@ -87,7 +85,7 @@ const DashboardPage: React.FC = () => {
         
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-          {stats.map((stat, i) => (
+          {statCards.map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -222,8 +220,8 @@ const DashboardPage: React.FC = () => {
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Recent Expenses</h3>
                  <div className="flex gap-4 items-center">
-                    <Link to="/expenses" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
-                    <Link to="/expenses" className="p-2 bg-primary-500 text-white rounded-lg active:scale-95 transition-all shadow-lg shadow-primary-500/20" title="Add Expense">
+                    <Link to="/staff/expenses" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
+                    <Link to="/staff/expenses" className="p-2 bg-primary-500 text-white rounded-lg active:scale-95 transition-all shadow-lg shadow-primary-500/20" title="Add Expense">
                        <Plus className="w-3 h-3" />
                     </Link>
                  </div>
@@ -254,10 +252,10 @@ const DashboardPage: React.FC = () => {
            <div className="p-10">
               <div className="flex justify-between items-center mb-10">
                  <h3 className="text-sm font-black italic text-surface-text/40">Low Stock Alert</h3>
-                 <Link to="/inventory" className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</Link>
+                 <Link to="/staff/inventory" className="text-[10px] font-black text-primary-400 hover:underline">Manage inventory</Link>
               </div>
               <div className="space-y-4">
-                 {products?.filter(p => !p.isService && p.quantity <= 5).slice(0, 5).map((p, i) => (
+                 {lowStockItems.slice(0, 5).map((p: any, i: number) => (
                    <div key={i} className="flex justify-between items-center p-4 bg-transparent border-b border-surface-border/50 transition-all">
                       <div className="flex items-center gap-3">
                          <div className="w-10 h-10 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center">
@@ -274,7 +272,7 @@ const DashboardPage: React.FC = () => {
                       </div>
                    </div>
                  ))}
-                 {lowStockCount === 0 && (
+                 {lowStockItems.length === 0 && (
                     <div className="p-10 text-center text-emerald-500/20 font-bold text-xs tracking-widest">All stock levels healthy</div>
                  )}
               </div>
@@ -285,26 +283,26 @@ const DashboardPage: React.FC = () => {
         <div className="p-10 border-t border-surface-border">
            <div className="flex justify-between items-center mb-10">
               <h3 className="text-sm font-black italic text-surface-text/40">Active Credits</h3>
-              <Link to="/debt" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
+              <Link to="/staff/debt" className="text-[10px] font-black text-primary-400 hover:underline">Manage all</Link>
            </div>
            <div className="p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-              {creditCustomers?.slice(0, 6).map((customer, i) => (
+              {activeCredits?.slice(0, 6).map((customer: any, i: number) => (
                 <div key={i} className="flex justify-between items-center p-4 bg-transparent border-b border-surface-border/50 group hover:bg-surface-card/5 transition-all">
                    <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-amber-500/10 text-amber-500 rounded-xl flex items-center justify-center">
                          <Users className="w-5 h-5" />
                       </div>
                       <div>
-                         <div className="text-xs font-black">{customer.name}</div>
-                         <div className="card-label !mb-0">{customer.phone}</div>
+                         <div className="text-xs font-black">{customer.customer_name}</div>
+                         <div className="card-label !mb-0">{customer.customer_phone}</div>
                       </div>
                    </div>
                    <div className="text-right">
-                      <div className="text-sm font-black text-red-500">MK {customer.balance.toLocaleString()}</div>
+                      <div className="text-sm font-black text-red-500">MK {(customer.current_total - customer.paid_amount).toLocaleString()}</div>
                    </div>
                 </div>
               ))}
-              {(!creditCustomers || creditCustomers.length === 0) && (
+              {(!activeCredits || activeCredits.length === 0) && (
                  <div className="col-span-full p-10 text-center text-surface-text/20 font-bold text-xs tracking-widest">No active credits</div>
               )}
            </div>
