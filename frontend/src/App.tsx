@@ -163,7 +163,6 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/about" element={<MainLayout><AboutPage /></MainLayout>} />
           <Route path="/onboarding" element={localStorage.getItem('token') ? <OnboardingPage /> : <Navigate to="/login" replace />} />
           <Route 
             path="/*" 

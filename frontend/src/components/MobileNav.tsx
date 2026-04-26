@@ -16,7 +16,7 @@ const MobileNav: React.FC = () => {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 z-[100] bg-surface-card/90 backdrop-blur-2xl border-t border-surface-border md:hidden safe-bottom pb-4 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)]">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-surface-card/80 backdrop-blur-xl border-t border-surface-border md:hidden safe-bottom pb-2">
         <div className="flex items-center justify-around h-20 px-4">
           {tabs.map((tab) => (
             <NavLink
@@ -24,20 +24,20 @@ const MobileNav: React.FC = () => {
               to={tab.path}
               className={({ isActive }) => clsx(
                 "flex flex-col items-center justify-center flex-1 transition-all duration-500 h-14 rounded-2xl relative",
-                isActive ? "text-primary-500 bg-primary-500/5" : "text-surface-text/30 hover:text-surface-text"
+                isActive ? "text-primary-500 bg-primary-500/5" : "text-surface-text"
               )}
             >
               {({ isActive }) => (
                 <>
                   <div className={clsx(
                     "transition-all duration-300 flex items-center justify-center",
-                    isActive && "scale-110"
+                    isActive ? "scale-110 opacity-100" : "opacity-60"
                   )}>
                     <tab.icon className={clsx("w-5 h-5")} strokeWidth={isActive ? 3 : 2} />
                   </div>
                   <span className={clsx(
                     "text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all uppercase italic",
-                    isActive ? "opacity-100" : "opacity-40"
+                    isActive ? "text-black dark:text-white opacity-100" : "text-surface-text opacity-80"
                   )}>
                     {tab.label}
                   </span>
@@ -49,13 +49,13 @@ const MobileNav: React.FC = () => {
           <button
             onClick={() => setIsMoreOpen(true)}
             className={clsx(
-              "flex flex-col items-center justify-center flex-1 transition-all duration-500 h-14 rounded-2xl relative text-surface-text/30",
+              "flex flex-col items-center justify-center flex-1 transition-all duration-500 h-14 rounded-2xl relative text-surface-text",
             )}
           >
-            <div className="transition-all duration-300 flex items-center justify-center">
+            <div className="transition-all duration-300 flex items-center justify-center opacity-60">
               <MoreHorizontal className="w-5 h-5" strokeWidth={2} />
             </div>
-            <span className="text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all uppercase italic opacity-40">
+            <span className="text-[8px] font-black tracking-[0.2em] mt-1.5 transition-all uppercase italic opacity-80 text-surface-text">
               More
             </span>
           </button>
