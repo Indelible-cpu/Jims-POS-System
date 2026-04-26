@@ -46,7 +46,7 @@ export const PublicStorefront: React.FC = () => {
     setSubmitting(true);
     try {
       await api.post('/inquiries', {
-        items: [{ id: product.id, name: product.name, price: product.price }]
+        items: [{ id: product.id, name: product.name, price: product.sellPrice ?? 0 }]
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -170,7 +170,7 @@ export const PublicStorefront: React.FC = () => {
                   <div className="mt-auto pt-6 border-t border-surface-border/50 flex flex-col gap-6">
                     <div className="flex items-end gap-1">
                       <span className="text-[10px] font-black text-surface-text/20 mb-1.5 uppercase">Starting from</span>
-                      <p className="text-2xl font-black text-primary-500 italic tracking-tighter">MK {p.price.toLocaleString()}</p>
+                      <p className="text-2xl font-black text-primary-500 italic tracking-tighter">MK {(p.sellPrice ?? 0).toLocaleString()}</p>
                     </div>
                     
                     <button 
