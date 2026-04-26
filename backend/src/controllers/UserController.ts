@@ -192,8 +192,15 @@ export const updateOnboarding = async (req: Request, res: Response) => {
           from: `"MsikaPos Security" <${process.env.SMTP_USER}>`,
           to: email,
           subject: "MsikaPos Account Verification",
-          text: `Your verification code is: ${data.verificationCode}`,
-          html: `<b>Your verification code is: ${data.verificationCode}</b>`
+          text: `Your MsikaPos verification code is: ${data.verificationCode}. For security reasons, do not share this code with anyone.`,
+          html: `
+            <div style="font-family: sans-serif; padding: 20px; color: #333;">
+              <h2 style="color: #10b981;">Account Verification</h2>
+              <p>Your verification code is: <strong style="font-size: 24px; letter-spacing: 2px;">${data.verificationCode}</strong></p>
+              <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+              <p style="color: #ef4444; font-weight: bold;">⚠️ Security Warning: Do not share this code with anyone. MsikaPos staff will never ask for your code.</p>
+            </div>
+          `
         }).then(() => {
           console.log(`✅ Verification email sent successfully to: ${email}`);
         }).catch(err => {
@@ -251,8 +258,15 @@ export const forgotPassword = async (req: Request, res: Response) => {
         from: `"MsikaPos Support" <${process.env.SMTP_USER}>`,
         to: email,
         subject: "Password Reset Code",
-        text: `Your reset code is: ${code}`,
-        html: `<b>Your reset code is: ${code}</b>`
+        text: `Your MsikaPos password reset code is: ${code}. For security reasons, do not share this code with anyone.`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #10b981;">Password Reset Request</h2>
+            <p>Your reset code is: <strong style="font-size: 24px; letter-spacing: 2px;">${code}</strong></p>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #ef4444; font-weight: bold;">⚠️ Security Warning: Do not share this code with anyone. Keep it secure to protect your account.</p>
+          </div>
+        `
       }).catch(err => console.error('Forgot password email failed:', err));
 
       return res.status(200).json({
