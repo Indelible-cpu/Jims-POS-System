@@ -31,37 +31,37 @@ const SalesPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="p-6 bg-surface-card border-b border-surface-border sticky top-0 z-30">
-        <div className="flex items-center gap-3 mb-6">
+      <div className="p-6 md:p-10">
+        <header className="hidden md:flex items-center gap-3 mb-10">
           <div className="w-10 h-10 bg-primary-600/10 text-primary-400 rounded-xl flex items-center justify-center">
             <TrendingUp className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-black tracking-tighter">Sales & profit</h1>
-        </div>
+        </header>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          <div className="bg-surface-bg border border-surface-border p-4 rounded-2xl">
+          <div className="bg-surface-card border border-surface-border p-5 rounded-2xl shadow-sm">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <DollarSign className="w-3 h-3" />
                 <span className="text-[10px] font-bold">Revenue</span>
              </div>
              <div className="text-xl font-black text-primary-400">MK {totalRevenue.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-bg border border-surface-border p-4 rounded-2xl">
+          <div className="bg-surface-card border border-surface-border p-5 rounded-2xl shadow-sm">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <TrendingUp className="w-3 h-3" />
                 <span className="text-[10px] font-bold">Profit</span>
              </div>
              <div className="text-xl font-black text-emerald-500">MK {totalProfit.toLocaleString()}</div>
           </div>
-          <div className="hidden lg:block bg-surface-bg border border-surface-border p-4 rounded-2xl">
+          <div className="hidden lg:block bg-surface-card border border-surface-border p-5 rounded-2xl shadow-sm">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <Receipt className="w-3 h-3" />
                 <span className="text-[10px] font-bold">Orders</span>
              </div>
              <div className="text-xl font-black">{todaySales.length}</div>
           </div>
-          <div className="hidden lg:block bg-surface-bg border border-surface-border p-4 rounded-2xl">
+          <div className="hidden lg:block bg-surface-card border border-surface-border p-5 rounded-2xl shadow-sm">
              <div className="flex items-center gap-2 mb-2 text-surface-text/40">
                 <Package className="w-3 h-3" />
                 <span className="text-[10px] font-bold">Items sold</span>
@@ -70,11 +70,11 @@ const SalesPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-6 relative">
+        <div className="mt-8 relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5" />
-          <input type="text" placeholder="Search invoices..." className="input-field w-full pl-12 py-4 text-sm font-medium" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <input type="text" placeholder="Search invoices..." className="input-field w-full pl-12 py-4 text-sm font-medium shadow-sm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
-      </header>
+      </div>
 
       <div className="p-0 md:p-8">
         <div className="bg-surface-card border-y md:border md:rounded-3xl border-surface-border overflow-hidden divide-y divide-surface-border">

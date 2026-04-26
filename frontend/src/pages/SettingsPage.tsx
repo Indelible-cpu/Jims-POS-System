@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Store, Smartphone, Receipt, Users, CreditCard, Wallet, Plus, Package, ShieldAlert, History, TrendingUp, Building2, Settings, Info, ChevronRight } from 'lucide-react';
+import { User, Store, Smartphone, Building2, Settings, Info, ChevronRight, ShieldAlert, History, TrendingUp, Plus } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
 import { db } from '../db/posDB';
@@ -9,13 +9,6 @@ import { AuditService } from '../services/AuditService';
 const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-  const handleSignOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    toast.success('Signed out successfully');
-    navigate('/login');
-  };
 
   const isSuperAdmin = user.role === 'SUPER_ADMIN';
 
@@ -104,18 +97,13 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface-bg transition-all pb-32">
-       {/* Desktop Header */}
+    <div className="flex flex-col w-full bg-surface-bg transition-all pb-32">
+       {/* Desktop Header Only - Mobile uses MainLayout header */}
        <header className="hidden md:flex px-10 py-10 bg-surface-card border-b border-surface-border sticky top-0 z-30 shadow-sm">
           <h2 className="section-title !mb-0">
             <Settings className="w-6 h-6 text-primary-500" />
             Account & System Settings
           </h2>
-       </header>
-
-       {/* Mobile Header */}
-       <header className="p-6 bg-surface-card border-b border-surface-border md:hidden">
-          <h1 className="text-2xl font-black tracking-tighter italic text-primary-500">Settings</h1>
        </header>
 
        <div className="p-4 md:p-10 space-y-6 md:space-y-10">
@@ -297,91 +285,10 @@ const SettingsPage: React.FC = () => {
                )}
             </div>
 
-            {/* Business Info - Hidden on desktop as they are in the sidebar */}
-            <div className="bg-surface-card md:hidden md:border md:rounded-3xl overflow-hidden">
-               <div className="px-6 py-4 border-b border-surface-border/50">
-                  <h3 className="text-[10px] font-black text-surface-text/30  tracking-[0.2em]">Business tools</h3>
-               </div>
-               
-               <div className="divide-y divide-surface-border/50">
-                  <button onClick={() => navigate('/debt')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="Manage customer debt">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <CreditCard className="w-5 h-5 text-primary-400" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Debt management</div>
-                           <div className="text-xs text-surface-text/40 font-bold">Track customer balances and payments</div>
-                        </div>
-                     </div>
-                  </button>
-
-                  <button onClick={() => navigate('/expenses')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="Track business expenses">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <Wallet className="w-5 h-5 text-primary-400" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Expenses tracking</div>
-                           <div className="text-xs text-surface-text/40 font-bold">Log and monitor daily operational costs</div>
-                        </div>
-                     </div>
-                  </button>
-
-                  <button onClick={() => navigate('/transactions')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="View transaction history">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <Receipt className="w-5 h-5 text-primary-400" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Transactions history</div>
-                           <div className="text-xs text-surface-text/40 font-bold">Detailed history of all system activities</div>
-                        </div>
-                     </div>
-                  </button>
-
-                  <button onClick={() => navigate('/inventory')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="Manage inventory">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <Package className="w-5 h-5 text-emerald-500" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Stock management</div>
-                           <div className="text-xs text-surface-text/40 font-bold">Add, edit and manage product inventory</div>
-                        </div>
-                     </div>
-                  </button>
-
-                  <button onClick={() => navigate('/users')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="Manage team members">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <Users className="w-5 h-5 text-primary-400" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Team management</div>
-                           <div className="text-xs text-surface-text/40 font-bold">Manage staff access and permissions</div>
-                        </div>
-                     </div>
-                  </button>
-
-                  <button onClick={() => navigate('/branches')} className="w-full text-left p-6 flex items-center justify-between group hover:bg-primary-500/5 transition-colors" title="Manage branch locations">
-                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-surface-bg rounded-xl flex items-center justify-center border border-surface-border group-hover:border-primary-500/20 transition-all">
-                           <Store className="w-5 h-5 text-primary-400" />
-                        </div>
-                        <div>
-                           <div className="font-black text-sm tracking-tight">Branch management</div>
-                           <div className="text-xs text-surface-text/40 font-bold">View and update location details</div>
-                        </div>
-                     </div>
-                  </button>
-               </div>
-            </div>
-
             {/* Super Admin Security Section */}
             {isSuperAdmin && (
-              <div className="bg-surface-card md:border md:rounded-3xl overflow-hidden">
-                 <div className="px-6 py-4 border-b border-surface-border/50 bg-accent-danger/5">
+              <div className="bg-surface-card border border-surface-border rounded-[2.5rem] overflow-hidden shadow-sm">
+                 <div className="px-8 py-5 border-b border-surface-border/50 bg-accent-danger/5">
                     <h3 className="text-[10px] font-black text-accent-danger  tracking-[0.2em]">System security & control</h3>
                  </div>
 

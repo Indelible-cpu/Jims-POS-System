@@ -218,8 +218,8 @@ const InventoryPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full bg-surface-bg transition-all pb-24 md:pb-0">
-      <header className="px-4 py-4 md:px-10 md:py-10 bg-surface-card md:border-b border-surface-border sticky top-0 z-30 shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="px-4 py-6 md:px-10 md:py-10">
+        <header className="hidden md:flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <h2 className="section-title !mb-0">
             <Package className="w-6 h-6 text-primary-500" />
             Inventory Intelligence
@@ -242,24 +242,44 @@ const InventoryPage: React.FC = () => {
                 <Plus className="w-4 h-4 mr-1 inline" /> Add Product
               </button>
           </div>
+        </header>
+
+        {/* Mobile Quick Actions */}
+        <div className="flex md:hidden items-center gap-3 mb-6">
+            <button 
+              onClick={() => setIsCategoryModalOpen(true)}
+              className="flex-1 btn-secondary !py-4 text-[10px] font-black tracking-widest"
+              title="Open Category Manager"
+              aria-label="Open Category Manager"
+            >
+              Categories
+            </button>
+            <button 
+              onClick={() => openAddModal()}
+              className="flex-1 btn-primary !py-4 text-[10px] font-black tracking-widest"
+              title="Add New Product"
+              aria-label="Add New Product"
+            >
+              <Plus className="w-4 h-4 mr-1 inline" /> Add Product
+            </button>
         </div>
           
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
-          <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
             <div className="card-label">Total Stock Cost</div>
-            <div className="text-2xl font-black tracking-tighter italic">MK {analytics.totalCost.toLocaleString()}</div>
+            <div className="text-xl md:text-2xl font-black tracking-tighter italic">MK {analytics.totalCost.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
             <div className="card-label !text-emerald-500">Expected Profit</div>
-            <div className="text-2xl font-black tracking-tighter italic text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
+            <div className="text-xl md:text-2xl font-black tracking-tighter italic text-emerald-500">MK {analytics.totalProfit.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
             <div className="card-label !text-red-500">Est. Ageing Loss</div>
-            <div className="text-2xl font-black tracking-tighter italic text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
+            <div className="text-xl md:text-2xl font-black tracking-tighter italic text-red-500">MK {analytics.totalLoss.toLocaleString()}</div>
           </div>
-          <div className="bg-surface-bg border border-surface-border p-8 rounded-[2rem] shadow-sm">
+          <div className="bg-surface-card border border-surface-border p-6 md:p-8 rounded-[2rem] shadow-sm">
             <div className="card-label !text-primary-500">Low Stock (Real)</div>
-            <div className="text-2xl font-black tracking-tighter italic text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
+            <div className="text-xl md:text-2xl font-black tracking-tighter italic text-primary-500">{analytics.lowStock} <span className="text-[10px] text-surface-text/20">Items</span></div>
           </div>
         </div>
 
@@ -281,7 +301,7 @@ const InventoryPage: React.FC = () => {
               onClick={() => setSelectedCategory(null)}
               className={clsx(
                 "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
-                !selectedCategory ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
+                !selectedCategory ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-card border-surface-border text-surface-text/40"
               )}
               title="Show all categories"
               aria-label="Show all categories"
@@ -294,7 +314,7 @@ const InventoryPage: React.FC = () => {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={clsx(
                   "px-8 py-3 rounded-2xl border text-[10px] font-black tracking-widest transition-all whitespace-nowrap",
-                  selectedCategory === cat.id ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-bg border-surface-border text-surface-text/40"
+                  selectedCategory === cat.id ? "bg-primary-500 border-primary-500 text-white shadow-lg" : "bg-surface-card border-surface-border text-surface-text/40"
                 )}
                 title={`Filter by ${cat.title}`}
                 aria-label={`Filter by ${cat.title}`}
@@ -304,7 +324,7 @@ const InventoryPage: React.FC = () => {
             ))}
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="p-0 md:p-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 md:gap-6">

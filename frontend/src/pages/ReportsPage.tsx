@@ -113,29 +113,29 @@ const ReportsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full bg-surface-bg transition-all pb-24 md:pb-0 px-4 md:px-8 pt-6">
-      <header className="mb-8">
+      <header className="hidden md:block mb-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-black tracking-tight italic">Business Reports</h1>
             <p className="text-[10px] text-surface-text/40 font-black tracking-widest mt-1 uppercase">Live Performance Analytics</p>
           </div>
-          
-          <div className="flex gap-2 p-1 bg-surface-card border border-surface-border rounded-2xl overflow-x-auto no-scrollbar">
-            {(['Financial', 'Staff', 'Payment'] as ReportTab[]).map((tab) => (
-              <button 
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={clsx(
-                  "px-6 py-3 rounded-xl text-[9px] font-black tracking-widest transition-all whitespace-nowrap uppercase",
-                  activeTab === tab ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" : "text-surface-text/40 hover:bg-surface-bg"
-                )}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
         </div>
       </header>
+
+      <div className="mb-8 flex gap-2 p-1 bg-surface-card border border-surface-border rounded-2xl overflow-x-auto no-scrollbar">
+        {(['Financial', 'Staff', 'Payment'] as ReportTab[]).map((tab) => (
+          <button 
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={clsx(
+              "px-6 py-3 rounded-xl text-[9px] font-black tracking-widest transition-all whitespace-nowrap uppercase",
+              activeTab === tab ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" : "text-surface-text/40 hover:bg-surface-bg"
+            )}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

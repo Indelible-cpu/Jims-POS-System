@@ -45,16 +45,7 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-surface-bg text-surface-text selection:bg-primary-500/30 pb-20">
-      <header className="sticky top-0 z-30 bg-surface-card/80 backdrop-blur-xl border-b border-surface-border px-6 py-4 flex items-center gap-4">
-        <button 
-          onClick={() => navigate(-1)}
-          className="p-2 hover:bg-surface-bg rounded-xl transition-all"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-xl font-black italic tracking-tighter">About MsikaPos</h1>
-      </header>
+    <div className="w-full bg-surface-bg text-surface-text selection:bg-primary-500/30 pb-20">
 
       <main className="max-w-3xl mx-auto p-6 space-y-10">
         {/* Brand Hero */}

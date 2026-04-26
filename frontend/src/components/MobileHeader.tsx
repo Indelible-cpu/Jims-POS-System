@@ -32,6 +32,7 @@ export default function MobileHeader() {
       case '/transactions': return 'Audit History';
       case '/users': return 'Team Management';
       case '/onboarding': return 'Setup';
+      case '/about': return 'About MsikaPos';
       default: return 'System';
     }
   };
