@@ -26,7 +26,7 @@ export const fetchTransactions = async (req: Request, res: Response) => {
     }
 
     // Branch filtering logic
-    if (user.role !== 'SUPERADMIN') {
+    if (user.role !== 'SUPER_ADMIN') {
       if (user.branchId) {
         where.branchId = user.branchId;
       }
@@ -74,7 +74,7 @@ export const getSummary = async (req: Request, res: Response) => {
       status: 'COMPLETED',
     };
 
-    if (user.role !== 'SUPERADMIN') {
+    if (user.role !== 'SUPER_ADMIN') {
       if (user.branchId) where.branchId = user.branchId;
     } else if (branch_id) {
       where.branchId = parseInt(branch_id as string);

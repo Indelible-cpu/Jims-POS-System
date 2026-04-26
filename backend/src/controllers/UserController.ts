@@ -68,7 +68,7 @@ export const fetchUsers = async (req: Request, res: Response) => {
 
   try {
     const where: any = { deleted: false };
-    if (authUser.role !== 'SUPERADMIN' && authUser.branchId) {
+    if (authUser.role !== 'SUPER_ADMIN' && authUser.branchId) {
       where.branchId = authUser.branchId;
     }
 

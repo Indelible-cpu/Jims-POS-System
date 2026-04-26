@@ -22,7 +22,7 @@ export const listProducts = async (req: Request, res: Response) => {
     }
 
     // Branch scoping
-    if (user.role !== 'SUPERADMIN' && user.branchId) {
+    if (user.role !== 'SUPER_ADMIN' && user.branchId) {
       where.branchId = user.branchId;
     }
 
@@ -53,7 +53,7 @@ export const searchProducts = async (req: Request, res: Response) => {
             ]
         };
 
-        if (user.role !== 'SUPERADMIN' && user.branchId) {
+        if (user.role !== 'SUPER_ADMIN' && user.branchId) {
             where.branchId = user.branchId;
         }
 
@@ -99,7 +99,7 @@ export const getProductTotals = async (req: Request, res: Response) => {
         }
 
         // Scoping
-        const targetBranchId = user.role === 'SUPERADMIN' ? (branchId ? parseInt(branchId as string) : undefined) : user.branchId;
+        const targetBranchId = user.role === 'SUPER_ADMIN' ? (branchId ? parseInt(branchId as string) : undefined) : user.branchId;
         if (targetBranchId) where.branchId = targetBranchId;
 
         const products = await prisma.product.findMany({ where });
@@ -168,7 +168,7 @@ export const saveProduct = async (req: Request, res: Response) => {
         quantity: Number(data.quantity),
         isService: !!data.is_service,
         categoryId: parseInt(data.category_id),
-        branchId: user.role === 'SUPERADMIN' ? (data.branch_id ? parseInt(data.branch_id) : null) : user.branchId,
+        branchId: user.role === 'SUPER_ADMIN' ? (data.branch_id ? parseInt(data.branch_id) : null) : user.branchId,
         updatedAt: new Date()
     };
 
