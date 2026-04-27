@@ -6,27 +6,32 @@ const prisma = new PrismaClient();
 const updateCategorization = async () => {
   console.log('Starting MsikaPos data update...');
 
-  // Helper to get or create category by slug
-  const getCategory = async (slug: string, title: string) => {
-    const existing = await prisma.category.findUnique({ where: { slug } });
-    if (existing) {
-      return await prisma.category.update({
-        where: { slug },
-        data: { title }
-      });
-    }
-    return await prisma.category.create({
-      data: { slug, title }
-    });
-  };
+  // 1. Target categories with upsert on slug
+  const catStationeryServices = await prisma.category.upsert({
+    where: { slug: 'stationery-services' },
+    update: { title: 'Stationery Services' },
+    create: { slug: 'stationery-services', title: 'Stationery Services' }
+  });
 
-  // 1. Get target categories
-  const catStationeryServices = await getCategory('stationery-services', 'Stationery Services');
-  const catTechSolutions = await getCategory('tech-solutions', 'Phones and Computer Tech Solutions');
-  const catPhoneAccessories = await getCategory('phone-accessories', 'Phone Accessories');
-  const catStationeryItems = await getCategory('stationery-items', 'Stationery Items');
+  const catTechSolutions = await prisma.category.upsert({
+    where: { slug: 'tech-solutions' },
+    update: { title: 'Phones and Computer Tech Solutions' },
+    create: { slug: 'tech-solutions', title: 'Phones and Computer Tech Solutions' }
+  });
 
-  // 2. Define product mappings
+  const catPhoneAccessories = await prisma.category.upsert({
+    where: { slug: 'phone-accessories' },
+    update: { title: 'Phone Accessories' },
+    create: { slug: 'phone-accessories', title: 'Phone Accessories' }
+  });
+
+  const catStationeryItems = await prisma.category.upsert({
+    where: { slug: 'stationery-items' },
+    update: { title: 'Stationery Items' },
+    create: { slug: 'stationery-items', title: 'Stationery Items' }
+  });
+
+  // 2. Define products
   const stationeryServices = [
     { name: 'Printing', price: 300, desc: 'High-quality document printing.' },
     { name: 'Scanning', price: 500, desc: 'Fast document scanning to PDF/Image.' },
@@ -47,26 +52,22 @@ const updateCategorization = async () => {
     { name: 'Windows Activation', price: 10000, desc: 'Genuine Windows activation.' }
   ];
 
-  // 3. Update Stationery Services
-  for (const s of stationeryServices) {
-    const sku = `SR-${s.name.toUpperCase().replace(/\s/g, '-')}`;
-    const existing = await prisma.product.findUnique({ where: { sku } });
-    if (existing) {
-      await prisma.product.update({
+  // 3. Upsert products
+  const upsertProducts = async (items: any[], catId: number, prefix: string) => {
+    for (const s of items) {
+      const sku = `${prefix}-${s.name.toUpperCase().replace(/\s/g, '-')}`;
+      await prisma.product.upsert({
         where: { sku },
-        data: { 
-          categoryId: catStationeryServices.id, 
+        update: { 
+          categoryId: catId, 
           description: s.desc,
           sellPrice: s.price,
           isService: true
-        }
-      });
-    } else {
-      await prisma.product.create({
-        data: {
+        },
+        create: {
           sku,
           name: s.name,
-          categoryId: catStationeryServices.id,
+          categoryId: catId,
           description: s.desc,
           costPrice: s.price / 2,
           sellPrice: s.price,
@@ -75,37 +76,10 @@ const updateCategorization = async () => {
         }
       });
     }
-  }
+  };
 
-  // 4. Update Tech Solutions
-  for (const s of techSolutions) {
-    const sku = `TC-${s.name.toUpperCase().replace(/\s/g, '-')}`;
-    const existing = await prisma.product.findUnique({ where: { sku } });
-    if (existing) {
-      await prisma.product.update({
-        where: { sku },
-        data: { 
-          categoryId: catTechSolutions.id, 
-          description: s.desc,
-          sellPrice: s.price,
-          isService: true
-        }
-      });
-    } else {
-      await prisma.product.create({
-        data: {
-          sku,
-          name: s.name,
-          categoryId: catTechSolutions.id,
-          description: s.desc,
-          costPrice: s.price / 2,
-          sellPrice: s.price,
-          isService: true,
-          quantity: 1
-        }
-      });
-    }
-  }
+  await upsertProducts(stationeryServices, catStationeryServices.id, 'SR');
+  await upsertProducts(techSolutions, catTechSolutions.id, 'TC');
 
   console.log('MsikaPos data update completed successfully.');
 };

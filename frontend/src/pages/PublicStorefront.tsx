@@ -214,9 +214,8 @@ export const PublicStorefront: React.FC = () => {
     >
       {/* Background Refresh Indicator */}
       {isRefreshing && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] bg-primary-500 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500 border-2 border-white/20">
-          <Loader2 className="w-4 h-4 animate-spin" />
-          <span className="text-[10px] font-black tracking-[0.2em] uppercase">Smart Syncing MsikaPos...</span>
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] bg-primary-500 text-white p-3 rounded-full shadow-2xl flex items-center justify-center animate-in fade-in slide-in-from-top-4 duration-500 border-2 border-white/20">
+          <Loader2 className="w-5 h-5 animate-spin" />
         </div>
       )}
 
