@@ -219,8 +219,9 @@ export const PublicStorefront: React.FC = () => {
         </div>
       )}
 
-      {/* Edge-to-Edge Header */}
-      <header className="sticky top-0 z-40 bg-surface-bg/80 backdrop-blur-xl border-b border-surface-border">
+      {/* Fixed Header & Navigation */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <header className="bg-surface-bg/80 backdrop-blur-xl border-b border-surface-border">
         <div className="w-full px-6 md:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center border border-primary-500/20">
@@ -271,29 +272,8 @@ export const PublicStorefront: React.FC = () => {
         </div>
       </header>
 
-      {/* Hero Search */}
-      <div className="w-full bg-surface-bg border-b border-surface-border transition-colors">
-        <div className="w-full px-6 md:px-12 py-12 text-center md:text-left flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="max-w-xl">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic mb-4 leading-none">Marketplace</h2>
-            <p className="text-sm md:text-base font-bold text-surface-text/40 mb-0">Explore premium products and professional services. Quality guaranteed at {shopName}.</p>
-          </div>
-          
-          <div className="relative w-full md:max-w-md">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5" />
-            <input 
-              type="text" 
-              placeholder="Search products & services..."
-              className="w-full py-5 pl-14 pr-6 bg-surface-card border border-surface-border rounded-full outline-none focus:border-primary-500 font-bold text-sm shadow-xl shadow-surface-text/5 transition-all"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Category Filter Bar */}
-      <div className="w-full bg-surface-bg border-b border-surface-border/50 overflow-x-auto no-scrollbar scroll-smooth">
+      {/* Category Filter Bar (Fixed) */}
+      <div className="w-full bg-surface-bg/80 backdrop-blur-xl border-b border-surface-border overflow-x-auto no-scrollbar scroll-smooth">
         <div className="w-full px-6 md:px-12 py-6 flex items-center gap-3 flex-nowrap min-w-max">
           <button 
             onClick={() => setSelectedCategory('All')}
@@ -333,9 +313,32 @@ export const PublicStorefront: React.FC = () => {
           ))}
         </div>
       </div>
+    </div>
 
-      {/* Product Grid */}
-      <main className="flex-1 w-full px-3 md:px-12 py-6 md:py-12">
+    {/* Main Content (Scrollable) */}
+    <main className="flex-1 w-full pt-[160px] md:pt-[180px]">
+      {/* Hero Search */}
+      <div className="w-full bg-surface-bg border-b border-surface-border transition-colors">
+        <div className="w-full px-6 md:px-12 py-12 text-center md:text-left flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="max-w-xl">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic mb-4 leading-none">Marketplace</h2>
+            <p className="text-sm md:text-base font-bold text-surface-text/40 mb-0">Explore premium products and professional services. Quality guaranteed at {shopName}.</p>
+          </div>
+          
+          <div className="relative w-full md:max-w-md">
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-surface-text/40 w-5 h-5" />
+            <input 
+              type="text" 
+              placeholder="Search products & services..."
+              className="w-full py-5 pl-14 pr-6 bg-surface-card border border-surface-border rounded-full outline-none focus:border-primary-500 font-bold text-sm shadow-xl shadow-surface-text/5 transition-all"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="px-6 md:px-12 py-12">
         {loading ? (
           <div className="py-32 text-center flex flex-col items-center gap-8">
             <div className="relative">
