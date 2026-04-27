@@ -57,44 +57,74 @@ export const PublicStorefront: React.FC = () => {
     toast.success('Added to cart');
   };
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (window.scrollY === 0) {
+      setTouchStart(e.touches[0].clientY);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart !== null) {
+      const touchEnd = e.changedTouches[0].clientY;
+      const distance = touchEnd - touchStart;
+      if (distance > 150) { // Threshold for pull-to-refresh
+        loadStorefront(true);
+      }
+      setTouchStart(null);
+    }
+  };
+
+  const loadStorefront = async (background = false) => {
+    if (!background) setLoading(true);
+    else setIsRefreshing(true);
+
+    try {
+      // Fetch products from Supabase via backend API (no auth needed)
+      const [productsRes, settingsRes] = await Promise.all([
+        api.get('/public/products'),
+        api.get('/public/settings'),
+      ]);
+
+      if (productsRes.data.success) {
+        const data = productsRes.data.data;
+        setProducts(data);
+        
+        // Better category extraction
+        const cats = Array.from(new Set(data.map((p: any) => p.category?.name || 'Uncategorized')))
+          .filter((c: any) => c !== 'Uncategorized') as string[];
+        setCategories(cats);
+      }
+
+      if (settingsRes.data.success && settingsRes.data.data?.companyName) {
+        setShopName(settingsRes.data.data.companyName);
+      }
+    } catch (err) {
+      console.error('Storefront load error:', err);
+      toast.error('Failed to load marketplace. Please refresh.');
+    } finally {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
+
   useEffect(() => {
-    const loadStorefront = async () => {
-      setLoading(true);
-      try {
-        // Fetch products from Supabase via backend API (no auth needed)
-        const [productsRes, settingsRes] = await Promise.all([
-          api.get('/public/products'),
-          api.get('/public/settings'),
-        ]);
-
-        if (productsRes.data.success) {
-          const data = productsRes.data.data;
-          setProducts(data);
-          
-          // Better category extraction
-          const cats = Array.from(new Set(data.map((p: any) => p.category?.name || 'Uncategorized')))
-            .filter((c: any) => c !== 'Uncategorized') as string[];
-          setCategories(cats);
-        }
-
-        if (settingsRes.data.success && settingsRes.data.data?.companyName) {
-          setShopName(settingsRes.data.data.companyName);
-        }
-      } catch (err) {
-        console.error('Storefront load error:', err);
-        toast.error('Failed to load marketplace. Please refresh.');
-      } finally {
-        setLoading(false);
-      }
-
-      // Restore logged-in customer session if any
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const u = JSON.parse(storedUser);
-        if (u.role === 'CUSTOMER') setCustomer(u);
-      }
-    };
     loadStorefront();
+    
+    // Smart background sync every 5 minutes
+    const interval = setInterval(() => loadStorefront(true), 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Restore logged-in customer session if any
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const u = JSON.parse(storedUser);
+      if (u.role === 'CUSTOMER') setCustomer(u);
+    }
   }, []);
 
   const handleInquiry = async (product: any) => {
@@ -146,7 +176,19 @@ export const PublicStorefront: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface-bg text-surface-text transition-colors duration-300">
+    <div 
+      className="min-h-screen flex flex-col bg-surface-bg text-surface-text transition-colors duration-300 selection:bg-primary-500/30 overflow-x-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Background Refresh Indicator */}
+      {isRefreshing && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-surface-card border border-surface-border px-6 py-2.5 rounded-full shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
+          <Loader2 className="w-3.5 h-3.5 animate-spin text-primary-500" />
+          <span className="text-[9px] font-black tracking-widest text-surface-text/60 uppercase">Syncing...</span>
+        </div>
+      )}
+
       {/* Edge-to-Edge Header */}
       <header className="sticky top-0 z-40 bg-surface-bg/80 backdrop-blur-xl border-b border-surface-border">
         <div className="w-full px-6 md:px-12 py-4 flex items-center justify-between">
@@ -218,8 +260,8 @@ export const PublicStorefront: React.FC = () => {
       </div>
 
       {/* Category Filter Bar */}
-      <div className="w-full bg-surface-bg border-b border-surface-border/50 overflow-x-auto no-scrollbar">
-        <div className="w-full px-6 md:px-12 py-6 flex items-center gap-3">
+      <div className="w-full bg-surface-bg border-b border-surface-border/50 overflow-x-auto no-scrollbar scroll-smooth">
+        <div className="w-full px-6 md:px-12 py-6 flex items-center gap-3 flex-nowrap min-w-max">
           <button 
             onClick={() => setSelectedCategory('All')}
             className={`px-8 py-3 rounded-full text-[10px] font-black tracking-widest transition-all whitespace-nowrap ${
@@ -247,11 +289,19 @@ export const PublicStorefront: React.FC = () => {
       </div>
 
       {/* Product Grid */}
-      <main className="flex-1 w-full px-4 md:px-12 py-8 md:py-12">
+      <main className="flex-1 w-full px-3 md:px-12 py-6 md:py-12">
         {loading ? (
-          <div className="py-20 text-center flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 animate-spin text-primary-500" />
-            <p className="text-[10px] font-black tracking-[0.3em] text-surface-text/20 italic">Loading marketplace...</p>
+          <div className="py-32 text-center flex flex-col items-center gap-8">
+            <div className="relative">
+              <Loader2 className="w-16 h-16 animate-spin text-primary-500" />
+              <div className="absolute inset-0 blur-2xl bg-primary-500/20 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-[10px] font-black tracking-[0.5em] text-surface-text/30 uppercase animate-pulse">Establishing Connection...</p>
+              <div className="w-12 h-0.5 bg-primary-500/10 rounded-full overflow-hidden">
+                <div className="h-full bg-primary-500 animate-progress origin-left"></div>
+              </div>
+            </div>
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center">
@@ -259,7 +309,7 @@ export const PublicStorefront: React.FC = () => {
             <p className="text-[10px] font-black tracking-widest text-surface-text/30 italic">No items found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-8">
             {filteredProducts.map(p => (
               <div key={p.id} className="group relative bg-surface-card border border-surface-border rounded-[2rem] md:rounded-[2.5rem] overflow-hidden hover:border-primary-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-1 flex flex-col h-full">
                 {/* Top Actions */}
@@ -296,20 +346,21 @@ export const PublicStorefront: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="aspect-square md:aspect-[4/3] bg-surface-bg border-b border-surface-border/30 flex items-center justify-center p-6 md:p-12 relative overflow-hidden shrink-0">
+                <div className="aspect-[4/5] bg-surface-bg border-b border-surface-border/30 flex items-center justify-center relative overflow-hidden shrink-0">
                   <div className="absolute inset-0 bg-gradient-to-br from-zinc-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <img 
                     src={p.imageUrl || "/premium-item.png"} 
                     alt={p.name} 
-                    className="w-full h-full object-contain drop-shadow-2xl scale-110 group-hover:scale-125 transition-transform duration-700" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent opacity-60"></div>
                 </div>
                 
                 <div className="p-4 md:p-8 flex flex-col flex-1">
                   <div className="mb-4 md:mb-6">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="text-[7px] md:text-[9px] font-black text-primary-500 tracking-[0.3em] italic opacity-60">
-                        {p.category?.name || 'Featured'}
+                        {p.category?.name || 'FEATURED'}
                       </div>
                       <div className="flex items-center gap-0.5 text-amber-500">
                         <Star className="w-2.5 h-2.5 fill-current" />
@@ -318,10 +369,9 @@ export const PublicStorefront: React.FC = () => {
                     </div>
                     <h3 className="font-black text-sm md:text-xl tracking-tight leading-tight group-hover:text-primary-500 transition-colors mb-2">{p.name}</h3>
                     <p className="text-[10px] md:text-xs text-surface-text/40 font-medium line-clamp-2 leading-relaxed">
-                      {p.description || "Premium quality solution tailored for excellence. Experience the best with our curated collection."}
+                      {p.description || `Premium quality ${p.name.toLowerCase()} available at MsikaPos.`}
                     </p>
                   </div>
-
                   <div className="mt-auto pt-4 md:pt-6 border-t border-surface-border/50 flex flex-col gap-4 md:gap-6">
                     <div className="flex items-end justify-between">
                       <div className="flex flex-col">
