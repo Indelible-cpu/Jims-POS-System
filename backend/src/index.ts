@@ -129,6 +129,26 @@ app.put('/api/inquiries/:id', CustomerCtrl.updateInquiryStatus as any);
 // Settings
 app.post('/api/settings', SettingsCtrl.saveSettings);
 
-app.listen(PORT, () => {
-  console.log(`🚀 POS Backend running on http://localhost:${PORT}`);
+// Role Initialization
+const initRoles = async () => {
+  const { prisma } = await import('./lib/prisma.js');
+  const roles = ['SUPER_ADMIN', 'ADMIN', 'CASHIER', 'CUSTOMER'];
+  try {
+    for (const roleName of roles) {
+      await prisma.role.upsert({
+        where: { name: roleName as any },
+        update: {},
+        create: { name: roleName as any }
+      });
+    }
+    console.log('✅ System roles initialized');
+  } catch (err) {
+    console.error('❌ Failed to initialize roles:', err);
+  }
+};
+
+initRoles().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 POS Backend running on http://localhost:${PORT}`);
+  });
 });

@@ -22,9 +22,15 @@ export const registerCustomer = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: 'Username already taken' });
     }
 
-    // Get Customer Role ID
-    const customerRole = await prisma.role.findUnique({ where: { name: 'CUSTOMER' } });
-    if (!customerRole) return res.status(500).json({ message: 'Customer role not configured' });
+    // Ensure Customer Role exists
+    const customerRole = await prisma.role.upsert({
+      where: { name: 'CUSTOMER' },
+      update: {},
+      create: { 
+        name: 'CUSTOMER',
+        description: 'Standard customer access for storefront inquiries'
+      }
+    });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     
@@ -63,6 +69,7 @@ export const registerCustomer = async (req: Request, res: Response) => {
       success: true,
       message: 'Registration successful',
       token,
+      role: 'CUSTOMER',
       customer: {
         id: result.customer.id,
         username: result.user.username,
