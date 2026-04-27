@@ -10,9 +10,9 @@ const updateData = async () => {
     const name = p.name.toLowerCase();
 
     // Assign unique descriptions based on product name and category
-    if (p.category?.name === 'Stationery Items' || p.categoryId === 2) {
+    if (p.category?.title === 'Stationery Items' || p.categoryId === 2) {
       description = `High-quality ${p.name} for office and home use. Essential stationery for everyday productivity.`;
-    } else if (p.category?.name === 'Services' || p.categoryId === 3) {
+    } else if (p.category?.title === 'Services' || p.categoryId === 3) {
       if (name.includes('password')) {
         description = `Expert ${p.name} service. Securely unlock your device without data loss. Professional bypass by certified technicians.`;
       } else if (name.includes('printing')) {
