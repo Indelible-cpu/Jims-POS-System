@@ -14,6 +14,7 @@ async function main() {
     1: RoleName.SUPER_ADMIN,
     2: RoleName.ADMIN,
     3: RoleName.CASHIER,
+    4: RoleName.EMPLOYEE,
   };
 
   for (const [id, name] of Object.entries(rolesMap)) {

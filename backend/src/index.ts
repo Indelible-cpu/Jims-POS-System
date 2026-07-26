@@ -234,7 +234,7 @@ app.put('/api/payroll/payslips/:id/sign', adminOnly, PayrollCtrl.signPayslip as 
 
 // Role Initialization
 const initRoles = async () => {
-  const roles = ['SUPER_ADMIN', 'ADMIN', 'CASHIER', 'CUSTOMER'];
+  const roles = ['SUPER_ADMIN', 'ADMIN', 'CASHIER', 'CUSTOMER', 'EMPLOYEE'];
   try {
     for (const roleName of roles) {
       await prisma.role.upsert({
