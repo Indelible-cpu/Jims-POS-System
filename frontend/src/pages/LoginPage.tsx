@@ -137,6 +137,8 @@ const LoginPage: React.FC = () => {
           if (!token) throw new Error('Please login with password first to enable biometrics.');
 
           // Restore session
+          sessionStorage.removeItem('user');
+          sessionStorage.removeItem('token');
           localStorage.setItem('user', JSON.stringify(userData));
           localStorage.setItem('token', token);
           
@@ -420,6 +422,11 @@ const LoginPage: React.FC = () => {
       }
       
       if (userToken && userData) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem('token', userToken);
         storage.setItem('user', JSON.stringify(userData));
