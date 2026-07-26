@@ -476,6 +476,8 @@ const LoginPage: React.FC = () => {
         return;
       }
       
+      if (!e.key) return;
+      
       const now = Date.now();
       if (now - lastKeyTime > 100) {
         buffer = ''; // Reset on slow typing (human)
