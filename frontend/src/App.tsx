@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import toast, { Toaster } from 'react-hot-toast';
 import { SyncService } from './services/SyncService';
 import { AuditService } from './services/AuditService';
+import { KeepAliveService } from './services/KeepAliveService';
 import MainLayout from './components/MainLayout';
 import FeatureGuard from './components/FeatureGuard';
 import { db } from './db/posDB';
@@ -103,6 +104,12 @@ const App: React.FC = () => {
   useEffect(() => {
     updateSWRef.current = updateServiceWorker;
   }, [updateServiceWorker]);
+
+  // Start keep-alive ping to prevent Render free-tier spin-down
+  useEffect(() => {
+    KeepAliveService.start();
+    return () => KeepAliveService.stop();
+  }, []);
 
 
   useEffect(() => {
