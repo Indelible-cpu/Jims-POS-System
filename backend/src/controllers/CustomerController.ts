@@ -264,3 +264,62 @@ export const deleteAllInquiries = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const deleteCustomer = async (req: AuthRequest, res: Response) => {
+  // Only SUPER_ADMIN is allowed to permanently delete a customer
+  if (req.user?.role !== 'SUPER_ADMIN') {
+    return res.status(403).json({ success: false, message: 'Forbidden: Only SUPER_ADMIN can delete customers' });
+  }
+
+  const { id } = req.params;
+  const customerId = Number(id);
+
+  if (isNaN(customerId)) {
+    return res.status(400).json({ success: false, message: 'Invalid customer ID' });
+  }
+
+  try {
+    const customer = await prisma.customer.findUnique({ where: { id: customerId } });
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer not found' });
+    }
+
+    // Ensure we scope to the correct branch if needed (though SUPER_ADMIN has global access)
+    // However, if the business has strict separation, we might want to check it.
+    // For now, super admin can delete anywhere.
+
+    await prisma.$transaction(async (tx) => {
+      // 1. Delete associated Inquiries
+      await tx.inquiry.deleteMany({ where: { customerId } });
+      
+      // 2. Delete associated Debt Payments
+      await tx.debtPayment.deleteMany({ where: { customerId } });
+      
+      // 3. Delete associated Product Ratings
+      await tx.productRating.deleteMany({ where: { customerId } });
+      
+      // 4. Unlink associated Sales (set customerId to null) to keep financial totals intact
+      await tx.sale.updateMany({
+        where: { customerId },
+        data: { customerId: null }
+      });
+      
+      // 5. Delete the Customer
+      await tx.customer.delete({ where: { id: customerId } });
+      
+      // If the customer also has a linked user account and it's not used elsewhere, we could delete it,
+      // but to be safe, we can leave the user account or deactivate it.
+      if (customer.userId) {
+        await tx.user.update({
+          where: { id: customer.userId },
+          data: { status: 'DEACTIVATED', deleted: true }
+        });
+      }
+    });
+
+    res.status(200).json({ success: true, message: 'Customer deleted successfully' });
+  } catch (error: any) {
+    console.error('Customer delete error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

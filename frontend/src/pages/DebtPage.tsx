@@ -468,7 +468,7 @@ const DebtPage: React.FC = () => {
                   <ArrowLeft className="w-4 h-4" /> <span className="md:hidden">Back</span><span className="hidden md:inline">Cancel / Go Back</span>
                 </button>
 
-                {currentUser?.role === 'ADMIN' && (
+                {['SUPER_ADMIN', 'ADMIN'].includes(currentUser?.role || '') && (
                   <button 
                     type="button"
                     onClick={() => {
@@ -484,10 +484,31 @@ const DebtPage: React.FC = () => {
                                 onClick={async () => {
                                   toast.dismiss(t.id);
                                   try {
+                                    // If synced (numeric ID), call backend first
+                                    if (!isNaN(Number(selectedCustomer.id))) {
+                                      await api.delete(`/customers/${selectedCustomer.id}`);
+                                    }
+                                    
+                                    // Then delete locally
                                     await db.customers.delete(selectedCustomer.id);
+                                    
+                                    // Unlink sales locally
+                                    await db.salesQueue
+                                      .where('customerId')
+                                      .equals(selectedCustomer.id)
+                                      .modify({ customerId: undefined });
+                                      
+                                    // Delete local debt payments
+                                    await db.debtPayments
+                                      .where('customerId')
+                                      .equals(selectedCustomer.id)
+                                      .delete();
+
                                     setSelectedCustomer(null);
                                     toast.success('Profile deleted');
-                                  } catch { toast.error('Failed to delete'); }
+                                  } catch (err: any) { 
+                                    toast.error(err.response?.data?.message || 'Failed to delete customer');
+                                  }
                                 }}
                                 className="flex-1 py-2 bg-red-500/10 text-red-500 rounded-lg text-[10px] font-black uppercase hover:bg-red-500 hover:text-white transition-all"
                               >Yes, delete</button>
