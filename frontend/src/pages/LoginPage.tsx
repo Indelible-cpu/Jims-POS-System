@@ -372,7 +372,7 @@ const LoginPage: React.FC = () => {
       // Online First Login
       if (navigator.onLine) {
         try {
-          const response = await api.post('/auth/login', { username: uname, password: pwd }, { timeout: 15000 });
+          const response = await api.post('/auth/login', { username: uname, password: pwd }, { timeout: 60000 });
           userData = response.data.user;
           userToken = response.data.token;
 

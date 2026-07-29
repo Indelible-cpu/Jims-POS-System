@@ -22,6 +22,8 @@ export interface LocalProduct {
   createdAt: string;
   updatedAt: string;
   deleted?: boolean;
+  synced?: number;
+  syncRetries?: number;
 }
 
 export interface LocalSaleItem {
@@ -196,9 +198,9 @@ export class POSDatabase extends Dexie {
       suppliers: 'id, name, synced',
       purchaseOrders: 'id, supplierId, status, synced, createdAt'
     });
-    // v18: add createdAt index to expenses
-    this.version(18).stores({
-      products: 'id, categoryId, sku, name, status, supplierId, updatedAt',
+    // v19: add synced to products
+    this.version(19).stores({
+      products: 'id, categoryId, sku, name, status, supplierId, updatedAt, synced',
       categories: 'id, slug',
       salesQueue: 'id, customerId, status, synced, syncRetries, createdAt',
       settings: 'key',

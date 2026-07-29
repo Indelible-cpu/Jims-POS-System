@@ -69,10 +69,10 @@ export const SyncService = {
       this.pushSales().catch(console.error);
     }
 
-    // Automatic recurring sync with ±10s jitter to avoid thundering-herd
+    // Automatic recurring sync with ±5s jitter to avoid thundering-herd
     const scheduleNextSync = () => {
-      const jitter = Math.floor(Math.random() * 20000) - 10000; // ±10s
-      const delay = 30000 + jitter;
+      const jitter = Math.floor(Math.random() * 10000) - 5000; // ±5s
+      const delay = 15000 + jitter; // Aggressive sync: 10s - 20s
       setTimeout(() => {
         if (navigator.onLine && !this.isSyncing) {
           this.pushSales().catch((err) => {
@@ -115,12 +115,21 @@ export const SyncService = {
         return results;
       };
 
-      const [unsyncedSales, unsyncedExpenses, unsyncedCustomers, unsyncedPayments] = await Promise.all([
+      const [unsyncedSales, unsyncedExpenses, unsyncedCustomers, unsyncedPayments, unsyncedProducts] = await Promise.all([
         getUnsynced(db.salesQueue),
         getUnsynced(db.expenses),
         getUnsynced(db.customers),
-        getUnsynced(db.debtPayments)
+        getUnsynced(db.debtPayments),
+        getUnsynced(db.products)
       ]);
+
+      // Sync local products first individually (since they aren't supported in the batch /sync endpoint)
+      if (unsyncedProducts && unsyncedProducts.length > 0) {
+        console.log(`🔄 Syncing ${unsyncedProducts.length} unsynced products individually...`);
+        for (const p of unsyncedProducts) {
+          await this.pushProduct(p);
+        }
+      }
 
       const hasLocalChanges = unsyncedSales.length > 0 || unsyncedExpenses.length > 0 || 
                              unsyncedCustomers.length > 0 || unsyncedPayments.length > 0;
@@ -433,9 +442,10 @@ export const SyncService = {
         discountType: (product.discount_type ?? product.discountType) as 'Percentage' | 'Fixed' | undefined,
         status: 'Active',
         createdAt: product.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        synced: 1,
+        syncRetries: 0
       });
-
 
       // If the server assigned a different ID (creation), remove the temporary one
       if (serverId !== product.id) {
@@ -446,6 +456,16 @@ export const SyncService = {
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : String(error);
       console.error('Product sync error:', msg);
+      
+      try {
+        const p = await db.products.get(product.id);
+        if (p) {
+          await db.products.update(product.id, { syncRetries: (p.syncRetries ?? 0) + 1 });
+        }
+      } catch (e) {
+        // ignore
+      }
+
       return false;
     }
   }

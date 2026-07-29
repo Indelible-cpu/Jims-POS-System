@@ -532,7 +532,8 @@ const InventoryPage: React.FC = () => {
         discountType: formData.discountType as 'Percentage' | 'Fixed' | undefined,
         reorderLevel: formData.reorderLevel === '' ? 0 : Number(formData.reorderLevel),
         supplierId: formData.supplierId,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        synced: 0
       };
 
       if (editingProduct) {
@@ -547,7 +548,8 @@ const InventoryPage: React.FC = () => {
           ...productData,
           id: newId,
           status: 'Active' as const,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          synced: 0
         };
         await db.products.add(fullNewProduct);
         await AuditService.log('PRODUCT_ADD', `Added product: ${productData.name} (SKU: ${productData.sku})`);
@@ -579,7 +581,7 @@ const InventoryPage: React.FC = () => {
       toast.error('Access Denied');
       return;
     }
-    await db.products.update(product.id, { deleted: true });
+    await db.products.update(product.id, { deleted: true, synced: 0 });
     await SyncService.pushProduct({ ...product, deleted: true } as Parameters<typeof SyncService.pushProduct>[0]);
     await AuditService.log('PRODUCT_SAFE_DELETE', `Safe deleted product: ${product.name} (SKU: ${product.sku})`, 'Warning');
     toast.success('Product moved to trash');
@@ -590,7 +592,7 @@ const InventoryPage: React.FC = () => {
       toast.error('Access Denied');
       return;
     }
-    await db.products.update(product.id, { deleted: false });
+    await db.products.update(product.id, { deleted: false, synced: 0 });
     await SyncService.pushProduct({ ...product, deleted: false } as Parameters<typeof SyncService.pushProduct>[0]);
     await AuditService.log('PRODUCT_RESTORE', `Restored product: ${product.name} (SKU: ${product.sku})`);
     toast.success('Product restored');
