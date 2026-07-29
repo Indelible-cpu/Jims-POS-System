@@ -172,7 +172,7 @@ export const SyncService = {
           deviceId,
           lastSyncTimestamp
         }),
-        timeout: 45000 
+        timeout: 65000 
       });
 
 

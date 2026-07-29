@@ -24,8 +24,10 @@ document.documentElement.setAttribute('data-font-size', savedFontSize);
 // Aggressively wake up the Render server in the background as soon as the app loads
 try {
   const backendUrl = import.meta.env.VITE_API_URL || 'https://msikapos.onrender.com';
-  const url = backendUrl.endsWith('/api') ? backendUrl : backendUrl.endsWith('/') ? backendUrl + 'api' : backendUrl + '/api';
-  fetch(url + '/health', { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  // Remove trailing /api if it exists, then append /ping
+  let base = backendUrl.endsWith('/api') ? backendUrl.slice(0, -4) : backendUrl;
+  if (base.endsWith('/')) base = base.slice(0, -1);
+  fetch(base + '/ping', { method: 'GET', mode: 'no-cors' }).catch(() => {});
 } catch (e) {
   // ignore
 }
